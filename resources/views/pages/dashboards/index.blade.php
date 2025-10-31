@@ -107,7 +107,7 @@ License: For each use you must have a valid license purchased only from above li
 											<span class="menu-bullet">
 												<span class="bullet bullet-dot"></span>
 											</span>
-											<span class="menu-title">Inicio Punto Fijo</span>
+											<span class="menu-title">Inicio</span>
 										</a>
 										
 										<!--end:Menu link-->
@@ -196,7 +196,7 @@ License: For each use you must have a valid license purchased only from above li
 						<div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
 							<!--begin::Heading-->
 							<h1 class="d-flex flex-column text-dark fw-bold my-1">
-								<span class="text-white fs-1">Inicio</span>
+								<span class="text-white fs-1">Inicio Punto Fijo</span>
 								<small class="text-gray-600 fs-6 fw-normal pt-2"></small>
 							</h1>
 							<!--end::Heading-->
