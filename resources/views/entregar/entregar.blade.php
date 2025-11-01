@@ -875,6 +875,43 @@ License: For each use you must have a valid license purchased only from above li
     <script src="assets/js/custom/utilities/modals/create-app.js"></script>
     <script src="assets/js/custom/utilities/modals/users-search.js"></script>
     <!--end::Custom Javascript-->
+
+
+
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const qrButton = document.getElementById("qr-button");
+    const qrReader = document.getElementById("qr-reader");
+    const qrInput = document.getElementById("qr-input");
+
+    let html5QrCode;
+
+    qrButton.addEventListener("click", async function() {
+        if (!html5QrCode) {
+            html5QrCode = new Html5Qrcode("qr-reader");
+        }
+
+        qrReader.style.display = "block";
+
+        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+        try {
+            await html5QrCode.start(
+                { facingMode: "environment" }, // Usa cámara trasera
+                config,
+                qrCodeMessage => {
+                    qrInput.value = qrCodeMessage;
+                    html5QrCode.stop().then(() => {
+                        qrReader.style.display = "none";
+                    });
+                }
+            );
+        } catch (err) {
+            console.error("Error al iniciar cámara:", err);
+        }
+    });
+});
+</script>
     <!--end::Javascript-->
 </body>
 <!--end::Body-->
