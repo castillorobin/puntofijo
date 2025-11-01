@@ -433,7 +433,7 @@ License: For each use you must have a valid license purchased only from above li
 
                                                <div class="qr-container d-flex align-items-center">
     <input id="qr-input" type="text" placeholder="Escanear código QR" readonly class="form-control me-2" style="max-width: 300px;" />
-    <button id="qr-button" class="btn btn-primary">📷 Escanear</button>
+    <button id="qr-button" class="btn btn-primary">Buscar</button>
 
     <!-- Contenedor donde se mostrará la cámara -->
     <div id="qr-reader" style="width: 100%; max-width: 300px; margin:auto; display:none;"></div>
@@ -852,7 +852,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let html5QrCode;
 
-    qrButton.addEventListener("click", async function() {
+    qrInput.addEventListener("click", async function() {
         if (!html5QrCode) {
             html5QrCode = new Html5Qrcode("qr-reader");
         }
