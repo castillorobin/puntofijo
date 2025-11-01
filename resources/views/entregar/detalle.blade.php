@@ -441,13 +441,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <th class="min-w-100px">COMERCIO</th>
                                                         <th class="min-w-100px">DESTINATARIO</th>
 
-                                                        @if (Route::currentRouteName() !== 'filtroreprogramado')
-                                                        <th class="min-w-100px">FECHA</th> <!-- Solo visible si NO es filtroreprogramado -->
-                                                        @endif
-
-                                                        @if (Route::currentRouteName() === 'filtroreprogramado')
-                                                        <th class="min-w-150px">FECHA REPROGRAMADO</th> <!-- Solo visible en filtroreprogramado -->
-                                                        @endif
+                                       
 
                                                         <th class="text-end min-w-75px">PRECIO</th>
                                                         <th class="text-center min-w-100px">ESTADO</th>
@@ -469,7 +463,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     @endphp
 
                                                     @foreach ($envios as $envio)
-                                                    @if ($envio->repartidor == Auth::user()->name)
+                                                   
                                                     @php
                                                     $estado = $envio->estado;
                                                     $color = $estadoColores[$estado] ?? '#BDC3C7';
@@ -478,23 +472,8 @@ License: For each use you must have a valid license purchased only from above li
                                                     <tr>
                                                         <td><a href="/detalles/{{ $envio->guia }}" class="text-gray-600 text-hover-primary">{{ $envio->guia }}</a></td>
                                                         <td>{{ $envio->comercio }}</td>
-                                                        <td>{{ $envio->destinatario }}</td>
-
-                                                        @if (Route::currentRouteName() !== 'filtroreprogramado')
-                                                        <td data-order="{{ $envio->fecha_entrega }}">
-                                                            {{ date('d M Y, h:i a', strtotime($envio->fecha_entrega)) }}
-                                                        </td>
-                                                        @endif
-
-                                                        @if (Route::currentRouteName() === 'filtroreprogramado')
-                                                        <td data-order="{{ $envio->fecha_reprogramado }}">
-                                                            @if ($envio->fecha_reprogramado)
-                                                            {{ date('d M Y', strtotime($envio->fecha_reprogramado)) }}
-                                                            @else
-                                                            -
-                                                            @endif
-                                                        </td>
-                                                        @endif
+                                                        <td>{{ $envio->destinatario }}</td>                          
+                                                       
 
                                                         <td class="text-end">${{ number_format($envio->precio, 2) }}</td>
                                                         <td class="text-center">
@@ -503,7 +482,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         
                                                        
                                                     </tr>
-                                                    @endif
+                                                 
                                                     @endforeach
                                                 </tbody>
 
