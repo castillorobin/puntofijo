@@ -441,36 +441,7 @@ License: For each use you must have a valid license purchased only from above li
                                             </div>
                                             <!--end::Main wrapper-->
 
-                                            <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="envios_table" style="width: 100%; table-layout: auto; overflow-x: hidden;">
-                                                <thead>
-                                                    <tr class="text-start text-gray-600 fw-bold fs-7 text-uppercase gs-0">
-                                                        <th class="min-w-100px">GUIA</th>
-                                                        <th class="min-w-100px">COMERCIO</th>
-                                                        <th class="min-w-100px">DESTINATARIO</th>
-
-                                                        @if (Route::currentRouteName() !== 'filtroreprogramado')
-                                                        <th class="min-w-100px">FECHA</th> <!-- Solo visible si NO es filtroreprogramado -->
-                                                        @endif
-
-                                                        @if (Route::currentRouteName() === 'filtroreprogramado')
-                                                        <th class="min-w-150px">FECHA REPROGRAMADO</th> <!-- Solo visible en filtroreprogramado -->
-                                                        @endif
-
-                                                        <th class="text-end min-w-75px">PRECIO</th>
-                                                        <th class="text-center min-w-100px">ESTADO</th>
-                                                       
-                                                        
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody class="fw-semibold text-gray-600">
-                                                  
-
-                                                    
-                                                </tbody>
-
-
-                                            </table>
+                                            
                                             <a href="/dashboard">
 <div style="margin-top: 20px;">
     <button type="button" class="btn btn-secondary" style="float: right">Cerrar</button>
@@ -870,6 +841,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     html5QrCode.stop().then(() => {
                         qrReader.style.display = "none";
                     });
+
+                     window.location.href = `/envio/buscar?codigo=${encodeURIComponent(qrCodeMessage)}`;
                 }
             );
         } catch (err) {

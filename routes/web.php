@@ -64,6 +64,7 @@ Route::post('/upload', [UploadController::class, 'upload'])->name('upload');
 Route::post('/cambiar-estado', [EnvioController::class, 'cambiarEstado'])->name('cambiar.estado');
 
 Route::get('/entregarenvio', [EnvioController::class, 'entregarenvio'])->name('entregarenvio');
+Route::get('/envio/buscar', [EnvioController::class, 'buscar'])->name('producto.buscar');
  
 
 
