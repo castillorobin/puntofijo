@@ -42,12 +42,12 @@ class EnvioController extends Controller
     public function buscar(Request $request)
 {
     $codigo = $request->get('codigo');
-    $envio = Envio::where('guia', $codigo)->first();
+    $envios = Envio::where('guia', $codigo)->get();
 
-    if (!$envio) {
+    if ($envio->isEmpty()) {
         return redirect()->back()->with('error', 'Envio no encontrado');
     }
 
-    return view('entregar.detalle', compact('envio'));
+    return view('entregar.detalle', compact('envios'));
 }
 }
