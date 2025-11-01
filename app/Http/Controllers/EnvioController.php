@@ -48,6 +48,6 @@ class EnvioController extends Controller
         return redirect()->back()->with('error', 'Envio no encontrado');
     }
 
-    return view('envios.detalle', compact('envio'));
+    return view('entregar.detalle', compact('envio'));
 }
 }
