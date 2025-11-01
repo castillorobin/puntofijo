@@ -44,7 +44,7 @@ class EnvioController extends Controller
     $codigo = $request->get('codigo');
     $envios = Envio::where('guia', $codigo)->get();
 
-    if ($envio->isEmpty()) {
+    if ($envios->isEmpty()) {
         return redirect()->back()->with('error', 'Envio no encontrado');
     }
 
