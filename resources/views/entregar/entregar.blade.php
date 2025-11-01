@@ -431,32 +431,13 @@ License: For each use you must have a valid license purchased only from above li
                                                 data-kt-search-enter="true"
                                                 data-kt-search-layout="inline">
 
-                                                <!--begin::Input Form-->
-                                                <form data-kt-search-element="form" class="w-50 position-relative mb-5" autocomplete="off">
-                                                    <input type="hidden" />
+                                               <div class="qr-container d-flex align-items-center">
+    <input id="qr-input" type="text" placeholder="Escanear código QR" readonly class="form-control me-2" style="max-width: 300px;" />
+    <button id="qr-button" class="btn btn-primary">📷 Escanear</button>
 
-                                                    <!--begin::Icon (Font Awesome)-->
-                                                    <span class="position-absolute top-50 start-0 translate-middle-y ps-5 text-gray-500">
-                                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                                    </span>
-                                                    <!--end::Icon-->
-
-                                                    <input type="text" class="form-control form-control-lg form-control-solid px-15"
-                                                        name="search"
-                                                        value=""
-                                                        placeholder="Buscar Guia"
-                                                        data-kt-search-element="input" id="customSearch" />
-
-                                                    <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5" data-kt-search-element="spinner">
-                                                        <span class="spinner-border h-15px w-15px align-middle text-gray-500"></span>
-                                                    </span>
-
-                                                    <span class="btn btn-flush btn-active-color-primary position-absolute top-50 end-0 translate-middle-y lh-0 me-5 d-none"
-                                                        data-kt-search-element="clear" id="clearSearch">
-                                                        &#10006;
-                                                    </span>
-                                                    <button type="submit" class="btn btn-primary position-absolute top-50 end-0 px-15 translate-middle-y">Buscar</button>
-                                                </form>
+    <!-- Contenedor donde se mostrará la cámara -->
+    <div id="qr-reader" style="width: 100%; max-width: 300px; margin:auto; display:none;"></div>
+</div>
                                             </div>
                                             <!--end::Main wrapper-->
 
