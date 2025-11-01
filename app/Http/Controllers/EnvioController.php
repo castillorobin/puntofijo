@@ -42,7 +42,7 @@ class EnvioController extends Controller
     public function buscar(Request $request)
 {
     $codigo = $request->get('codigo');
-    dd( $codigo);
+    //dd( $codigo);
     $envios = Envio::where('guia', $codigo)->get();
 
     if ($envios->isEmpty()) {
