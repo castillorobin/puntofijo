@@ -842,6 +842,7 @@ License: For each use you must have a valid license purchased only from above li
         </div>
         <!--end::Page-->
     </div>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
     <script>
 document.addEventListener("DOMContentLoaded", function() {
