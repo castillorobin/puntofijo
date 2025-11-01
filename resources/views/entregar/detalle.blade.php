@@ -446,6 +446,14 @@ License: For each use you must have a valid license purchased only from above li
             <i class="fas fa-window-close" style="font-size:40px; color:red;"></i>
         </a>
     </div>
+
+                             <div class="col-sm-2">                                 
+                                    <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                        <div class="image-input-wrapper w-125px h-125px" style="background-image: url(https://meloexpress.site/fotos/{{$envio[0]->foto1}})"></div>
+                                    </div>
+                                </div>  
+                               
+
     <!--end::Card header-->
 
     <!--begin::Form-->
@@ -654,40 +662,6 @@ License: For each use you must have a valid license purchased only from above li
 
 
 
-                        <!-- Modal Fallido -->
-                        <div class="modal fade" tabindex="-1" id="kt_modal_fallido">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title">ESTADO FALLIDO</h3>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <label for="estadoSelect" class="form-label p-2">Motivo</label>
-                                        <select id="estadoSelect" class="form-select form-select-solid"
-                                            data-control="select2" data-placeholder="Seleccionar una opción"
-                                            data-hide-search="true" onchange="toggleNotaField()">
-                                            <option></option>
-                                            <option value="Cliente no contesta">Cliente no contesta</option>
-                                            <option value="Cliente no estaba en el lugar" selected>Cliente no estaba en el lugar</option>
-                                            <option value="Cliente no tenía dinero">Cliente no tenía dinero</option>
-                                            <option value="Otro">Otro</option>
-                                        </select>
-
-                                        <div id="notaField" class="rounded border p-2 mt-3" style="display: none;">
-                                            <label for="nota_fallido" class="form-label">Nota</label>
-                                            <textarea id="nota_fallido" class="form-control" data-kt-autosize="true" placeholder="Escribe tu nota aquí..."></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="button" class="btn btn-primary" data-estado="Fallido"
-                                            >Guardar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Modal No Entregado -->
                         <div class="modal fade" tabindex="-1" id="kt_modal_no_entregado">
                             <div class="modal-dialog modal-dialog-centered">
@@ -710,202 +684,7 @@ License: For each use you must have a valid license purchased only from above li
                             </div>
                         </div>
 
-                        <!-- Modal Reprogramado -->
-                        <div class="modal fade" tabindex="-1" id="kt_modal_reprogramado">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">ESTADO REPROGRAMADO</h5>
-                                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
-                                            data-bs-dismiss="modal" aria-label="Cerrar">
-                                            <span class="svg-icon fs-2x"></span>
-                                        </div>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="mb-0">
-                                            <label class="form-label p-2">Nueva Fecha</label>
-                                            <input class="form-control form-control-solid"
-                                                placeholder="Seleccione la Fecha" id="kt_daterangepicker_3" />
-
-                                            <div id="notaContainer" class="rounded border d-flex flex-column p-2 mt-3">
-                                                <label for="nota_reprogramado" class="form-label">Motivo</label>
-                                                <textarea id="nota_reprogramado" class="form-control" data-kt-autosize="true" placeholder="Escribe el motivo..."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <script>                                
-                                        $(document).ready(function() {
-                                            $("#kt_daterangepicker_3").daterangepicker({
-                                                singleDatePicker: true,
-                                                showDropdowns: true,
-                                                minYear: 1901,
-                                                maxYear: parseInt(moment().format("YYYY"), 12),
-                                                locale: {
-                                                    format: 'YYYY-MM-DD' // Formato esperado por MySQL
-                                                }
-                                            }, function(start) {
-                                                $("#kt_daterangepicker_3").val(start.format("YYYY-MM-DD"));
-                                            });
-                                        });
-
-                                    </script>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="button" class="btn btn-primary" data-estado="Reprogramado"
-                                            >Guardar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" tabindex="-1" id="kt_modal_cambio">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title">ESTADO CAMBIO</h3>
-                                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
-                                            data-bs-dismiss="modal" aria-label="Cerrar">
-                                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span
-                                                    class="path2"></span></i>
-                                        </div>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <form action="cambiando" method="POST" enctype="multipart/form-data">
-                                            
-                                            @method('GET')
-
-                                        <div class="row mb-6">
-                                            <label class="col-lg-3 col-form-label fw-semibold fs-6">Foto</label>
-                                            <div class="col-lg-8">
-                                                <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
-                                                    <div class="image-input-wrapper w-125px h-125px" style="background-image: url(/assets/media/avatars/300-1.jpg)"></div>
-                                                    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                                                        <i class="ki-duotone ki-pencil fs-7">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                        </i>
-                                                        <input type="file" name="foto" accept=".png, .jpg, .jpeg" capture="camera" /> <!-- Agregar capture="camera" -->
-                                                        <input type="hidden" name="avatar_remove" />
-                                                    </label>
-                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
-                                                        <i class="ki-duotone ki-cross fs-2">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                        </i>
-                                                    </span>
-                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
-                                                        <i class="ki-duotone ki-cross fs-2">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                        </i>
-                                                    </span>
-                                                </div>
-                                                <div class="form-text">Tipos de archivos: png, jpg, jpeg.</div>
-                                            </div>
-                                        </div>
-                                        <!--end::Dropzone--> 
-
-                                        <!-- Div no centralizado para el label y el input -->
-                                        <div class="mb-5">
-                                            <label class="form-label p-2">Guia de Cambio</label>
-                                            <input type="text" class="form-control form-control-solid" name="notarepa" />
-                                        </div>
-                                      
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
-                                    </div>
-                                </form>
-                                   
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <script>
-                            function cambiarEstado(button, redirigirUrl) {
-                                var estado = button.getAttribute('data-estado');
-                                var guia = button.getAttribute('data-guia'); // Obtenemos la guía específica del botón
-
-                                $.ajax({
-                                    url: '/cambiar-estado',
-                                    method: 'POST',
-                                    data: {
-                                        _token: '{{ csrf_token() }}',
-                                        estado: estado,
-                                        guia: guia // Enviamos la guía en lugar del ID
-                                    },
-                                    success: function(response) {
-                                        window.location.href = redirigirUrl;
-                                    },
-                                    error: function(xhr) {
-                                        alert('Error al cambiar el estado');
-                                    }
-                                });
-                            }
-
-                            function guardarEstado(button, redirigirUrl) {
-                                var estado = button.getAttribute('data-estado');
-                                var guia = button.getAttribute('data-guia'); // Obtenemos la guía específica del botón
-
-                                var motivo = null;
-                                var nota = null;
-                                var fechaReprogramado = null;
-
-                                if (estado === "No entregado") {
-                                    nota = document.getElementById("nota_no_entregado").value || null;
-                                }
-
-                                if (estado === "Fallido") {
-                                    var selectMotivo = document.getElementById("estadoSelect").value;
-                                    motivo = selectMotivo;
-
-                                    if (selectMotivo === "Otro") {
-                                        nota = document.getElementById("nota_fallido").value || null;
-                                    }
-                                }
-
-                                if (estado === "Reprogramado") {
-                                    fechaReprogramado = document.getElementById("kt_daterangepicker_3").value || null;
-                                    nota = document.getElementById("nota_reprogramado").value || null;
-                                }
-
-                                $.ajax({
-                                    url: '/cambiar-estado',
-                                    method: 'POST',
-                                    data: {
-                                        _token: '{{ csrf_token() }}',
-                                        estado: estado,
-                                        guia: guia, // Enviamos la guía en lugar del ID
-                                        nota: motivo,
-                                        nota_repartidor: nota,
-                                        fecha_reprogramado: fechaReprogramado
-                                    },
-                                    success: function(response) {
-                                        window.location.href = redirigirUrl;
-                                    },
-                                    error: function(xhr) {
-                                        alert('Error al guardar el estado');
-                                    }
-                                });
-                            }
-
-                            function toggleNotaField() {
-                                var estado = document.getElementById("estadoSelect").value;
-                                var notaField = document.getElementById("notaField");
-                                if (estado === "Otro") {
-                                    notaField.style.display = "block";
-                                } else {
-                                    notaField.style.display = "none";
-                                }
-                            }
-                        </script>
-
-
+                </div>
 
 
 
@@ -984,6 +763,8 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+
+
    
  
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
