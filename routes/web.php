@@ -63,6 +63,8 @@ Route::get('/guardaruser', [App\Http\Controllers\UsuarioController::class, 'guar
 Route::post('/upload', [UploadController::class, 'upload'])->name('upload');
 Route::post('/cambiar-estado', [EnvioController::class, 'cambiarEstado'])->name('cambiar.estado');
 
+Route::get('/entregarenvio', [EnvioController::class, 'entregarenvio'])->name('entregarenvio');
+ 
 
 
 Route::post('/logout', function () {

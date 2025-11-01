@@ -33,4 +33,9 @@ class EnvioController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Estado actualizado correctamente']);
     }
+
+    public function entregarenvio()
+    {
+        return view('entregar.entregar');
+    }
 }
