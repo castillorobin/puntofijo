@@ -43,12 +43,12 @@ class EnvioController extends Controller
 {
     $codigo = $request->get('codigo');
     //dd( $codigo);
-    $envios = Envio::where('guia', $codigo)->get();
+    $envio = Envio::where('guia', $codigo)->first();
 
-    if ($envios->isEmpty()) {
+    if (!$envio) {
         return redirect()->back()->with('error', 'Envio no encontrado');
     }
 
-    return view('entregar.detalle', compact('envios'));
+    return view('entregar.detalle', compact('envio'));
 }
 }

@@ -433,61 +433,147 @@ License: For each use you must have a valid license purchased only from above li
 
                     
                                             </div>
-                                            <!--end::Main wrapper-->
-<table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="envios_table" style="width: 100%; table-layout: auto; overflow-x: hidden;">
-                                                <thead>
-                                                    <tr class="text-start text-gray-600 fw-bold fs-7 text-uppercase gs-0">
-                                                        <th class="min-w-100px">GUIA</th>
-                                                        <th class="min-w-100px">COMERCIO</th>
-                                                        <th class="min-w-100px">DESTINATARIO</th>
-
-                                       
-
-                                                        <th class="text-end min-w-75px">PRECIO</th>
-                                                        <th class="text-center min-w-100px">ESTADO</th>
-                                                       
-                                                        
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody class="fw-semibold text-gray-600">
-                                                    @php
-                                                    $estadoColores = [
-                                                    'En ruta' => '#F39C12',
-                                                    'Entregado' => '#2ECC71',
-                                                    'Fallido' => '#E74C3C',
-                                                    'No entregado' => '#C0392B',
-                                                    'Reprogramado' => '#F1C40F',
-                                                    'Cambio' => '#3498DB'
-                                                    ];
-                                                    @endphp
-
-                                                    @foreach ($envios as $envio)
-                                                   
-                                                    @php
-                                                    $estado = $envio->estado;
-                                                    $color = $estadoColores[$estado] ?? '#BDC3C7';
-                                                    @endphp
-
-                                                    <tr>
-                                                        <td><a href="/detalles/{{ $envio->guia }}" class="text-gray-600 text-hover-primary">{{ $envio->guia }}</a></td>
-                                                        <td>{{ $envio->comercio }}</td>
-                                                        <td>{{ $envio->destinatario }}</td>                          
-                                                       
-
-                                                        <td class="text-end">${{ number_format($envio->precio, 2) }}</td>
-                                                        <td class="text-center">
-                                                            <span class="badge" style="background-color: {{ $color }}; color: white; padding: 8px 8px; border-radius: 6px;">{{ $estado }}</span>
-                                                        </td>
-                                                        
-                                                       
-                                                    </tr>
-                                                 
-                                                    @endforeach
-                                                </tbody>
+                                            <!--Empieza formulario-->
 
 
-                                            </table>
+<div class="card">
+    <!--begin::Card header-->
+    <div class="card-header">
+        <!--begin::Card title-->
+        <div class="card-title fs-3 fw-bold">Guia: {{ $envio[0]->guia }}</div>
+        <!--end::Card title-->
+        <a href="/stocks/agregarfoto" class="w-200" style="float:right; margin-top:20px; font-size:20px;">
+            <i class="fas fa-window-close" style="font-size:40px; color:red;"></i>
+        </a>
+    </div>
+    <!--end::Card header-->
+
+    <!--begin::Form-->
+    <form action="/guardandofoto" method="POST" id="kt_account_profile_details_form" class="form" enctype="multipart/form-data">
+                                @csrf
+                            @method('GET')
+                        <input type="text" value="{{ $envio[0]->guia }}" class="visually-hidden" name="guia2" id="guia2">
+        <!--begin::Card body-->
+        <div class="card-body p-9">
+            <!--begin::Row-->
+            <div class="row mb-5">
+                 <!--begin::Row--> 
+            <div class="row mb-8">
+                 <!--begin::Col-->
+                <div class="col-xl-3">
+                    <div class="fs-6 fw-semibold mt-2 mb-3">Comercio:</div>
+                </div>
+                <!--end::Col-->
+
+                 <!--begin::Col-->
+                <div class="col-xl-9 fv-row fv-plugins-icon-container">
+                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->comercio }}">
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                </div>
+            </div>
+            <!--end::Row-->
+            <!--begin::Row-->
+            <div class="row mb-8">
+                 <!--begin::Col-->
+                <div class="col-xl-3">
+                    <div class="fs-6 fw-semibold mt-2 mb-3">Destinatario:</div>
+                </div>
+                <!--end::Col-->
+
+                 <!--begin::Col-->
+                <div class="col-xl-9 fv-row fv-plugins-icon-container">
+                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->destinatario }}">
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                </div>
+            </div>
+            <!--end::Row-->
+            <!--begin::Row-->
+            <div class="row mb-8">
+                 <!--begin::Col-->
+                <div class="col-xl-3">
+                    <div class="fs-6 fw-semibold mt-2 mb-3">Direccion:</div>
+                </div>
+                <!--end::Col-->
+
+                 <!--begin::Col-->
+                <div class="col-xl-9 fv-row fv-plugins-icon-container">
+                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->direccion }}">
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                </div>
+            </div>
+            <!--end::Row-->
+                
+                <div class="row">
+    <!-- Imagen 1 -->
+    <div class="col-12 col-md-2 d-flex justify-content-center" style="margin-top: 20px">
+        <div class="image-input image-input-outline" data-kt-image-input="true" 
+             style="background-image: url('/metronic8/demo1/assets/media/svg/avatars/blank.svg')">
+            <div class="image-input-wrapper w-125px h-125px bgi-position-center cont1 d-none"></div>
+            <!-- ... igual que el anterior pero con avatar1 -->         
+        </div>
+    </div>
+
+    <!-- Imagen 2 -->
+    <div class="col-12 col-md-2 d-flex justify-content-center" style="margin-top: 20px">
+        <div class="image-input image-input-outline" data-kt-image-input="true" 
+             style="background-image: url('/metronic8/demo1/assets/media/svg/avatars/blank.svg')">
+            <div class="image-input-wrapper w-125px h-125px bgi-position-center cont2 d-none"></div>
+            <!-- ... igual que el anterior pero con avatar2 -->
+        </div>
+    </div>
+
+    <!-- Imagen 3 -->
+    <div class="col-12 col-md-2 d-flex justify-content-center" style="margin-top: 20px">
+        <div class="image-input image-input-outline" data-kt-image-input="true" 
+             style="background-image: url('/metronic8/demo1/assets/media/svg/avatars/blank.svg')">
+            <div class="image-input-wrapper w-125px h-125px bgi-position-center cont3 d-none"></div>
+            <!-- ... igual que el anterior pero con avatar3 -->
+        </div>
+    </div>
+</div>
+            </div>
+            <br>
+            <!--end::Row-->
+            
+<div class="row justify-content-end">
+    <!-- Botón Borrar -->
+    <div class="col-sm-12 col-md-2 py-2">
+        <button type="button" class="btn btn-light btn-active-light-primary w-100"
+        onclick="location.reload();">
+    Borrar
+</button>
+    </div>
+
+    <!-- Botón Capturar foto -->
+    <div class="col-sm-12 col-md-2 py-2">
+        <input type="file" class="inputfile file-input-control w-100" name="foto1" id="file" onchange="loadFile(event, 'cont1')" onclick="esconder1()">
+        <label for="file" class="file-input-label btn btn-primary w-100" id="file1l">
+            <i class="fas fa-camera"></i> Abrir cámara
+        </label>
+
+        <input type="file" class="inputfile file-input-control w-100" name="foto2" id="file2" onchange="loadFile(event, 'cont2')" onclick="esconder2()">
+        <label for="file2" class="file-input-label btn btn-primary w-100" id="file2l" style="display: none;">
+            <i class="fas fa-camera"></i> Abrir cámara
+        </label>
+
+        <input type="file" class="inputfile file-input-control w-100" name="foto3" id="file3" onchange="loadFile(event, 'cont3')" onclick="esconder3()">
+        <label for="file3" class="file-input-label btn btn-primary w-100" id="file3l" style="display: none;">
+            <i class="fas fa-camera"></i> Abrir cámara
+        </label>
+    </div>
+</div>
+
+<!-- Botón Guardar -->
+<div class="row justify-content-end">
+    <div class="col-sm-12 col-md-2 py-2">
+        <button type="submit" class="btn btn-primary w-100" id="kt_project_settings_submit">Guardar</button>
+    </div>
+</div>
+        <!--end::Card footer-->
+    <input type="hidden"></form>
+    <!--end:Form-->
+</div>
+</div>
                                             
                                             <a href="/dashboard">
 <div style="margin-top: 20px;">
