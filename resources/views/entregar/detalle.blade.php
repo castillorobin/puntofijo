@@ -567,7 +567,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Opcional: acción de botones
     document.getElementById("btn-tomar-foto").addEventListener("click", function() {
-        alert("Aquí puedes integrar la lógica para tomar foto 📸");
+      
     });
 
     document.getElementById("btn-guardar-cambio").addEventListener("click", function() {
