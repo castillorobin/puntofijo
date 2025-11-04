@@ -269,13 +269,16 @@ License: For each use you must have a valid license purchased only from above li
               <div class="row mb-8">
                  <!--begin::Col-->
                 <div class="col-xl-3">
-                    <div class="fs-6 fw-semibold mt-2 mb-3 text-center">
+                   <!-- Botón Comprobante de entrega -->
+<div class="fs-6 fw-semibold mt-2 mb-3 text-center">
     <button type="button" class="btn btn-light-success fw-bold" id="btn-abrir-camara">
         <i class="fas fa-camera" style="font-size: 25px;"></i> &nbsp; Comprobante de Entrega
     </button>
 </div>
 
-<!-- Cámara y previsualización -->
+</div>
+
+<!-- Sección de cámara y previsualización -->
 <div id="camera-section-entrega" class="text-center" style="display:none;">
     <video id="camera-preview-entrega" width="100%" height="auto" autoplay playsinline class="rounded border mb-3"></video>
     <canvas id="photo-canvas-entrega" style="display:none;"></canvas>
@@ -283,9 +286,6 @@ License: For each use you must have a valid license purchased only from above li
     <div class="mt-3">
         <button type="button" class="btn btn-warning" id="btn-capturar-entrega">
             <i class="fas fa-camera"></i> Tomar Foto
-        </button>
-        <button type="button" class="btn btn-primary" id="btn-guardar-entrega">
-            <i class="fas fa-save"></i> Guardar
         </button>
     </div>
 
