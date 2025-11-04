@@ -165,7 +165,7 @@ License: For each use you must have a valid license purchased only from above li
 
                  <!--begin::Col-->
                 <div class="col-xl-9 fv-row fv-plugins-icon-container">
-                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->comercio }}">
+                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->comercio }}" readonly>
                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                 </div>
             </div>
@@ -180,7 +180,7 @@ License: For each use you must have a valid license purchased only from above li
 
                  <!--begin::Col-->
                 <div class="col-xl-9 fv-row fv-plugins-icon-container">
-                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->destinatario }}">
+                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->destinatario }}" readonly>
                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                 </div>
             </div>
@@ -195,65 +195,82 @@ License: For each use you must have a valid license purchased only from above li
 
                  <!--begin::Col-->
                 <div class="col-xl-9 fv-row fv-plugins-icon-container">
-                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->direccion }}">
+                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->direccion }}" readonly>
                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                 </div>
             </div>
             <!--end::Row-->
-                
-                <div class="row">
-    <!-- Imagen 1 -->
-    <div class="col-12 col-md-2 d-flex justify-content-center" style="margin-top: 20px">
-        <div class="image-input image-input-outline" data-kt-image-input="true" 
-             style="background-image: url('/metronic8/demo1/assets/media/svg/avatars/blank.svg')">
-            <div class="image-input-wrapper w-125px h-125px bgi-position-center cont1 d-none"></div>
-            <!-- ... igual que el anterior pero con avatar1 -->         
-        </div>
-    </div>
 
-    <!-- Imagen 2 -->
-    <div class="col-12 col-md-2 d-flex justify-content-center" style="margin-top: 20px">
-        <div class="image-input image-input-outline" data-kt-image-input="true" 
-             style="background-image: url('/metronic8/demo1/assets/media/svg/avatars/blank.svg')">
-            <div class="image-input-wrapper w-125px h-125px bgi-position-center cont2 d-none"></div>
-            <!-- ... igual que el anterior pero con avatar2 -->
-        </div>
-    </div>
+             <!--begin::Row-->
+            <div class="row mb-8">
+                 <!--begin::Col-->
+                <div class="col-xl-3">
+                    <div class="fs-6 fw-semibold mt-2 mb-3">Nota:</div>
+                </div>
+                <!--end::Col-->
 
-    <!-- Imagen 3 -->
-    <div class="col-12 col-md-2 d-flex justify-content-center" style="margin-top: 20px">
-        <div class="image-input image-input-outline" data-kt-image-input="true" 
-             style="background-image: url('/metronic8/demo1/assets/media/svg/avatars/blank.svg')">
-            <div class="image-input-wrapper w-125px h-125px bgi-position-center cont3 d-none"></div>
-            <!-- ... igual que el anterior pero con avatar3 -->
-        </div>
-    </div>
-</div>
+                 <!--begin::Col-->
+                <div class="col-xl-9 fv-row fv-plugins-icon-container">
+                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->nota }}" readonly>
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                </div>
+            </div>
+            <!--end::Row-->
+
+             <!--begin::Row-->
+            <div class="row mb-8">
+                 <!--begin::Col-->
+                <div class="col-xl-3">
+                    <div class="fs-6 fw-semibold mt-2 mb-3">Total:</div>
+                </div>
+                <!--end::Col-->
+
+                 <!--begin::Col-->
+                <div class="col-xl-9 fv-row fv-plugins-icon-container">
+                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->total }}" readonly>
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                </div>
+            </div>
+            <!--end::Row-->
+
+             <!--begin::Row-->
+            <div class="row mb-8">
+                 <!--begin::Col-->
+                <div class="col-xl-3">
+                    <div class="fs-6 fw-semibold mt-2 mb-3"><i class="fas fa-map-marked-alt" style="font-size: 30px;"></i> Ver Ubicación</div>
+                </div>
+                <!--end::Col-->
+
+            </div>
+            <!--end::Row-->
+             
             </div>
             <br>
             <!--end::Row-->
             
 <div class="row justify-content-end">
+    <!-- Botón Guardar -->
+<div class="row justify-content-end">
+    <div class="col-sm-12 col-md-2 py-2">
+        <button type="submit" class="btn btn-success w-100" id="kt_project_settings_submit">Entregar</button>
+    </div>
+</div>
     <!-- Botón Borrar -->
     <div class="col-sm-12 col-md-2 py-2">
-        <button type="button" class="btn btn-light btn-active-light-primary w-100"
-        onclick="location.reload();">
-    Borrar
+        <a href="/dashboard">
+        <button type="button" class="btn btn-light btn-active-light-primary w-100">
+       
+    Cancelar
 </button>
+</a>
     </div>
 
     <!-- Botón Capturar foto -->
     
 </div>
 
-<!-- Botón Guardar -->
-<div class="row justify-content-end">
-    <div class="col-sm-12 col-md-2 py-2">
-        <button type="submit" class="btn btn-primary w-100" id="kt_project_settings_submit">Guardar</button>
-    </div>
-</div>
-        <!--end::Card footer-->
-    <input type="hidden"></form>
+
+       </form>
     <!--end:Form-->
 </div>
 </div>
