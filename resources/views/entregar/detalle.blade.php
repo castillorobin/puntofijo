@@ -249,7 +249,11 @@ License: For each use you must have a valid license purchased only from above li
             <div class="row mb-8">
                  <!--begin::Col-->
                 <div class="col-xl-3">
-                    <div class="fs-6 fw-semibold mt-2 mb-3"><i class="fas fa-exchange-alt" style="font-size: 30px;"></i> &nbsp; Hacer cambio</div>
+                    <div class="fs-6 fw-semibold mt-2 mb-3">
+    <a href="#" class="btn btn-light-primary fw-bold" data-bs-toggle="modal" data-bs-target="#modalHacerCambio">
+        <i class="fas fa-exchange-alt" style="font-size: 25px;"></i> &nbsp; Hacer cambio
+    </a>
+</div>
                 </div>
                 <!--end::Col-->
 
@@ -380,45 +384,91 @@ License: For each use you must have a valid license purchased only from above li
 
 
 
+<!--begin::Modal - Hacer cambio-->
+<div class="modal fade" id="modalHacerCambio" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mw-500px">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title text-dark">
+                    <i class="fas fa-exchange-alt"></i> &nbsp; Hacer cambio
+                </h5>
+                <button type="button" class="btn btn-icon btn-sm btn-active-light-danger" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="modal-body py-5">
+                <div class="mb-3">
+                    <label class="fw-semibold text-gray-700">Guía:</label>
+                    <input type="text" id="qr-input-cambio" class="form-control form-control-solid" placeholder="Escanea un código QR" readonly>
+                </div>
+
+                <div id="qr-reader-cambio" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
+            </div>
+
+            <div class="modal-footer justify-content-end">
+                <button type="button" class="btn btn-secondary" id="btn-tomar-foto">
+                    <i class="fas fa-camera"></i> Tomar foto
+                </button>
+                <button type="button" class="btn btn-primary" id="btn-guardar-cambio">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal - Hacer cambio-->
+
 
 
 	
 	
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
-    <script>
+  <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const qrButton = document.getElementById("qr-button");
-    const qrReader = document.getElementById("qr-reader");
-    const qrInput = document.getElementById("qr-input");
+    const qrInputCambio = document.getElementById("qr-input-cambio");
+    const qrReaderCambio = document.getElementById("qr-reader-cambio");
+    let html5QrCodeCambio;
 
-    let html5QrCode;
-
-    qrInput.addEventListener("click", async function() {
-        if (!html5QrCode) {
-            html5QrCode = new Html5Qrcode("qr-reader");
+    qrInputCambio.addEventListener("click", async function() {
+        if (!html5QrCodeCambio) {
+            html5QrCodeCambio = new Html5Qrcode("qr-reader-cambio");
         }
 
-        qrReader.style.display = "block";
+        qrReaderCambio.style.display = "block";
 
         const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
         try {
-            await html5QrCode.start(
-                { facingMode: "environment" }, // Usa cámara trasera
+            await html5QrCodeCambio.start(
+                { facingMode: "environment" },
                 config,
                 qrCodeMessage => {
-                    qrInput.value = qrCodeMessage;
-                    html5QrCode.stop().then(() => {
-                        qrReader.style.display = "none";
+                    qrInputCambio.value = qrCodeMessage;
+                    html5QrCodeCambio.stop().then(() => {
+                        qrReaderCambio.style.display = "none";
                     });
-
-                     window.location.href = `/envio/buscar?codigo=${encodeURIComponent(qrCodeMessage)}`;
                 }
             );
         } catch (err) {
             console.error("Error al iniciar cámara:", err);
         }
+    });
+
+    // Opcional: acción de botones
+    document.getElementById("btn-tomar-foto").addEventListener("click", function() {
+        alert("Aquí puedes integrar la lógica para tomar foto 📸");
+    });
+
+    document.getElementById("btn-guardar-cambio").addEventListener("click", function() {
+        const guia = qrInputCambio.value;
+        if (guia === "") {
+            alert("Por favor, escanea una guía antes de guardar.");
+            return;
+        }
+        alert("Guardando datos del cambio para la guía: " + guia);
+        // Aquí puedes enviar la información al backend vía AJAX o form
     });
 });
 </script>
