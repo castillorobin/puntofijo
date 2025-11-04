@@ -121,8 +121,10 @@ License: For each use you must have a valid license purchased only from above li
     <input id="qr-input" type="text" placeholder="Escanear código QR" readonly class="form-control me-2" style="max-width: 300px;" />
  
 
-    <!-- Contenedor donde se mostrará la cámara -->
+    <!-- Contenedor donde se mostrará la cámara 
     <div id="qr-reader" style="width: 100%; max-width: 300px; margin:auto; display:none;"></div>
+-->
+    <div id="qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
 </div>
                                             </div>
                                             <!--end::Main wrapper-->
