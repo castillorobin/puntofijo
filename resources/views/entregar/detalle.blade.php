@@ -417,8 +417,6 @@ License: For each use you must have a valid license purchased only from above li
     </div>
 </div>
 <!--end::Modal - Ver Ubicación-->
-
-
 <!--begin::Modal - Hacer cambio-->
 <div class="modal fade" id="modalHacerCambio" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered mw-600px">
@@ -432,47 +430,54 @@ License: For each use you must have a valid license purchased only from above li
                 </button>
             </div>
 
-            <div class="modal-body py-5">
-                <!-- Campo de guía con lectura QR -->
-                <div class="mb-3">
-                    <label class="fw-semibold text-gray-700">Guía:</label>
-                    <input type="text" id="qr-input-cambio" class="form-control form-control-solid" placeholder="Escanea un código QR" readonly>
+            <form id="formHacerCambio" method="POST" action="{{ route('envios.cambio') }}">
+                @csrf
+                <div class="modal-body py-5">
+                    <!-- Campo de guía con lectura QR -->
+                     <input type="text" class="form-control form-control-solid" name="guiacambio" value="{{ $envio[0]->guia }}" hidden>
+                    <div class="mb-3">
+                        <label class="fw-semibold text-gray-700">Guía:</label>
+                        <input type="text" id="qr-input-cambio" name="guia" class="form-control form-control-solid" placeholder="Escanea un código QR" readonly>
+                    </div>
+
+                    <div id="qr-reader-cambio" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
+
+                    <!-- Vista previa de cámara -->
+                    <div id="camera-section" class="text-center" style="display:none;">
+                        <video id="camera-preview" width="100%" height="auto" autoplay playsinline class="rounded border mb-3"></video>
+                        <canvas id="photo-canvas" style="display:none;"></canvas>
+                    </div>
+
+                    <!-- Previsualización con opción de borrar -->
+                    <div id="photo-preview-container-cambio" class="position-relative text-center" style="display:none;">
+                        <button type="button" id="btn-borrar-foto-cambio" 
+                                class="btn btn-icon btn-sm btn-active-light-danger position-absolute top-0 end-0 m-2"
+                                title="Eliminar foto">
+                            <i class="fas fa-times fs-4 text-danger"></i>
+                        </button>
+                        <img id="photo-preview" class="img-fluid rounded border shadow-sm" alt="Previsualización de la foto">
+                    </div>
+
+                    <!-- Campo oculto para la imagen base64 -->
+                    <input type="hidden" name="foto_cambio" id="foto_cambio_base64">
                 </div>
 
-                <div id="qr-reader-cambio" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
-
-                <!-- Vista previa de cámara -->
-                <div id="camera-section" class="text-center" style="display:none;">
-                    <video id="camera-preview" width="100%" height="auto" autoplay playsinline class="rounded border mb-3"></video>
-                    <canvas id="photo-canvas" style="display:none;"></canvas>
-                    <!-- Vista previa con botón para eliminar -->
-<div id="photo-preview-container-cambio" class="position-relative text-center" style="display:none;">
-    <button type="button" id="btn-borrar-foto-cambio" 
-            class="btn btn-icon btn-sm btn-active-light-danger position-absolute top-0 end-0 m-2"
-            title="Eliminar foto">
-        <i class="fas fa-times fs-4 text-danger"></i>
-    </button>
-    <img id="photo-preview" class="img-fluid rounded border shadow-sm" alt="Previsualización de la foto">
-</div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-secondary" id="btn-tomar-foto">
+                        <i class="fas fa-camera"></i> Tomar foto
+                    </button>
+                    <button type="button" class="btn btn-success" id="btn-capturar-foto" style="display:none;">
+                        <i class="fas fa-check"></i> Capturar
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="btn-guardar-cambio">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
                 </div>
-            </div>
-
-            <div class="modal-footer justify-content-end">
-                <button type="button" class="btn btn-secondary" id="btn-tomar-foto">
-                    <i class="fas fa-camera"></i> Tomar foto
-                </button>
-                <button type="button" class="btn btn-success" id="btn-capturar-foto" style="display:none;">
-                    <i class="fas fa-check"></i> Capturar
-                </button>
-                <button type="button" class="btn btn-primary" id="btn-guardar-cambio">
-                    <i class="fas fa-save"></i> Guardar
-                </button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 <!--end::Modal - Hacer cambio-->
-
 
 <!--begin::Modal - Ver Foto-->
 <div class="modal fade" id="modalVerFoto" tabindex="-1" aria-hidden="true">
@@ -500,8 +505,7 @@ License: For each use you must have a valid license purchased only from above li
 	   {{-- Global Metronic Scripts --}}
     <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
-
- <script>
+<script>
 document.addEventListener("DOMContentLoaded", function() {
     const qrInputCambio = document.getElementById("qr-input-cambio");
     const qrReaderCambio = document.getElementById("qr-reader-cambio");
@@ -512,8 +516,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const video = document.getElementById("camera-preview");
     const canvas = document.getElementById("photo-canvas");
     const photoPreview = document.getElementById("photo-preview");
+    const previewContainerCambio = document.getElementById("photo-preview-container-cambio");
     const btnBorrarFotoCambio = document.getElementById("btn-borrar-foto-cambio");
-const previewContainerCambio = document.getElementById("photo-preview-container-cambio");
+    const inputFotoHidden = document.getElementById("foto_cambio_base64");
 
     let html5QrCodeCambio;
     let cameraStream = null;
@@ -526,7 +531,6 @@ const previewContainerCambio = document.getElementById("photo-preview-container-
         }
 
         qrReaderCambio.style.display = "block";
-
         const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
         try {
@@ -549,6 +553,7 @@ const previewContainerCambio = document.getElementById("photo-preview-container-
     btnTomarFoto.addEventListener("click", async function() {
         try {
             cameraSection.style.display = "block";
+            previewContainerCambio.style.display = "none";
             btnCapturarFoto.style.display = "inline-block";
             btnTomarFoto.style.display = "none";
 
@@ -570,87 +575,50 @@ const previewContainerCambio = document.getElementById("photo-preview-container-
         cameraStream.getTracks().forEach(track => track.stop());
         cameraStream = null;
 
-       // Mostrar foto con contenedor y botón de eliminar
-capturedPhoto = canvas.toDataURL("image/png");
-photoPreview.src = capturedPhoto;
-previewContainerCambio.style.display = "block";
-photoPreview.style.display = "block";
+        // Mostrar foto
+        capturedPhoto = canvas.toDataURL("image/png");
+        inputFotoHidden.value = capturedPhoto; // Guardar en input oculto
+        photoPreview.src = capturedPhoto;
+        previewContainerCambio.style.display = "block";
 
         // Ocultar video
         video.style.display = "none";
+        cameraSection.style.display = "none";
         btnCapturarFoto.style.display = "none";
         btnTomarFoto.style.display = "inline-block";
     });
 
-    // --- GUARDAR ---
-    btnGuardarCambio.addEventListener("click", function() {
-        const guia = qrInputCambio.value;
-        if (guia === "") {
-            alert("Por favor, escanea una guía antes de guardar.");
-            return;
-        }
-        if (!capturedPhoto) {
-            alert("Toma una foto antes de guardar.");
-            return;
-        }
-
-        alert("✅ Guía: " + guia + "\nFoto capturada correctamente (listo para enviar al backend).");
+    // --- ELIMINAR FOTO ---
+    btnBorrarFotoCambio.addEventListener("click", function() {
+        capturedPhoto = null;
+        inputFotoHidden.value = "";
+        photoPreview.src = "";
+        previewContainerCambio.style.display = "none";
+        btnTomarFoto.style.display = "inline-block";
     });
 
-    // --- Eliminar foto (volver a abrir cámara) ---
-btnBorrarFotoCambio.addEventListener("click", async function() {
-    // Limpiar previsualización
-    capturedPhoto = null;
-    photoPreview.src = "";
-    previewContainerCambio.style.display = "none";
-    photoPreview.style.display = "none";
-
-    // Volver a mostrar cámara
-    try {
-        cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-        video.style.display = "block";
-        cameraSection.style.display = "block";
-        btnCapturarFoto.style.display = "inline-block";
-        btnTomarFoto.style.display = "none";
-        video.srcObject = cameraStream;
-    } catch (err) {
-        alert("No se pudo reabrir la cámara: " + err.message);
-    }
-});
-
-   // --- LIMPIAR TODO AL CERRAR EL MODAL ---
-const modalHacerCambio = document.getElementById('modalHacerCambio');
-modalHacerCambio.addEventListener('hidden.bs.modal', async function () {
-    console.log("Modal cerrado, limpiando...");
-
-    // Detener cámara si estaba activa
-    if (cameraStream) {
-        cameraStream.getTracks().forEach(track => track.stop());
-        cameraStream = null;
-    }
-
-    // Detener lector QR si estaba activo o pendiente
-    if (html5QrCodeCambio) {
-        try {
-            await html5QrCodeCambio.stop();
-        } catch (e) {
-            console.warn("El lector QR ya estaba detenido:", e);
+    // --- LIMPIAR TODO AL CERRAR EL MODAL ---
+    const modalHacerCambio = document.getElementById('modalHacerCambio');
+    modalHacerCambio.addEventListener('hidden.bs.modal', function () {
+        if (cameraStream) {
+            cameraStream.getTracks().forEach(track => track.stop());
+            cameraStream = null;
         }
-        html5QrCodeCambio.clear(); // Limpia el área del lector
-        html5QrCodeCambio = null;  // Reinicia la instancia
-        qrReaderCambio.style.display = "none";
-    }
+        if (html5QrCodeCambio) {
+            html5QrCodeCambio.stop().catch(() => {}).then(() => {
+                qrReaderCambio.style.display = "none";
+            });
+        }
 
-    // Limpiar campos y vista previa
-    qrInputCambio.value = "";
-    photoPreview.src = "";
-    photoPreview.style.display = "none";
-    video.style.display = "block";
-    cameraSection.style.display = "none";
-    btnCapturarFoto.style.display = "none";
-    btnTomarFoto.style.display = "inline-block";
-    capturedPhoto = null;
-});
+        // Limpiar todo
+        qrInputCambio.value = "";
+        inputFotoHidden.value = "";
+        photoPreview.src = "";
+        previewContainerCambio.style.display = "none";
+        cameraSection.style.display = "none";
+        btnCapturarFoto.style.display = "none";
+        btnTomarFoto.style.display = "inline-block";
+    });
 });
 </script>
 

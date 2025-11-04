@@ -68,6 +68,12 @@ Route::get('/envio/buscar', [EnvioController::class, 'buscar'])->name('producto.
  
 Route::post('/guardar-comprobante', [EnvioController::class, 'guardarComprobante'])->name('guardarComprobante');
 
+
+Route::post('/guardandocambio', [EnvioController::class, 'guardandocambio'])->name('envios.cambio');
+
+Route::post('/envios/cambio', [App\Http\Controllers\EnvioController::class, 'guardarCambio'])->name('envios.cambio');
+
+
 Route::post('/logout', function () {
     Auth::logout();
     session()->invalidate();
