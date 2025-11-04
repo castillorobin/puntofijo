@@ -269,9 +269,9 @@ License: For each use you must have a valid license purchased only from above li
               <div class="row mb-8">
                  <!--begin::Col-->
                 <div class="col-xl-3">
-                   <!-- Botón Comprobante de entrega -->
-<div class="fs-6 fw-semibold mt-2 mb-3 ">
-    <button type="button" class="btn btn-light-primary fw-bold" id="btn-abrir-camara">
+             <!-- Botón Comprobante de entrega -->
+<div class="fs-6 fw-semibold mt-2 mb-3 text-center">
+    <button type="button" class="btn btn-light-success fw-bold" id="btn-abrir-camara">
         <i class="fas fa-camera" style="font-size: 25px;"></i> &nbsp; Comprobante de Entrega
     </button>
 </div>
@@ -288,11 +288,17 @@ License: For each use you must have a valid license purchased only from above li
             <i class="fas fa-camera"></i> Tomar Foto
         </button>
     </div>
+</div>
 
-    <div id="photo-preview-container" class="mt-4" style="display:none;">
-        <h6 class="text-muted mb-2">Previsualización:</h6>
-        <img id="photo-preview-entrega" class="img-fluid rounded border shadow-sm" alt="Previsualización de la foto">
-    </div>
+<!-- Contenedor de previsualización -->
+<div id="photo-preview-container" class="mt-4 position-relative text-center" style="display:none;">
+    <button type="button" id="btn-borrar-foto" 
+            class="btn btn-icon btn-sm btn-active-light-danger position-absolute top-0 end-0 m-2" 
+            title="Eliminar foto">
+        <i class="fas fa-times fs-4 text-danger"></i>
+    </button>
+    <h6 class="text-muted mb-2">Previsualización:</h6>
+    <img id="photo-preview-entrega" class="img-fluid rounded border shadow-sm" alt="Previsualización de la foto">
 </div>
 
                 </div>
@@ -616,7 +622,6 @@ modalHacerCambio.addEventListener('hidden.bs.modal', async function () {
 });
 </script>
 
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const btnAbrirCamara = document.getElementById("btn-abrir-camara");
@@ -626,26 +631,36 @@ document.addEventListener("DOMContentLoaded", function() {
     const previewContainer = document.getElementById("photo-preview-container");
     const photoPreview = document.getElementById("photo-preview-entrega");
     const cameraSection = document.getElementById("camera-section-entrega");
+    const btnBorrarFoto = document.getElementById("btn-borrar-foto");
 
     let cameraStream = null;
     let capturedPhoto = null;
 
-    // --- ABRIR CÁMARA ---
-    btnAbrirCamara.addEventListener("click", async function() {
-        if (cameraStream) return; // evitar abrir doble cámara
-
+    // --- FUNCIÓN: iniciar cámara ---
+    async function iniciarCamara() {
         try {
             cameraSection.style.display = "block";
             previewContainer.style.display = "none";
+            btnCapturar.style.display = "inline-block";
+            video.style.display = "block";
 
             cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
             video.srcObject = cameraStream;
         } catch (err) {
             alert("No se pudo acceder a la cámara: " + err.message);
         }
+    }
+
+    // --- Abrir cámara (desde el botón principal) ---
+    btnAbrirCamara.addEventListener("click", function() {
+        if (cameraStream) {
+            // Si la cámara ya está activa, no hacer nada
+            return;
+        }
+        iniciarCamara();
     });
 
-    // --- CAPTURAR FOTO ---
+    // --- Capturar foto ---
     btnCapturar.addEventListener("click", function() {
         const context = canvas.getContext("2d");
         canvas.width = video.videoWidth;
@@ -665,22 +680,30 @@ document.addEventListener("DOMContentLoaded", function() {
         photoPreview.src = capturedPhoto;
         previewContainer.style.display = "block";
 
-        // Ocultar video
+        // Ocultar cámara
         video.style.display = "none";
         btnCapturar.style.display = "none";
+        cameraSection.style.display = "none";
 
-        // Mostrar miniatura actualizada si existe
+        // Actualizar miniatura principal (opcional)
         const imageWrapper = document.querySelector(".image-input-wrapper");
         if (imageWrapper) {
             imageWrapper.style.backgroundImage = `url(${capturedPhoto})`;
         }
     });
 
-    // --- OBTENER FOTO EN FORMATO BASE64 AL ENTREGAR ---
+    // --- Eliminar foto (volver a tomar otra) ---
+    btnBorrarFoto.addEventListener("click", function() {
+        capturedPhoto = null;
+        photoPreview.src = "";
+        previewContainer.style.display = "none";
+        iniciarCamara();
+    });
+
+    // --- Antes de enviar formulario, incluir foto base64 si existe ---
     const formEntregar = document.querySelector("form#kt_account_profile_details_form");
     if (formEntregar) {
         formEntregar.addEventListener("submit", function(e) {
-            // Crear input oculto con la foto capturada si existe
             if (capturedPhoto) {
                 let inputHidden = document.getElementById("foto_entrega_base64");
                 if (!inputHidden) {
