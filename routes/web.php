@@ -66,7 +66,7 @@ Route::post('/cambiar-estado', [EnvioController::class, 'cambiarEstado'])->name(
 Route::get('/entregarenvio', [EnvioController::class, 'entregarenvio'])->name('entregarenvio');
 Route::get('/envio/buscar', [EnvioController::class, 'buscar'])->name('producto.buscar');
  
-
+Route::post('/guardar-comprobante', [EnvioController::class, 'guardarComprobante'])->name('guardarComprobante');
 
 Route::post('/logout', function () {
     Auth::logout();
