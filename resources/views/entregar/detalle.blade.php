@@ -382,7 +382,6 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Modal - Ver Ubicación-->
 
 
-
 <!--begin::Modal - Hacer cambio-->
 <div class="modal fade" id="modalHacerCambio" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered mw-600px">
@@ -428,7 +427,6 @@ License: For each use you must have a valid license purchased only from above li
     </div>
 </div>
 <!--end::Modal - Hacer cambio-->
-
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -496,12 +494,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Detener cámara
         cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
 
         // Mostrar foto
         capturedPhoto = canvas.toDataURL("image/png");
         photoPreview.src = capturedPhoto;
         photoPreview.style.display = "block";
-        canvas.style.display = "none";
 
         // Ocultar video
         video.style.display = "none";
@@ -523,12 +521,37 @@ document.addEventListener("DOMContentLoaded", function() {
 
         alert("✅ Guía: " + guia + "\nFoto capturada correctamente (listo para enviar al backend).");
         // Aquí puedes enviar la imagen y la guía vía AJAX:
-        // fetch('/guardar-cambio', { method: 'POST', body: JSON.stringify({ guia, foto: capturedPhoto }) })
+        // fetch('/guardar-cambio', { method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'}, body: JSON.stringify({ guia, foto: capturedPhoto }) })
+    });
+
+    // --- LIMPIAR TODO AL CERRAR EL MODAL ---
+    const modalHacerCambio = document.getElementById('modalHacerCambio');
+    modalHacerCambio.addEventListener('hidden.bs.modal', function () {
+        // Detener cámara si estaba activa
+        if (cameraStream) {
+            cameraStream.getTracks().forEach(track => track.stop());
+            cameraStream = null;
+        }
+
+        // Detener lector QR si estaba activo
+        if (html5QrCodeCambio) {
+            html5QrCodeCambio.stop().catch(() => {}).then(() => {
+                qrReaderCambio.style.display = "none";
+            });
+        }
+
+        // Limpiar campos y vista previa
+        qrInputCambio.value = "";
+        photoPreview.src = "";
+        photoPreview.style.display = "none";
+        video.style.display = "block";
+        cameraSection.style.display = "none";
+        btnCapturarFoto.style.display = "none";
+        btnTomarFoto.style.display = "inline-block";
+        capturedPhoto = null;
     });
 });
 </script>
-
-
 
 	
 	
