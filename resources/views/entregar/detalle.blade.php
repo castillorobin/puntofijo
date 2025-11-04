@@ -445,7 +445,15 @@ License: For each use you must have a valid license purchased only from above li
                 <div id="camera-section" class="text-center" style="display:none;">
                     <video id="camera-preview" width="100%" height="auto" autoplay playsinline class="rounded border mb-3"></video>
                     <canvas id="photo-canvas" style="display:none;"></canvas>
-                    <img id="photo-preview" class="img-fluid rounded border" style="display:none;" alt="Previsualización de la foto">
+                    <!-- Vista previa con botón para eliminar -->
+<div id="photo-preview-container-cambio" class="position-relative text-center" style="display:none;">
+    <button type="button" id="btn-borrar-foto-cambio" 
+            class="btn btn-icon btn-sm btn-active-light-danger position-absolute top-0 end-0 m-2"
+            title="Eliminar foto">
+        <i class="fas fa-times fs-4 text-danger"></i>
+    </button>
+    <img id="photo-preview" class="img-fluid rounded border shadow-sm" alt="Previsualización de la foto">
+</div>
                 </div>
             </div>
 
@@ -504,6 +512,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const video = document.getElementById("camera-preview");
     const canvas = document.getElementById("photo-canvas");
     const photoPreview = document.getElementById("photo-preview");
+    const btnBorrarFotoCambio = document.getElementById("btn-borrar-foto-cambio");
+const previewContainerCambio = document.getElementById("photo-preview-container-cambio");
 
     let html5QrCodeCambio;
     let cameraStream = null;
@@ -560,10 +570,11 @@ document.addEventListener("DOMContentLoaded", function() {
         cameraStream.getTracks().forEach(track => track.stop());
         cameraStream = null;
 
-        // Mostrar foto
-        capturedPhoto = canvas.toDataURL("image/png");
-        photoPreview.src = capturedPhoto;
-        photoPreview.style.display = "block";
+       // Mostrar foto con contenedor y botón de eliminar
+capturedPhoto = canvas.toDataURL("image/png");
+photoPreview.src = capturedPhoto;
+previewContainerCambio.style.display = "block";
+photoPreview.style.display = "block";
 
         // Ocultar video
         video.style.display = "none";
@@ -585,6 +596,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
         alert("✅ Guía: " + guia + "\nFoto capturada correctamente (listo para enviar al backend).");
     });
+
+    // --- Eliminar foto (volver a abrir cámara) ---
+btnBorrarFotoCambio.addEventListener("click", async function() {
+    // Limpiar previsualización
+    capturedPhoto = null;
+    photoPreview.src = "";
+    previewContainerCambio.style.display = "none";
+    photoPreview.style.display = "none";
+
+    // Volver a mostrar cámara
+    try {
+        cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        video.style.display = "block";
+        cameraSection.style.display = "block";
+        btnCapturarFoto.style.display = "inline-block";
+        btnTomarFoto.style.display = "none";
+        video.srcObject = cameraStream;
+    } catch (err) {
+        alert("No se pudo reabrir la cámara: " + err.message);
+    }
+});
 
    // --- LIMPIAR TODO AL CERRAR EL MODAL ---
 const modalHacerCambio = document.getElementById('modalHacerCambio');
