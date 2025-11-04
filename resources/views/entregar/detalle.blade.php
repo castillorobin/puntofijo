@@ -617,14 +617,12 @@ modalHacerCambio.addEventListener('hidden.bs.modal', async function () {
 </script>
 
 
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const btnAbrirCamara = document.getElementById("btn-abrir-camara");
     const video = document.getElementById("camera-preview-entrega");
     const canvas = document.getElementById("photo-canvas-entrega");
     const btnCapturar = document.getElementById("btn-capturar-entrega");
-    const btnGuardar = document.getElementById("btn-guardar-entrega");
     const previewContainer = document.getElementById("photo-preview-container");
     const photoPreview = document.getElementById("photo-preview-entrega");
     const cameraSection = document.getElementById("camera-section-entrega");
@@ -634,6 +632,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // --- ABRIR CÁMARA ---
     btnAbrirCamara.addEventListener("click", async function() {
+        if (cameraStream) return; // evitar abrir doble cámara
+
         try {
             cameraSection.style.display = "block";
             previewContainer.style.display = "none";
@@ -658,52 +658,42 @@ document.addEventListener("DOMContentLoaded", function() {
             cameraStream = null;
         }
 
-        // Mostrar foto
+        // Guardar imagen localmente (para enviar luego)
         capturedPhoto = canvas.toDataURL("image/png");
+
+        // Mostrar previsualización
         photoPreview.src = capturedPhoto;
         previewContainer.style.display = "block";
+
+        // Ocultar video
+        video.style.display = "none";
+        btnCapturar.style.display = "none";
+
+        // Mostrar miniatura actualizada si existe
+        const imageWrapper = document.querySelector(".image-input-wrapper");
+        if (imageWrapper) {
+            imageWrapper.style.backgroundImage = `url(${capturedPhoto})`;
+        }
     });
 
-    // --- GUARDAR FOTO ---
-    btnGuardar.addEventListener("click", async function() {
-        if (!capturedPhoto) {
-            alert("Primero toma una foto del comprobante.");
-            return;
-        }
-
-        try {
-            const response = await fetch("{{ route('guardarComprobante') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({
-                    guia: "{{ $envio[0]->guia }}",
-                    foto: capturedPhoto
-                })
-            });
-
-            if (response.ok) {
-                alert("✅ Comprobante guardado correctamente.");
-
-                // Opcional: actualizar la miniatura con la nueva foto
-                const imageWrapper = document.querySelector(".image-input-wrapper");
-                if (imageWrapper) {
-                    imageWrapper.style.backgroundImage = `url(${capturedPhoto})`;
+    // --- OBTENER FOTO EN FORMATO BASE64 AL ENTREGAR ---
+    const formEntregar = document.querySelector("form#kt_account_profile_details_form");
+    if (formEntregar) {
+        formEntregar.addEventListener("submit", function(e) {
+            // Crear input oculto con la foto capturada si existe
+            if (capturedPhoto) {
+                let inputHidden = document.getElementById("foto_entrega_base64");
+                if (!inputHidden) {
+                    inputHidden = document.createElement("input");
+                    inputHidden.type = "hidden";
+                    inputHidden.name = "foto_entrega";
+                    inputHidden.id = "foto_entrega_base64";
+                    formEntregar.appendChild(inputHidden);
                 }
-
-                cameraSection.style.display = "none";
-                previewContainer.style.display = "none";
-                capturedPhoto = null;
-            } else {
-                alert("⚠️ Ocurrió un error al guardar la foto.");
+                inputHidden.value = capturedPhoto;
             }
-        } catch (err) {
-            console.error("Error al enviar la foto:", err);
-            alert("Error al enviar la foto al servidor.");
-        }
-    });
+        });
+    }
 });
 </script>
 
