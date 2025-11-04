@@ -269,7 +269,32 @@ License: For each use you must have a valid license purchased only from above li
               <div class="row mb-8">
                  <!--begin::Col-->
                 <div class="col-xl-3">
-                    <div class="fs-6 fw-semibold mt-2 mb-3"><i class="fas fa-camera" style="font-size: 30px;"></i> &nbsp; Comprobante de Entrega</div>
+                    <div class="fs-6 fw-semibold mt-2 mb-3 text-center">
+    <button type="button" class="btn btn-light-success fw-bold" id="btn-abrir-camara">
+        <i class="fas fa-camera" style="font-size: 25px;"></i> &nbsp; Comprobante de Entrega
+    </button>
+</div>
+
+<!-- Cámara y previsualización -->
+<div id="camera-section-entrega" class="text-center" style="display:none;">
+    <video id="camera-preview-entrega" width="100%" height="auto" autoplay playsinline class="rounded border mb-3"></video>
+    <canvas id="photo-canvas-entrega" style="display:none;"></canvas>
+
+    <div class="mt-3">
+        <button type="button" class="btn btn-warning" id="btn-capturar-entrega">
+            <i class="fas fa-camera"></i> Tomar Foto
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-guardar-entrega">
+            <i class="fas fa-save"></i> Guardar
+        </button>
+    </div>
+
+    <div id="photo-preview-container" class="mt-4" style="display:none;">
+        <h6 class="text-muted mb-2">Previsualización:</h6>
+        <img id="photo-preview-entrega" class="img-fluid rounded border shadow-sm" alt="Previsualización de la foto">
+    </div>
+</div>
+
                 </div>
                 <!--end::Col-->
 
@@ -588,6 +613,97 @@ modalHacerCambio.addEventListener('hidden.bs.modal', async function () {
     btnTomarFoto.style.display = "inline-block";
     capturedPhoto = null;
 });
+});
+</script>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const btnAbrirCamara = document.getElementById("btn-abrir-camara");
+    const video = document.getElementById("camera-preview-entrega");
+    const canvas = document.getElementById("photo-canvas-entrega");
+    const btnCapturar = document.getElementById("btn-capturar-entrega");
+    const btnGuardar = document.getElementById("btn-guardar-entrega");
+    const previewContainer = document.getElementById("photo-preview-container");
+    const photoPreview = document.getElementById("photo-preview-entrega");
+    const cameraSection = document.getElementById("camera-section-entrega");
+
+    let cameraStream = null;
+    let capturedPhoto = null;
+
+    // --- ABRIR CÁMARA ---
+    btnAbrirCamara.addEventListener("click", async function() {
+        try {
+            cameraSection.style.display = "block";
+            previewContainer.style.display = "none";
+
+            cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+            video.srcObject = cameraStream;
+        } catch (err) {
+            alert("No se pudo acceder a la cámara: " + err.message);
+        }
+    });
+
+    // --- CAPTURAR FOTO ---
+    btnCapturar.addEventListener("click", function() {
+        const context = canvas.getContext("2d");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Detener cámara
+        if (cameraStream) {
+            cameraStream.getTracks().forEach(track => track.stop());
+            cameraStream = null;
+        }
+
+        // Mostrar foto
+        capturedPhoto = canvas.toDataURL("image/png");
+        photoPreview.src = capturedPhoto;
+        previewContainer.style.display = "block";
+    });
+
+    // --- GUARDAR FOTO ---
+    btnGuardar.addEventListener("click", async function() {
+        if (!capturedPhoto) {
+            alert("Primero toma una foto del comprobante.");
+            return;
+        }
+
+        try {
+            const response = await fetch("{{ route('guardarComprobante') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    guia: "{{ $envio[0]->guia }}",
+                    foto: capturedPhoto
+                })
+            });
+
+            if (response.ok) {
+                alert("✅ Comprobante guardado correctamente.");
+
+                // Opcional: actualizar la miniatura con la nueva foto
+                const imageWrapper = document.querySelector(".image-input-wrapper");
+                if (imageWrapper) {
+                    imageWrapper.style.backgroundImage = `url(${capturedPhoto})`;
+                }
+
+                cameraSection.style.display = "none";
+                previewContainer.style.display = "none";
+                capturedPhoto = null;
+            } else {
+                alert("⚠️ Ocurrió un error al guardar la foto.");
+            }
+        } catch (err) {
+            console.error("Error al enviar la foto:", err);
+            alert("Error al enviar la foto al servidor.");
+        }
+    });
 });
 </script>
 
