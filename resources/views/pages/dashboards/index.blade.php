@@ -72,6 +72,7 @@ License: For each use you must have a valid license purchased only from above li
 	<!--end::Theme mode setup on page load-->
 	<!--begin::Main-->
 	<!--begin::Root-->
+	<x-default-layout>
 	<div class="d-flex flex-column flex-root">
 		<!--begin::Page-->
 		<div class="page d-flex flex-row flex-column-fluid">
@@ -4703,7 +4704,7 @@ License: For each use you must have a valid license purchased only from above li
 	<!--begin::Javascript-->
 
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
-
+</x-default-layout>
 
 	   {{-- Global Metronic Scripts --}}
     <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
