@@ -137,11 +137,17 @@ License: For each use you must have a valid license purchased only from above li
         </a>
     </div>
 
-                             <div class="col-sm-12 text-center mt-5">                                 
-                                    <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
-                                        <div class="image-input-wrapper w-125px h-125px" style="background-image: url(https://meloexpress.site/fotos/{{$envio[0]->foto1}})"></div>
-                                    </div>
-                                </div>  
+                            <div class="col-sm-12 text-center mt-5">
+    <div class="image-input image-input-outline cursor-pointer" 
+         data-kt-image-input="true"
+         style="background-image: url('assets/media/svg/avatars/blank.svg');"
+         data-bs-toggle="modal" 
+         data-bs-target="#modalVerFoto">
+        <div class="image-input-wrapper w-125px h-125px border border-2 border-primary shadow-sm hover-scale" 
+             style="background-image: url('https://meloexpress.site/fotos/{{$envio[0]->foto1}}'); background-size: cover; background-position: center;">
+        </div>
+    </div>
+</div>
                                
 
     <!--end::Card header-->
@@ -427,6 +433,25 @@ License: For each use you must have a valid license purchased only from above li
     </div>
 </div>
 <!--end::Modal - Hacer cambio-->
+
+
+<!--begin::Modal - Ver Foto-->
+<div class="modal fade" id="modalVerFoto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-transparent border-0 shadow-none">
+            <div class="modal-body text-center position-relative p-0">
+                <button type="button" class="btn btn-icon btn-sm btn-active-light-danger position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times fs-2 text-white"></i>
+                </button>
+                <img id="fotoAmpliada" src="https://meloexpress.site/fotos/{{$envio[0]->foto1}}" 
+                     class="img-fluid rounded-3 shadow-lg" 
+                     alt="Foto del paquete"
+                     style="max-height: 85vh; object-fit: contain;">
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal - Ver Foto-->
 
 	
 	
