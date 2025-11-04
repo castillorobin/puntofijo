@@ -137,7 +137,7 @@ License: For each use you must have a valid license purchased only from above li
         </a>
     </div>
 
-                             <div class="col-sm-2">                                 
+                             <div class="col-sm-12 text-center mt-5">                                 
                                     <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
                                         <div class="image-input-wrapper w-125px h-125px" style="background-image: url(https://meloexpress.site/fotos/{{$envio[0]->foto1}})"></div>
                                     </div>
