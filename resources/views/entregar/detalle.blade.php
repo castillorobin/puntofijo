@@ -272,17 +272,17 @@ License: For each use you must have a valid license purchased only from above li
             
 <div class="row justify-content-end">
     <!-- Botón Guardar -->
-<div class="row justify-content-end">
+
+
     <div class="col-sm-12 col-md-2 py-2">
-        <button type="submit" class="btn btn-success w-100" id="kt_project_settings_submit">Entregar</button>
+        <button type="submit" class="btn btn-success w-100" >Entregar</button>
     </div>
-</div>
+
     <!-- Botón Borrar -->
     <div class="col-sm-12 col-md-2 py-2">
         <a href="/dashboard">
-        <button type="button" class="btn btn-light btn-active-light-primary w-100">
-       
-    Cancelar
+        <button type="button" class="btn btn-light w-100">
+            Cancelar
 </button>
 </a>
     </div>
@@ -341,6 +341,11 @@ License: For each use you must have a valid license purchased only from above li
                 <div class="mb-3">
                     <label class="fw-semibold text-gray-700">Ubicacion:</label>
                     <input type="text" class="form-control form-control-solid" value="{{ $envio[0]->agenciaubi }}" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold text-gray-700">Tipo de Ubicación:</label>
+                    <input type="text" class="form-control form-control-solid" value="{{ $envio[0]->ubicacion }}" readonly>
                 </div>
 
                 <div class="mb-3">
