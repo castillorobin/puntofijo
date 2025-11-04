@@ -530,34 +530,39 @@ document.addEventListener("DOMContentLoaded", function() {
         alert("✅ Guía: " + guia + "\nFoto capturada correctamente (listo para enviar al backend).");
     });
 
-    // --- LIMPIAR TODO AL CERRAR EL MODAL ---
-    const modalHacerCambio = document.getElementById('modalHacerCambio');
-    modalHacerCambio.addEventListener('hidden.bs.modal', function () {
-        console.log("Modal cerrado, limpiando...");
+   // --- LIMPIAR TODO AL CERRAR EL MODAL ---
+const modalHacerCambio = document.getElementById('modalHacerCambio');
+modalHacerCambio.addEventListener('hidden.bs.modal', async function () {
+    console.log("Modal cerrado, limpiando...");
 
-        // Detener cámara si estaba activa
-        if (cameraStream) {
-            cameraStream.getTracks().forEach(track => track.stop());
-            cameraStream = null;
+    // Detener cámara si estaba activa
+    if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+    }
+
+    // Detener lector QR si estaba activo o pendiente
+    if (html5QrCodeCambio) {
+        try {
+            await html5QrCodeCambio.stop();
+        } catch (e) {
+            console.warn("El lector QR ya estaba detenido:", e);
         }
+        html5QrCodeCambio.clear(); // Limpia el área del lector
+        html5QrCodeCambio = null;  // Reinicia la instancia
+        qrReaderCambio.style.display = "none";
+    }
 
-        // Detener lector QR si estaba activo
-        if (html5QrCodeCambio) {
-            html5QrCodeCambio.stop().catch(() => {}).then(() => {
-                qrReaderCambio.style.display = "none";
-            });
-        }
-
-        // Limpiar campos y vista previa
-        qrInputCambio.value = "";
-        photoPreview.src = "";
-        photoPreview.style.display = "none";
-        video.style.display = "block";
-        cameraSection.style.display = "none";
-        btnCapturarFoto.style.display = "none";
-        btnTomarFoto.style.display = "inline-block";
-        capturedPhoto = null;
-    });
+    // Limpiar campos y vista previa
+    qrInputCambio.value = "";
+    photoPreview.src = "";
+    photoPreview.style.display = "none";
+    video.style.display = "block";
+    cameraSection.style.display = "none";
+    btnCapturarFoto.style.display = "none";
+    btnTomarFoto.style.display = "inline-block";
+    capturedPhoto = null;
+});
 });
 </script>
 
