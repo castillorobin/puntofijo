@@ -2,9 +2,9 @@
 <div class="app-navbar flex-shrink-0">
 	<!--begin::Search-->
 	<div class="app-navbar-item align-items-stretch ms-1 ms-md-3">
-		@include(config('settings.KT_THEME_LAYOUT_DIR').'/partials/header-layout/search/_dropdown')
+		@include(config('settings.KT_THEME_LAYOUT_DIR').'/partials/sidebar-layout/search/_dropdown')
 	</div>
-	<!--end::Search-->
+	
 	<!--begin::Activities-->
 	<div class="app-navbar-item ms-1 ms-md-3">
 		<!--begin::Drawer toggle-->
@@ -12,7 +12,7 @@
 		<!--end::Drawer toggle-->
 	</div>
 	<!--end::Activities-->
-	<!--begin::Notifications-->
+	<!--begin::Notifications--> <input type="text" value="{{date_default_timezone_set('America/El_Salvador') }}" hidden>
 	<div class="app-navbar-item ms-1 ms-md-3">
 		<!--begin::Menu- wrapper-->
 		<div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" id="kt_menu_item_wow">{!! getIcon('element-plus', 'fs-2 fs-md-1') !!}</div>
