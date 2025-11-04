@@ -237,7 +237,25 @@ License: For each use you must have a valid license purchased only from above li
             <div class="row mb-8">
                  <!--begin::Col-->
                 <div class="col-xl-3">
-                    <div class="fs-6 fw-semibold mt-2 mb-3"><i class="fas fa-map-marked-alt" style="font-size: 30px;"></i> Ver Ubicación</div>
+                    <div class="fs-6 fw-semibold mt-2 mb-3"><i class="fas fa-map-marked-alt" style="font-size: 30px;"></i> &nbsp; Ver Ubicación</div>
+                </div>
+                <!--end::Col-->
+
+            </div>
+            <div class="row mb-8">
+                 <!--begin::Col-->
+                <div class="col-xl-3">
+                    <div class="fs-6 fw-semibold mt-2 mb-3"><i class="fas fa-exchange-alt" style="font-size: 30px;"></i> &nbsp; Hacer cambio</div>
+                </div>
+                <!--end::Col-->
+
+            </div>
+            <!--end::Row-->
+
+              <div class="row mb-8">
+                 <!--begin::Col-->
+                <div class="col-xl-3">
+                    <div class="fs-6 fw-semibold mt-2 mb-3"><i class="fas fa-camera" style="font-size: 30px;"></i> &nbsp; Comprobante de Entrega</div>
                 </div>
                 <!--end::Col-->
 
