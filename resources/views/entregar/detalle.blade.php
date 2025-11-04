@@ -428,9 +428,12 @@ License: For each use you must have a valid license purchased only from above li
 </div>
 <!--end::Modal - Hacer cambio-->
 
-<script>
+	
+	
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+ <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // --- VARIABLES GLOBALES ---
     const qrInputCambio = document.getElementById("qr-input-cambio");
     const qrReaderCambio = document.getElementById("qr-reader-cambio");
     const btnTomarFoto = document.getElementById("btn-tomar-foto");
@@ -520,13 +523,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         alert("✅ Guía: " + guia + "\nFoto capturada correctamente (listo para enviar al backend).");
-        // Aquí puedes enviar la imagen y la guía vía AJAX:
-        // fetch('/guardar-cambio', { method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'}, body: JSON.stringify({ guia, foto: capturedPhoto }) })
     });
 
     // --- LIMPIAR TODO AL CERRAR EL MODAL ---
     const modalHacerCambio = document.getElementById('modalHacerCambio');
     modalHacerCambio.addEventListener('hidden.bs.modal', function () {
+        console.log("Modal cerrado, limpiando...");
+
         // Detener cámara si estaba activa
         if (cameraStream) {
             cameraStream.getTracks().forEach(track => track.stop());
@@ -549,58 +552,6 @@ document.addEventListener("DOMContentLoaded", function() {
         btnCapturarFoto.style.display = "none";
         btnTomarFoto.style.display = "inline-block";
         capturedPhoto = null;
-    });
-});
-</script>
-
-	
-	
-<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-
-  <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const qrInputCambio = document.getElementById("qr-input-cambio");
-    const qrReaderCambio = document.getElementById("qr-reader-cambio");
-    let html5QrCodeCambio;
-
-    qrInputCambio.addEventListener("click", async function() {
-        if (!html5QrCodeCambio) {
-            html5QrCodeCambio = new Html5Qrcode("qr-reader-cambio");
-        }
-
-        qrReaderCambio.style.display = "block";
-
-        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-
-        try {
-            await html5QrCodeCambio.start(
-                { facingMode: "environment" },
-                config,
-                qrCodeMessage => {
-                    qrInputCambio.value = qrCodeMessage;
-                    html5QrCodeCambio.stop().then(() => {
-                        qrReaderCambio.style.display = "none";
-                    });
-                }
-            );
-        } catch (err) {
-            console.error("Error al iniciar cámara:", err);
-        }
-    });
-
-    // Opcional: acción de botones
-    document.getElementById("btn-tomar-foto").addEventListener("click", function() {
-      
-    });
-
-    document.getElementById("btn-guardar-cambio").addEventListener("click", function() {
-        const guia = qrInputCambio.value;
-        if (guia === "") {
-            alert("Por favor, escanea una guía antes de guardar.");
-            return;
-        }
-        alert("Guardando datos del cambio para la guía: " + guia);
-        // Aquí puedes enviar la información al backend vía AJAX o form
     });
 });
 </script>
