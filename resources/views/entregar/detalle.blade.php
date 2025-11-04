@@ -95,7 +95,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <h3 class="card-title align-items-start flex-column">
                                             <span class="card-label fw-bold fs-3 mb-1 text-gray-600 text-uppercase">
                                                
-                                                ENVIOS POR ENTREGARR
+                                                ENVIOS POR ENTREGAR
                                                
                                             </span>
                                             <span class="text-muted mt-1 fw-semibold fs-7">
@@ -432,6 +432,11 @@ License: For each use you must have a valid license purchased only from above li
 	
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
+
+	   {{-- Global Metronic Scripts --}}
+    <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
+
  <script>
 document.addEventListener("DOMContentLoaded", function() {
     const qrInputCambio = document.getElementById("qr-input-cambio");
@@ -559,9 +564,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 </x-default-layout>
 
-	   {{-- Global Metronic Scripts --}}
-    <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 	<!--end::Custom Javascript-->
 	<!--end::Javascript-->
 </body>
