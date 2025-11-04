@@ -124,8 +124,9 @@ License: For each use you must have a valid license purchased only from above li
     <!-- Contenedor donde se mostrará la cámara 
     <div id="qr-reader" style="width: 100%; max-width: 300px; margin:auto; display:none;"></div>
 -->
-    <div id="qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
+    
 </div>
+<div id="qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
                                             </div>
                                             <!--end::Main wrapper-->
 
