@@ -383,10 +383,9 @@ License: For each use you must have a valid license purchased only from above li
 
 
 
-
 <!--begin::Modal - Hacer cambio-->
 <div class="modal fade" id="modalHacerCambio" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered mw-500px">
+    <div class="modal-dialog modal-dialog-centered mw-600px">
         <div class="modal-content">
             <div class="modal-header bg-warning">
                 <h5 class="modal-title text-dark">
@@ -398,17 +397,28 @@ License: For each use you must have a valid license purchased only from above li
             </div>
 
             <div class="modal-body py-5">
+                <!-- Campo de guía con lectura QR -->
                 <div class="mb-3">
                     <label class="fw-semibold text-gray-700">Guía:</label>
                     <input type="text" id="qr-input-cambio" class="form-control form-control-solid" placeholder="Escanea un código QR" readonly>
                 </div>
 
                 <div id="qr-reader-cambio" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
+
+                <!-- Vista previa de cámara -->
+                <div id="camera-section" class="text-center" style="display:none;">
+                    <video id="camera-preview" width="100%" height="auto" autoplay playsinline class="rounded border mb-3"></video>
+                    <canvas id="photo-canvas" style="display:none;"></canvas>
+                    <img id="photo-preview" class="img-fluid rounded border" style="display:none;" alt="Previsualización de la foto">
+                </div>
             </div>
 
             <div class="modal-footer justify-content-end">
                 <button type="button" class="btn btn-secondary" id="btn-tomar-foto">
                     <i class="fas fa-camera"></i> Tomar foto
+                </button>
+                <button type="button" class="btn btn-success" id="btn-capturar-foto" style="display:none;">
+                    <i class="fas fa-check"></i> Capturar
                 </button>
                 <button type="button" class="btn btn-primary" id="btn-guardar-cambio">
                     <i class="fas fa-save"></i> Guardar
@@ -418,6 +428,105 @@ License: For each use you must have a valid license purchased only from above li
     </div>
 </div>
 <!--end::Modal - Hacer cambio-->
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // --- VARIABLES GLOBALES ---
+    const qrInputCambio = document.getElementById("qr-input-cambio");
+    const qrReaderCambio = document.getElementById("qr-reader-cambio");
+    const btnTomarFoto = document.getElementById("btn-tomar-foto");
+    const btnCapturarFoto = document.getElementById("btn-capturar-foto");
+    const btnGuardarCambio = document.getElementById("btn-guardar-cambio");
+    const cameraSection = document.getElementById("camera-section");
+    const video = document.getElementById("camera-preview");
+    const canvas = document.getElementById("photo-canvas");
+    const photoPreview = document.getElementById("photo-preview");
+
+    let html5QrCodeCambio;
+    let cameraStream = null;
+    let capturedPhoto = null;
+
+    // --- ESCANEO DE QR ---
+    qrInputCambio.addEventListener("click", async function() {
+        if (!html5QrCodeCambio) {
+            html5QrCodeCambio = new Html5Qrcode("qr-reader-cambio");
+        }
+
+        qrReaderCambio.style.display = "block";
+
+        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+        try {
+            await html5QrCodeCambio.start(
+                { facingMode: "environment" },
+                config,
+                qrCodeMessage => {
+                    qrInputCambio.value = qrCodeMessage;
+                    html5QrCodeCambio.stop().then(() => {
+                        qrReaderCambio.style.display = "none";
+                    });
+                }
+            );
+        } catch (err) {
+            console.error("Error al iniciar cámara para QR:", err);
+        }
+    });
+
+    // --- ABRIR CÁMARA ---
+    btnTomarFoto.addEventListener("click", async function() {
+        try {
+            cameraSection.style.display = "block";
+            btnCapturarFoto.style.display = "inline-block";
+            btnTomarFoto.style.display = "none";
+
+            cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+            video.srcObject = cameraStream;
+        } catch (err) {
+            alert("No se pudo acceder a la cámara: " + err.message);
+        }
+    });
+
+    // --- CAPTURAR FOTO ---
+    btnCapturarFoto.addEventListener("click", function() {
+        const context = canvas.getContext("2d");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Detener cámara
+        cameraStream.getTracks().forEach(track => track.stop());
+
+        // Mostrar foto
+        capturedPhoto = canvas.toDataURL("image/png");
+        photoPreview.src = capturedPhoto;
+        photoPreview.style.display = "block";
+        canvas.style.display = "none";
+
+        // Ocultar video
+        video.style.display = "none";
+        btnCapturarFoto.style.display = "none";
+        btnTomarFoto.style.display = "inline-block";
+    });
+
+    // --- GUARDAR ---
+    btnGuardarCambio.addEventListener("click", function() {
+        const guia = qrInputCambio.value;
+        if (guia === "") {
+            alert("Por favor, escanea una guía antes de guardar.");
+            return;
+        }
+        if (!capturedPhoto) {
+            alert("Toma una foto antes de guardar.");
+            return;
+        }
+
+        alert("✅ Guía: " + guia + "\nFoto capturada correctamente (listo para enviar al backend).");
+        // Aquí puedes enviar la imagen y la guía vía AJAX:
+        // fetch('/guardar-cambio', { method: 'POST', body: JSON.stringify({ guia, foto: capturedPhoto }) })
+    });
+});
+</script>
 
 
 
