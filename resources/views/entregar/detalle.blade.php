@@ -270,8 +270,8 @@ License: For each use you must have a valid license purchased only from above li
                  <!--begin::Col-->
                 <div class="col-xl-3">
                    <!-- Botón Comprobante de entrega -->
-<div class="fs-6 fw-semibold mt-2 mb-3 text-center">
-    <button type="button" class="btn btn-light-success fw-bold" id="btn-abrir-camara">
+<div class="fs-6 fw-semibold mt-2 mb-3 ">
+    <button type="button" class="btn btn-light-primary fw-bold" id="btn-abrir-camara">
         <i class="fas fa-camera" style="font-size: 25px;"></i> &nbsp; Comprobante de Entrega
     </button>
 </div>
