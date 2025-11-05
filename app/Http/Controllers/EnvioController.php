@@ -93,7 +93,7 @@ $guia = $request->input('guia'); // o el nombre que uses para identificar el env
     if ($fotoBase64) {
         $image = str_replace('data:image/png;base64,', '', $fotoBase64);
         $image = str_replace(' ', '+', $image);
-        $imageName = 'cambio_' . $guia . '_' . time() . '.png';
+        $imageName = 'cambio_' . time() . '.png';
         \Storage::disk('public')->put('fotos/' . $imageName, base64_decode($image));
 
         $updateData['fotocambio'] = $imageName;
@@ -106,4 +106,43 @@ $guia = $request->input('guia'); // o el nombre que uses para identificar el env
     //return view('entregar.entregar');
     return redirect()->back()->with('success', 'Cambio completado correctamente.');
 }
+
+public function guardarEntrega(Request $request)
+{
+    $guia = $request->input('guiaentrega');
+    $fotoBase64 = $request->input('foto_entrega');
+
+    if (!$guia) {
+        return back()->with('error', 'No se recibió la guía del envío.');
+    }
+
+    // Buscar el envío
+    $envio = \DB::table('envios')->where('guia', $guia)->first();
+
+    if (!$envio) {
+        return back()->with('error', 'No se encontró el envío con la guía proporcionada.');
+    }
+
+    $updateData = [
+        'updated_at' => now(),
+        'estado' => 'Entregado',
+    ];
+
+    // Si hay una foto base64, guardarla en el storage
+    if ($fotoBase64) {
+        $image = str_replace('data:image/png;base64,', '', $fotoBase64);
+        $image = str_replace(' ', '+', $image);
+        $imageName = 'entrega_' . time() . '.png';
+
+        \Storage::disk('public')->put('fotos/' . $imageName, base64_decode($image));
+
+        $updateData['fotoentrega'] = $imageName;
+    }
+
+    // Actualizar el registro
+    \DB::table('envios')->where('guia', $guia)->update($updateData);
+
+    return redirect()->route('entregarenvio')->with('success', 'Entrega registrada correctamente.');
+}
+
 }

@@ -73,6 +73,7 @@ Route::post('/guardandocambio', [EnvioController::class, 'guardandocambio'])->na
 
 Route::post('/envios/cambio', [App\Http\Controllers\EnvioController::class, 'guardarCambio'])->name('envios.cambio');
 
+Route::post('/envios/guardar-entrega', [EnvioController::class, 'guardarEntrega'])->name('envios.guardarentrega');
 
 Route::post('/logout', function () {
     Auth::logout();

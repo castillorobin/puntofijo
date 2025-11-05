@@ -171,9 +171,7 @@ License: For each use you must have a valid license purchased only from above li
     <!--end::Card header-->
 
     <!--begin::Form-->
-    <form action="/guardandofoto" method="POST" id="kt_account_profile_details_form" class="form" enctype="multipart/form-data">
-                                @csrf
-                            @method('GET')
+    
                         <input type="text" value="{{ $envio[0]->guia }}" class="visually-hidden" name="guia2" id="guia2">
         <!--begin::Card body-->
         <div class="card-body p-9">
@@ -301,9 +299,12 @@ License: For each use you must have a valid license purchased only from above li
 
             </div>
             <!--end::Row-->
-
+  <form id="formHacerEntrega" method="POST" action="{{ route('envios.guardarentrega') }}">
+                @csrf
               <div class="row mb-8">
                  <!--begin::Col-->
+                 <input type="text" value="{{ $envio[0]->guia }}" class="visually-hidden" name="guiaentrega" id="guiaentrega">
+                 <input type="hidden" name="foto_entrega" id="foto_entrega_base64">
                 <div class="col-xl-3">
              <!-- Botón Comprobante de entrega -->
 <div class="fs-6 fw-semibold mt-2 mb-3 ">
@@ -363,13 +364,13 @@ License: For each use you must have a valid license purchased only from above li
 </button>
 </a>
     </div>
-
+</form>
     <!-- Botón Capturar foto -->
     
 </div>
 
 
-       </form>
+    
     <!--end:Form-->
 </div>
 </div>
@@ -669,32 +670,24 @@ document.addEventListener("DOMContentLoaded", function() {
     const photoPreview = document.getElementById("photo-preview-entrega");
     const cameraSection = document.getElementById("camera-section-entrega");
     const btnBorrarFoto = document.getElementById("btn-borrar-foto");
+    const inputFotoHidden = document.getElementById("foto_entrega_base64");
 
     let cameraStream = null;
     let capturedPhoto = null;
 
-    // --- FUNCIÓN: iniciar cámara ---
-    async function iniciarCamara() {
+    // --- Abrir cámara ---
+    btnAbrirCamara.addEventListener("click", async function() {
+        if (cameraStream) return;
         try {
             cameraSection.style.display = "block";
             previewContainer.style.display = "none";
             btnCapturar.style.display = "inline-block";
-            video.style.display = "block";
 
             cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
             video.srcObject = cameraStream;
         } catch (err) {
             alert("No se pudo acceder a la cámara: " + err.message);
         }
-    }
-
-    // --- Abrir cámara (desde el botón principal) ---
-    btnAbrirCamara.addEventListener("click", function() {
-        if (cameraStream) {
-            // Si la cámara ya está activa, no hacer nada
-            return;
-        }
-        iniciarCamara();
     });
 
     // --- Capturar foto ---
@@ -710,50 +703,30 @@ document.addEventListener("DOMContentLoaded", function() {
             cameraStream = null;
         }
 
-        // Guardar imagen localmente (para enviar luego)
+        // Guardar imagen base64
         capturedPhoto = canvas.toDataURL("image/png");
+        inputFotoHidden.value = capturedPhoto;
 
         // Mostrar previsualización
         photoPreview.src = capturedPhoto;
         previewContainer.style.display = "block";
 
-        // Ocultar cámara
+        // Ocultar video
         video.style.display = "none";
-        btnCapturar.style.display = "none";
         cameraSection.style.display = "none";
-
-        // Actualizar miniatura principal (opcional)
-        const imageWrapper = document.querySelector(".image-input-wrapper");
-        if (imageWrapper) {
-            imageWrapper.style.backgroundImage = `url(${capturedPhoto})`;
-        }
+        btnCapturar.style.display = "none";
     });
 
-    // --- Eliminar foto (volver a tomar otra) ---
+    // --- Borrar foto ---
     btnBorrarFoto.addEventListener("click", function() {
         capturedPhoto = null;
+        inputFotoHidden.value = "";
         photoPreview.src = "";
         previewContainer.style.display = "none";
-        iniciarCamara();
+        btnCapturar.style.display = "inline-block";
+        video.style.display = "block";
+        cameraSection.style.display = "block";
     });
-
-    // --- Antes de enviar formulario, incluir foto base64 si existe ---
-    const formEntregar = document.querySelector("form#kt_account_profile_details_form");
-    if (formEntregar) {
-        formEntregar.addEventListener("submit", function(e) {
-            if (capturedPhoto) {
-                let inputHidden = document.getElementById("foto_entrega_base64");
-                if (!inputHidden) {
-                    inputHidden = document.createElement("input");
-                    inputHidden.type = "hidden";
-                    inputHidden.name = "foto_entrega";
-                    inputHidden.id = "foto_entrega_base64";
-                    formEntregar.appendChild(inputHidden);
-                }
-                inputHidden.value = capturedPhoto;
-            }
-        });
-    }
 });
 </script>
 
