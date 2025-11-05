@@ -102,6 +102,7 @@ $guia = $request->input('guia'); // o el nombre que uses para identificar el env
     // Actualiza el registro
     \DB::table('envios')->where('guia', $guiacambio)->update($updateData);
 
-    return view('entregar.entregar');
+    //return view('entregar.entregar');
+    return redirect()->back()->with('success', 'Cambio completado correctamente.');
 }
 }

@@ -132,6 +132,24 @@ License: For each use you must have a valid license purchased only from above li
         <!--begin::Card title-->
         <div class="card-title fs-3 fw-bold">Guia: {{ $envio[0]->guia }}</div>
         <!--end::Card title-->
+        @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-success" style="margin-left: 25px;">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <script>
+        // Espera 4 segundos (4000 ms) y luego oculta el mensaje
+        setTimeout(function () {
+            let alertBox = document.getElementById('alert-success');
+            if (alertBox) {
+                alertBox.classList.remove('show');
+                alertBox.classList.add('fade');
+                alertBox.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+@endif
         <a href="/dashboard" class="w-200" style="float:right; margin-top:20px; font-size:20px;">
             <i class="fas fa-window-close" style="font-size:40px; color:red;"></i>
         </a>
@@ -270,7 +288,7 @@ License: For each use you must have a valid license purchased only from above li
                  <!--begin::Col-->
                 <div class="col-xl-3">
              <!-- Botón Comprobante de entrega -->
-<div class="fs-6 fw-semibold mt-2 mb-3 text-center">
+<div class="fs-6 fw-semibold mt-2 mb-3 ">
     <button type="button" class="btn btn-light-primary fw-bold" id="btn-abrir-camara">
         <i class="fas fa-camera" style="font-size: 25px;"></i> &nbsp; Comprobante de Entrega
     </button>
@@ -425,6 +443,7 @@ License: For each use you must have a valid license purchased only from above li
                 <h5 class="modal-title text-dark">
                     <i class="fas fa-exchange-alt"></i> &nbsp; Hacer cambio
                 </h5>
+
                 <button type="button" class="btn btn-icon btn-sm btn-active-light-danger" data-bs-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times"></i>
                 </button>
