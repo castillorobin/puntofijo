@@ -180,35 +180,53 @@ License: For each use you must have a valid license purchased only from above li
             <!--begin::Row-->
             <div class="row mb-5">
                  <!--begin::Row--> 
-            <div class="row mb-8">
-                 <!--begin::Col-->
-                <div class="col-xl-3">
-                    <div class="fs-6 fw-semibold mt-2 mb-3">Comercio:</div>
-                </div>
-                <!--end::Col-->
+            <div class="row mb-8 align-items-center">
+    <!-- Etiqueta -->
+    <div class="col-xl-3">
+        <div class="fs-6 fw-semibold mt-2 mb-3">Comercio:</div>
+    </div>
 
-                 <!--begin::Col-->
-                <div class="col-xl-9 fv-row fv-plugins-icon-container">
-                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->comercio }}" readonly>
-                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-                </div>
-            </div>
-            <!--end::Row-->
-            <!--begin::Row-->
-            <div class="row mb-8">
-                 <!--begin::Col-->
-                <div class="col-xl-3">
-                    <div class="fs-6 fw-semibold mt-2 mb-3">Destinatario:</div>
-                </div>
-                <!--end::Col-->
+    <!-- Input y teléfono -->
+    <div class="col-xl-9 d-flex align-items-center fv-row fv-plugins-icon-container">
+        <input type="text" 
+               class="form-control form-control-solid me-2" 
+               name="name" 
+               value="{{ $envio[0]->comercio }}" 
+               readonly>
 
-                 <!--begin::Col-->
-                <div class="col-xl-9 fv-row fv-plugins-icon-container">
-                    <input type="text" class="form-control form-control-solid" name="name" value="{{ $envio[0]->destinatario }}" readonly>
-                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-                </div>
-            </div>
+        @if(!empty($envio[0]->telefono))
+            <a href="tel:{{ $envio[0]->telefono }}" 
+               class="btn btn-icon btn-light-success" 
+               title="Llamar al destinatario">
+                <i class="fas fa-phone"></i>
+            </a>
+        @endif
+    </div>
+</div>
             <!--end::Row-->
+            <div class="row mb-8 align-items-center">
+    <!-- Etiqueta -->
+    <div class="col-xl-3">
+        <div class="fs-6 fw-semibold mt-2 mb-3">Destinatario:</div>
+    </div>
+
+    <!-- Input y teléfono -->
+    <div class="col-xl-9 d-flex align-items-center fv-row fv-plugins-icon-container">
+        <input type="text" 
+               class="form-control form-control-solid me-2" 
+               name="name" 
+               value="{{ $envio[0]->destinatario }}" 
+               readonly>
+
+        @if(!empty($envio[0]->telefono))
+            <a href="tel:{{ $envio[0]->telefono }}" 
+               class="btn btn-icon btn-light-success" 
+               title="Llamar al destinatario">
+                <i class="fas fa-phone"></i>
+            </a>
+        @endif
+    </div>
+</div>
             <!--begin::Row-->
             <div class="row mb-8">
                  <!--begin::Col-->
