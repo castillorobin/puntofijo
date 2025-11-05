@@ -44,12 +44,13 @@ class EnvioController extends Controller
     $codigo = $request->get('codigo');
     //dd( $codigo);
     $envio = Envio::where('guia', $codigo)->get();
+    $comercio = \DB::table('comercios')->where('comercio', $envio[0]->comercio)->first();
 
     if ($envio->isEmpty()) {
         return redirect()->back()->with('error', 'Envio no encontrado');
     }
 
-    return view('entregar.detalle', compact('envio'));
+    return view('entregar.detalle', compact('envio', 'comercio'));
 } 
 public function guardandocambio(Request $request)
 {

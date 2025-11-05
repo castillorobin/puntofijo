@@ -183,7 +183,7 @@ License: For each use you must have a valid license purchased only from above li
             <div class="row mb-8 align-items-center">
     <!-- Etiqueta -->
     <div class="col-xl-3">
-        <div class="fs-6 fw-semibold mt-2 mb-3">Comercio:</div>
+        <div class="fs-6 fw-semibold mt-2 mb-3">Comercio: </div>
     </div>
 
     <!-- Input y teléfono -->
@@ -194,8 +194,8 @@ License: For each use you must have a valid license purchased only from above li
                value="{{ $envio[0]->comercio }}" 
                readonly>
 
-        @if(!empty($envio[0]->telefono))
-            <a href="tel:{{ $envio[0]->telefono }}" 
+        @if(!empty($comercio->telefono))
+            <a href="tel:{{ $comercio->telefono }}" 
                class="btn btn-icon btn-light-success" 
                title="Llamar al destinatario">
                 <i class="fas fa-phone"></i>
