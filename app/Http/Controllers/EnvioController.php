@@ -165,7 +165,7 @@ public function guardarEntrega(Request $request)
         $ticketact->cajero = Auth::user()->name;
         $ticketact->fechapago = Carbon::now();
         $ticketact->estado = "Pagado";
-        $ticketact->metodopago = $metodo;
+        $ticketact->metodo = $metodo;
         $ticketact->subtotal = $subtotal;
         $ticketact->descuento = $descuento;
         $ticketact->total = $total;
