@@ -692,15 +692,17 @@ input.is-invalid {
                                                                 </div>
 
                                                                 <div class="row">
-                                                                    <!-- Content -->
-                                                                  
-                                                                   <div class="col-6 d-flex align-items-center justify-content-end">
-                                                                    <span class="form-label">Cambio</span>
-                                                                    </div>
-                                                                     <div class="col-6">
-                                                                    <input type="text" name="cambio" id="cambio" class="form-control form-control-solid" placeholder="$0.00" readonly/>
-                                                                    </div>
-                                                                </div>
+  <div class="col-6 d-flex align-items-center justify-content-end">
+    <span class="form-label">Cambio</span>
+  </div>
+  <div class="col-6">
+    <!-- Visible SOLO para mostrar con $ -->
+    <input type="text" id="cambio_mostrado" class="form-control form-control-solid" placeholder="$0.00" readonly/>
+
+    <!-- Oculto: este se manda al backend sin símbolos -->
+    <input type="hidden" name="cambio" id="cambio_num" value="0">
+  </div>
+</div>
  
                                                                 
                                                                 <input type="text" name="tota" id="tota" hidden>
@@ -726,78 +728,79 @@ input.is-invalid {
                                                          </div></div>
                                                         </form>
 
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const inputSubtotal = document.getElementById("sutota");
-    const inputDescuento = document.getElementById("descuento");
-    const spanSubtotal = document.getElementById("stotal");
-    const spanDescuento = document.getElementById("sdescuento");
-    const spanTotal = document.getElementById("totalito");
-    const inputRecibido = document.getElementById("recibido");
-    const inputCambio = document.getElementById("cambio");
+  const inputSubtotal = document.getElementById("sutota");
+  const inputDescuento = document.getElementById("descuento");
+  const spanSubtotal  = document.getElementById("stotal");
+  const spanDescuento = document.getElementById("sdescuento");
+  const spanTotal     = document.getElementById("totalito");
+  const inputRecibido = document.getElementById("recibido");
 
-    const inputHiddenTotal = document.getElementById("tota");
-    const inputHiddenSubtotal = document.getElementById("stota");
+  const inputHiddenTotal    = document.getElementById("tota");
+  const inputHiddenSubtotal = document.getElementById("stota");
 
-    // Formatear a moneda
-    function formatoMoneda(valor) {
-        return "$" + parseFloat(valor).toFixed(2);
+  const cambioMostrado = document.getElementById("cambio_mostrado");
+  const cambioNum      = document.getElementById("cambio_num");
+
+  // helper
+  const fmt = v => "$" + (parseFloat(v||0)).toFixed(2);
+
+  function actualizarTotales() {
+    let subtotal  = parseFloat(inputSubtotal.value)  || 0;
+    let descuento = parseFloat(inputDescuento.value) || 0;
+    if (descuento > subtotal) { descuento = subtotal; inputDescuento.value = descuento; }
+
+    const total = subtotal - descuento;
+
+    spanSubtotal.textContent  = fmt(subtotal);
+    spanDescuento.textContent = fmt(descuento);
+    spanTotal.textContent     = fmt(total);
+
+    inputHiddenTotal.value    = total.toFixed(2);
+    inputHiddenSubtotal.value = subtotal.toFixed(2);
+
+    actualizarCambio();
+  }
+
+  function actualizarCambio() {
+    const recibido = parseFloat(inputRecibido.value) || 0;
+    const total    = parseFloat(inputHiddenTotal.value) || 0;
+    const cambio   = recibido - total;
+
+    // visible (con $)
+    cambioMostrado.value = fmt(Math.max(cambio, 0));
+
+    // oculto (numérico limpio)
+    cambioNum.value = (cambio >= 0 ? cambio : 0).toFixed(2);
+
+    // colores opcionales
+    if (!recibido) {
+      cambioMostrado.classList.remove("is-valid","is-invalid");
+    } else if (cambio >= 0) {
+      cambioMostrado.classList.add("is-valid");
+      cambioMostrado.classList.remove("is-invalid");
+    } else {
+      cambioMostrado.classList.add("is-invalid");
+      cambioMostrado.classList.remove("is-valid");
     }
+  }
 
-    // Actualizar totales
-    function actualizarTotales() {
-        let subtotal = parseFloat(inputSubtotal.value) || 0;
-        let descuento = parseFloat(inputDescuento.value) || 0;
+  inputDescuento.addEventListener("input", actualizarTotales);
+  inputRecibido.addEventListener("input", actualizarCambio);
+  actualizarTotales(); // init
 
-        // Validar que el descuento no sea mayor que el subtotal
-        if (descuento > subtotal) {
-            descuento = subtotal;
-            inputDescuento.value = descuento;
-        }
-
-        let total = subtotal - descuento;
-
-        // Actualizar valores visibles
-        spanSubtotal.textContent = formatoMoneda(subtotal);
-        spanDescuento.textContent = formatoMoneda(descuento);
-        spanTotal.textContent = formatoMoneda(total);
-
-        // Actualizar inputs ocultos
-        inputHiddenTotal.value = total.toFixed(2);
-        inputHiddenSubtotal.value = subtotal.toFixed(2);
-
-        // Recalcular cambio si hay recibido
-        actualizarCambio();
-    }
-
-    // Calcular cambio y cambiar color
-    function actualizarCambio() {
-        let recibido = parseFloat(inputRecibido.value) || 0;
-        let total = parseFloat(inputHiddenTotal.value) || 0;
-        let cambio = recibido - total;
-
-        if (isNaN(cambio)) cambio = 0;
-        inputCambio.value = formatoMoneda(cambio >= 0 ? cambio : 0);
-
-        // Cambiar color visualmente
-        if (recibido === 0) {
-            inputCambio.classList.remove("is-valid", "is-invalid");
-        } else if (cambio >= 0) {
-            inputCambio.classList.add("is-valid");
-            inputCambio.classList.remove("is-invalid");
-        } else {
-            inputCambio.classList.add("is-invalid");
-            inputCambio.classList.remove("is-valid");
-        }
-    }
-
-    // Escuchar cambios
-    inputDescuento.addEventListener("input", actualizarTotales);
-    inputRecibido.addEventListener("input", actualizarCambio);
-
-    // Inicializar al abrir el modal
-    actualizarTotales();
+  // Seguridad extra: antes de enviar, asegura que los numéricos vayan limpios
+  const form = document.getElementById('formHacerEntrega');
+  if (form) {
+    form.addEventListener('submit', () => {
+      // si por algo algún campo trae símbolos, límpialos aquí también:
+      const clean = v => String(v||'').replace(/[^\d.\-]/g,'');
+      inputDescuento.value = clean(inputDescuento.value);
+      inputRecibido.value  = clean(inputRecibido.value);
+      // cambio ya va en cambio_num
+    });
+  }
 });
 </script>
 
