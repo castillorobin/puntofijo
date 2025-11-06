@@ -173,6 +173,7 @@ public function guardarEntrega(Request $request)
         $ticketact->entrega = $recibido;
         $ticketact->cambio = $cambio;
         $ticketact->agencia = $agencia;
+        $ticketact->comercio = $envios->comercio;
         $ticketact->save();
 
 
