@@ -179,7 +179,7 @@ License: For each use you must have a valid license purchased only from above li
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Confirmar Entrega</button>
+                    <button type="submit" class="btn btn-success">Entregar</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </form>
