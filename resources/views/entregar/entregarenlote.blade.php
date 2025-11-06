@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<!--
+Author: Keenthemes
+Product Name: Metronic
+Product Version: 8.1.8
+Purchase: https://1.envato.market/EA4JP
+Website: http://www.keenthemes.com
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+-->
+<html lang="en">
+<!--begin::Head-->
+
+<head>
+	<base href="" />
+	<title>Melo Express - Punto Fijo</title>
+	
+	<meta charset="utf-8" />
+	<meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
+	<meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Metronic - Bootstrap Admin Template, HTML, VueJS, React, Angular. Laravel, Asp.Net Core, Ruby on Rails, Spring Boot, Blazor, Django, Express.js, Node.js, Flask Admin Dashboard Theme & Template" />
+	<meta property="og:url" content="https://keenthemes.com/metronic" />
+	<meta property="og:site_name" content="Keenthemes | Metronic" />
+	<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+	<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+	<!--begin::Fonts(mandatory for all pages)-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+	<!--end::Fonts-->
+	<!--begin::Vendor Stylesheets(used for this page only)-->
+	<link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+
+	<!--end::Vendor Stylesheets-->
+	<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+	    {{-- Global Metronic Styles --}}
+    <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+	<!--end::Global Stylesheets Bundle-->
+
+	
+</head>
+<!--end::Head-->
+<!--begin::Body-->
+
+<body id="kt_body" class="app-default">
+	<!--begin::Theme mode setup on page load-->
+	<script>
+		var defaultThemeMode = "light";
+		var themeMode;
+		if (document.documentElement) {
+			if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
+				themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
+			} else {
+				if (localStorage.getItem("data-bs-theme") !== null) {
+					themeMode = localStorage.getItem("data-bs-theme");
+				} else {
+					themeMode = defaultThemeMode;
+				}
+			}
+			if (themeMode === "system") {
+				themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			}
+			document.documentElement.setAttribute("data-bs-theme", themeMode);
+		}
+	</script>
+
+	<x-default-layout>
+	
+        <div class="container-fluid mt-5">
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-light">
+            <h3 class="card-title text-gray-700 fw-bold text-uppercase">Entregar en Lote</h3>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Escáner QR -->
+            <div class="d-flex align-items-center mb-4">
+                <input id="qr-input" type="text" placeholder="Escanear código QR" readonly
+                    class="form-control me-3" style="max-width: 300px;" />
+                <button type="button" id="btn-limpiar" class="btn btn-light-danger">Limpiar lista</button>
+            </div>
+
+            <div id="qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
+
+            <!-- Tabla de envíos -->
+            <div class="table-responsive">
+                <table class="table table-striped align-middle" id="tabla-lote">
+                    <thead class="bg-secondary text-white">
+                        <tr>
+                            <th>Guía</th>
+                            <th>Comercio</th>
+                            <th>Destinatario</th>
+                            <th>Dirección</th>
+                            <th>Nota</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="text-end mt-4">
+                <button type="button" id="btn-entregar-lote" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEntregarLote" disabled>
+                    <i class="fas fa-check-circle"></i> Entregar en Lote
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Entregar en Lote -->
+<div class="modal fade" id="modalEntregarLote" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form id="formEntregaLote" method="POST" action="{{ route('envios.guardarLote') }}">
+                @csrf
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Detalles del Pago - Entrega en Lote</h5>
+                    <button type="button" class="btn btn-icon btn-sm btn-light" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" name="guias" id="guias-lote">
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Cajero</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->name }}" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Fecha</label>
+                            <input type="text" class="form-control" value="{{ now()->format('j/n/Y') }}" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Agencia</label>
+                            <input type="text" class="form-control" value="{{ $empleado[0]->agencia }}" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Método de Pago</label>
+                            <select class="form-select" name="metodo" required>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Transferencia_empresa">Transferencia a la empresa</option>
+                                <option value="Transferencia_comercio">Transferencia al comercio</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Subtotal</label>
+                            <input type="text" id="subtotal-lote" class="form-control" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Descuento</label>
+                            <input type="number" id="descuento-lote" name="descuento" class="form-control" value="0" min="0" step="0.01">
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Nota</label>
+                            <textarea name="nota" class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="bg-light p-3 rounded text-end">
+                        <strong>Subtotal: </strong><span id="lbl-subtotal" class="text-success">$0.00</span><br>
+                        <strong>Descuento: </strong><span id="lbl-descuento" class="text-danger">$0.00</span><br>
+                        <strong>Total: </strong><span id="lbl-total" class="fs-4 fw-bold text-dark">$0.00</span>
+                        <input type="hidden" name="total" id="total-lote">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Confirmar Entrega</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+	</x-default-layout>
+   
+<!-- Librería QR -->
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const qrInput = document.getElementById("qr-input");
+    const qrReader = document.getElementById("qr-reader");
+    const tabla = document.querySelector("#tabla-lote tbody");
+    const btnEntregar = document.getElementById("btn-entregar-lote");
+    const btnLimpiar = document.getElementById("btn-limpiar");
+
+    let html5QrCode;
+    let listaGuias = [];
+
+    qrInput.addEventListener("click", async function() {
+        if (!html5QrCode) html5QrCode = new Html5Qrcode("qr-reader");
+        qrReader.style.display = "block";
+        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+        try {
+            await html5QrCode.start({ facingMode: "environment" }, config, async (qrCodeMessage) => {
+                qrInput.value = qrCodeMessage;
+                html5QrCode.stop();
+                qrReader.style.display = "none";
+
+                // Consultar datos del envío via AJAX
+                const response = await fetch(`/envio/buscar/${qrCodeMessage}`);
+                if (response.ok) {
+                    const envio = await response.json();
+                    if (!listaGuias.includes(envio.guia)) {
+                        listaGuias.push(envio.guia);
+
+                        const fila = `
+                            <tr data-guia="${envio.guia}">
+                                <td>${envio.guia}</td>
+                                <td>${envio.comercio}</td>
+                                <td>${envio.destinatario}</td>
+                                <td>${envio.direccion}</td>
+                                <td>${envio.nota || ''}</td>
+                                <td class="text-end">$${parseFloat(envio.total).toFixed(2)}</td>
+                                <td><button class="btn btn-sm btn-danger btn-quitar">X</button></td>
+                            </tr>
+                        `;
+                        tabla.insertAdjacentHTML('beforeend', fila);
+                        actualizarTotales();
+                        btnEntregar.disabled = false;
+                    }
+                } else {
+                    alert("Código no encontrado.");
+                }
+            });
+        } catch (err) {
+            console.error("Error al iniciar cámara:", err);
+        }
+    });
+
+    // Quitar una fila
+    tabla.addEventListener('click', e => {
+        if (e.target.classList.contains('btn-quitar')) {
+            const fila = e.target.closest('tr');
+            const guia = fila.getAttribute('data-guia');
+            listaGuias = listaGuias.filter(g => g !== guia);
+            fila.remove();
+            actualizarTotales();
+            if (listaGuias.length === 0) btnEntregar.disabled = true;
+        }
+    });
+
+    // Limpiar tabla completa
+    btnLimpiar.addEventListener("click", function() {
+        tabla.innerHTML = "";
+        listaGuias = [];
+        actualizarTotales();
+        btnEntregar.disabled = true;
+    });
+
+    // Calcular totales
+    function actualizarTotales() {
+        let subtotal = 0;
+        document.querySelectorAll("#tabla-lote tbody tr").forEach(row => {
+            const valor = parseFloat(row.cells[5].textContent.replace('$', '')) || 0;
+            subtotal += valor;
+        });
+
+        document.getElementById("subtotal-lote").value = subtotal.toFixed(2);
+        document.getElementById("lbl-subtotal").textContent = `$${subtotal.toFixed(2)}`;
+
+        const descuento = parseFloat(document.getElementById("descuento-lote").value) || 0;
+        document.getElementById("lbl-descuento").textContent = `$${descuento.toFixed(2)}`;
+
+        const total = subtotal - descuento;
+        document.getElementById("lbl-total").textContent = `$${total.toFixed(2)}`;
+        document.getElementById("total-lote").value = total.toFixed(2);
+        document.getElementById("guias-lote").value = JSON.stringify(listaGuias);
+    }
+
+    document.getElementById("descuento-lote").addEventListener("input", actualizarTotales);
+});
+</script>
+
+	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+
+
+	   {{-- Global Metronic Scripts --}}
+    <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
+	<!--end::Custom Javascript-->
+	<!--end::Javascript-->
+</body>
+<!--end::Body-->
+
+</html>

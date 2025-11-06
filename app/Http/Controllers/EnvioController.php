@@ -191,4 +191,42 @@ public function guardarEntrega(Request $request)
     //return redirect()->route('entregarenvio')->with('success', 'Entrega registrada correctamente.');
 }
 
+    public function entregarenlote()
+    {
+         $empleado = Empleado::where('nombre', Auth::user()->name)->get();
+        return view('entregar.entregarenlote', compact('empleado'));
+    }
+
+    public function buscarEnvio($guia)
+{
+    $envio = \DB::table('envios')->where('guia', $guia)->first();
+    if (!$envio) {
+        return response()->json(['error' => 'Guia no encontrada'], 404);
+    }
+    return response()->json($envio);
+}
+
+
+public function guardarLote(Request $request)
+{
+    $guias = json_decode($request->input('guias'), true);
+    $total = $request->input('total');
+    $descuento = $request->input('descuento');
+    $metodo = $request->input('metodo');
+    $nota = $request->input('nota');
+
+    foreach ($guias as $guia) {
+        \DB::table('envios')->where('guia', $guia)->update([
+            'estado' => 'Entregado',
+            'fecha_entrega' => now(),
+            'metodo_pago' => $metodo,
+            'nota' => $nota,
+            'updated_at' => now(),
+        ]);
+    }
+
+    return redirect()->back()->with('success', 'Entrega en lote registrada correctamente.');
+}
+
+
 }

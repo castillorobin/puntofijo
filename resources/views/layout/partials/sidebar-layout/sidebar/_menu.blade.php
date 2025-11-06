@@ -40,23 +40,47 @@
 
 
 					<div data-kt-menu-trigger="click" id="menu-item-caja" class="menu-item menu-accordion">
-  <span class="menu-link">
-    <span class="menu-icon">{!! getIcon('setting-3', 'fs-2') !!}</span>
-    <span class="menu-title">Caja</span>
-    <span class="menu-arrow"></span>
-  </span>
+						<span class="menu-link">
+							<span class="menu-icon">{!! getIcon('setting-3', 'fs-2') !!}</span>
+							<span class="menu-title">Caja</span>
+							<span class="menu-arrow"></span>
+						</span>
 
-  <div class="menu-sub menu-sub-accordion">
-    <div class="menu-item">
-      <a class="menu-link " href="{{ url('/caja/cajero') }}">
-        <span class="menu-bullet"><span class="fas fa-cash-register"></span></span>
-        <span class="menu-title">Movimientos de caja</span>
-      </a>
-    </div>
-  </div>
+						<div class="menu-sub menu-sub-accordion">
+							<div class="menu-item">
+							<a class="menu-link " href="{{ url('/caja/cajero') }}">
+								<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+								<span class="menu-title">Movimientos de caja</span>
+							</a>
+							</div>
+						</div>
+					</div>
 
- 
-</div>
+
+					<div data-kt-menu-trigger="click" id="menu-item-caja" class="menu-item menu-accordion">
+						<span class="menu-link">
+							<span class="menu-icon">{!! getIcon('setting-3', 'fs-2') !!}</span>
+							<span class="menu-title">Entregar</span>
+							<span class="menu-arrow"></span>
+						</span>
+
+						<div class="menu-sub menu-sub-accordion">
+							<div class="menu-item">
+							<a class="menu-link " href="{{ url('/entregarenvio') }}">
+								<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+								<span class="menu-title">Entregar</span>
+							</a>
+							</div>
+						</div>
+						<div class="menu-sub menu-sub-accordion">
+							<div class="menu-item">
+							<a class="menu-link " href="{{ url('/entregarenlote') }}">
+								<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+								<span class="menu-title">Entregar en Lote</span>
+							</a>
+							</div>
+						</div>
+					</div>
 
 				</div>
 			

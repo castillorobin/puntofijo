@@ -62,18 +62,17 @@ Route::get('/guardaruser', [App\Http\Controllers\UsuarioController::class, 'guar
 
 Route::post('/upload', [UploadController::class, 'upload'])->name('upload');
 Route::post('/cambiar-estado', [EnvioController::class, 'cambiarEstado'])->name('cambiar.estado');
-
 Route::get('/entregarenvio', [EnvioController::class, 'entregarenvio'])->name('entregarenvio');
 Route::get('/envio/buscar', [EnvioController::class, 'buscar'])->name('producto.buscar');
- 
 Route::post('/guardar-comprobante', [EnvioController::class, 'guardarComprobante'])->name('guardarComprobante');
-
-
 Route::post('/guardandocambio', [EnvioController::class, 'guardandocambio'])->name('envios.cambio');
-
 Route::post('/envios/cambio', [App\Http\Controllers\EnvioController::class, 'guardarCambio'])->name('envios.cambio');
-
 Route::post('/envios/guardar-entrega', [EnvioController::class, 'guardarEntrega'])->name('envios.guardarentrega');
+
+Route::get('/entregarenlote', [EnvioController::class, 'entregarenlote'])->name('entregarenlote');
+
+Route::post('/envios/entregarlote', [EnvioController::class, 'guardarLote'])->name('envios.guardarLote');
+Route::get('/envio/buscar/{guia}', [EnvioController::class, 'buscarEnvio']);
 
 
 //Caja
