@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Envio;
 use Illuminate\Http\Request;
+use App\Models\Empleado;
+use Illuminate\Support\Facades\Auth;
 
 class EnvioController extends Controller
 {
@@ -50,8 +52,10 @@ class EnvioController extends Controller
         return redirect()->back()->with('error', 'Envio no encontrado');
     }
 
-    return view('entregar.detalle', compact('envio', 'comercio'));
-} 
+    $empleado = Empleado::where('nombre', Auth::user()->name)->get();
+
+    return view('entregar.detalle', compact('envio', 'comercio', 'empleado'));
+}
 public function guardandocambio(Request $request)
 {
 
@@ -110,7 +114,14 @@ $guia = $request->input('guia'); // o el nombre que uses para identificar el env
 public function guardarEntrega(Request $request)
 {
     $guia = $request->input('guiaentrega');
+    $total = $request->input('tota');
+    $subtotal = $request->input('stota');
+    $descuento = $request->input('descuento');
+    $metodo = $request->input('metodo');
+    $nota = $request->input('nota');
+
     $fotoBase64 = $request->input('foto_entrega');
+
 
     if (!$guia) {
         return back()->with('error', 'No se recibió la guía del envío.');
@@ -123,9 +134,16 @@ public function guardarEntrega(Request $request)
         return back()->with('error', 'No se encontró el envío con la guía proporcionada.');
     }
 
+    
     $updateData = [
-        'updated_at' => now(),
+        'subtotal' => $subtotal,
+        'descuento' => $descuento,
+        'total' => $total,
+        'metodo_pago' => $metodo,
+        'nota' => $nota,
         'estado' => 'Entregado',
+        'fecha_entrega' => now(),
+        'updated_at' => now(),
     ];
 
     // Si hay una foto base64, guardarla en el storage
