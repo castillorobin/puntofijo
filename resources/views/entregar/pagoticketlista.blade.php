@@ -29,7 +29,7 @@
 
     </style>
 <div style="width:100%; " class="text-center centrar"> 
-    <img src="../public/fotos/logo24.png" alt="" width="35%">
+    <img src="https://meloexpress.site/fotos/logo24.png" alt="" width="35%">
     <br>
             <div class="margen "> <span class="page__heading melo" >Pago por Ticket</span></div>
             
