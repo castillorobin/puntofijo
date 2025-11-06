@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Envio;
 use Illuminate\Http\Request;
 use App\Models\Empleado;
+use App\Models\Ticktpago;
 use Illuminate\Support\Facades\Auth;
+use PDF; 
 
 class EnvioController extends Controller
 {
@@ -119,6 +121,9 @@ public function guardarEntrega(Request $request)
     $descuento = $request->input('descuento');
     $metodo = $request->input('metodo');
     $nota = $request->input('nota');
+    $recibido = $request->input('recibido');
+    $cambio = $request->input('cambio');
+    $agencia = $request->input('agencia');
 
     $fotoBase64 = $request->input('foto_entrega');
 
@@ -128,19 +133,14 @@ public function guardarEntrega(Request $request)
     }
 
     // Buscar el envío
-    $envio = \DB::table('envios')->where('guia', $guia)->first();
+    $envios = \DB::table('envios')->where('guia', $guia)->first();
 
-    if (!$envio) {
+    if (!$envios) {
         return back()->with('error', 'No se encontró el envío con la guía proporcionada.');
     }
 
     
     $updateData = [
-        'subtotal' => $subtotal,
-        'descuento' => $descuento,
-        'total' => $total,
-        'metodo_pago' => $metodo,
-        'nota' => $nota,
         'estado' => 'Entregado',
         'fecha_entrega' => now(),
         'updated_at' => now(),
@@ -160,7 +160,31 @@ public function guardarEntrega(Request $request)
     // Actualizar el registro
     \DB::table('envios')->where('guia', $guia)->update($updateData);
 
-    return redirect()->route('entregarenvio')->with('success', 'Entrega registrada correctamente.');
+    $ticketact = new Ticktpago();
+        $ticketact->userpago = Auth::user()->name;
+        $ticketact->cajero = Auth::user()->name;
+        $ticketact->fechapago = Carbon::now();
+        $ticketact->estado = "Pagado";
+        $ticketact->metodopago = $metodo;
+        $ticketact->subtotal = $subtotal;
+        $ticketact->descuento = $descuento;
+        $ticketact->total = $total;
+        $ticketact->nota = $nota;
+        $ticketact->entrega = $recibido;
+        $ticketact->cambio = $cambio;
+        $ticketact->agencia = $agencia;
+        $ticketact->save();
+
+
+
+        $pdf = PDF::loadView('entregar.pagoticketlista', ['ticketact'=>$ticketact, 'envios'=>$envios]);
+       
+        $customPaper = array(0,0,360,750);
+       
+        $pdf->setPaper($customPaper );
+        return $pdf->stream();
+
+    //return redirect()->route('entregarenvio')->with('success', 'Entrega registrada correctamente.');
 }
 
 }
