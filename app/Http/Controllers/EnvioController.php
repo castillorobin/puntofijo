@@ -8,7 +8,7 @@ use App\Models\Empleado;
 use App\Models\Ticktpago;
 use Illuminate\Support\Facades\Auth;
 use PDF; 
-
+use Carbon\Carbon;
 class EnvioController extends Controller
 {
 
