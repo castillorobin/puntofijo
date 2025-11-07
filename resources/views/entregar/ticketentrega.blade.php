@@ -159,7 +159,7 @@
 <hr>
 <div class="centrar">¡¡GRACIAS POR PREFERIRNOS!!</div>
 <hr>
-<div style="padding-left:75px;"> {!! DNS1D::getBarcodeHTML($ticketact[0]->id , 'C39') !!} <span style="padding-right: 80px; font-weight: bolder;"> {{ $ticketact[0]->id }} </span></div>
+
 </div>
 
    
