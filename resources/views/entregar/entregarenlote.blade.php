@@ -43,6 +43,21 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 	<!--end::Global Stylesheets Bundle-->
 
+    <style>
+input.is-valid {
+    border: 2px solid #28a745 !important;
+    background-color: #e6f9ec !important;
+    color: #155724 !important;
+    font-weight: 600;
+}
+input.is-invalid {
+    border: 2px solid #dc3545 !important;
+    background-color: #f8d7da !important;
+    color: #721c24 !important;
+    font-weight: 600;
+}
+</style>
+
 	
 </head>
 <!--end::Head-->
@@ -191,36 +206,28 @@ License: For each use you must have a valid license purchased only from above li
                    
                 </div>
 
-                 <div class="row mb-8">
-                                                                    <!-- Content -->
-                                                                  
-                                                                   <div class="col-6 d-flex align-items-center justify-content-end">
-                                                                    <span class="form-label">Recibido</span>
-                                                                    </div>
-                                                                     <div class="col-6">
-                                                                    <input type="text" name="recibido" id="recibido" class="form-control form-control-solid" placeholder="$0.00" />
-                                                                    </div>
-                                                                </div>
+                                                                <!-- Campos de Recibido y Cambio -->
+                <div class="row mt-4">
+                    <div class="col-6 d-flex align-items-center justify-content-end">
+                        <span class="form-label fw-semibold">Recibido</span>
+                    </div>
+                    <div class="col-6">
+                        <input type="number" step="0.01" min="0" name="recibido" id="recibido-lote" class="form-control form-control-solid" placeholder="0.00" />
+                    </div>
+                </div>
 
-                                                                <div class="row">
-                                                                <div class="col-6 d-flex align-items-center justify-content-end">
-                                                                    <span class="form-label">Cambio</span>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <!-- Visible SOLO para mostrar con $ -->
-                                                                    <input type="text" id="cambio_mostrado" class="form-control form-control-solid" placeholder="$0.00" readonly/>
+                <div class="row mt-3">
+                    <div class="col-6 d-flex align-items-center justify-content-end">
+                        <span class="form-label fw-semibold">Cambio</span>
+                    </div>
+                    <div class="col-6">
+                        <!-- Visible -->
+                        <input type="text" id="cambio_mostrado_lote" class="form-control form-control-solid" placeholder="$0.00" readonly/>
 
-                                                                    <!-- Oculto: este se manda al backend sin símbolos -->
-                                                                    <input type="hidden" name="cambio" id="cambio_num" value="0">
-                                                                </div>
-                                                                </div>
-
-
-
-
-
-
-
+                        <!-- Oculto (solo el número sin símbolo) -->
+                        <input type="hidden" name="cambio" id="cambio_num_lote" value="0">
+                    </div>
+                </div>
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Entregar</button>
@@ -332,7 +339,45 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     document.getElementById("descuento-lote").addEventListener("input", actualizarTotales);
+
+
+
 });
+
+
+ // === CAMPOS DE RECIBIDO Y CAMBIO EN LOTE ===
+    const inputRecibido = document.getElementById("recibido-lote");
+    const cambioMostrado = document.getElementById("cambio_mostrado_lote");
+    const cambioNum = document.getElementById("cambio_num_lote");
+    const mensajeCambio = document.getElementById("mensaje-cambio-lote");
+
+    function actualizarCambioLote() {
+        const recibido = parseFloat(inputRecibido.value) || 0;
+        const total = parseFloat(document.getElementById("total-lote").value) || 0;
+        const cambio = recibido - total;
+
+        // Actualizar valores
+        cambioMostrado.value = "$" + (cambio >= 0 ? cambio.toFixed(2) : "0.00");
+        cambioNum.value = (cambio >= 0 ? cambio.toFixed(2) : 0);
+
+        // Cambiar color
+        if (recibido === 0) {
+            cambioMostrado.classList.remove("is-valid", "is-invalid");
+            mensajeCambio.textContent = "";
+        } else if (cambio >= 0) {
+            cambioMostrado.classList.add("is-valid");
+            cambioMostrado.classList.remove("is-invalid");
+            mensajeCambio.textContent = "Cambio correcto ✔️";
+            mensajeCambio.style.color = "#28a745";
+        } else {
+            cambioMostrado.classList.add("is-invalid");
+            cambioMostrado.classList.remove("is-valid");
+            mensajeCambio.textContent = "Falta dinero ❌";
+            mensajeCambio.style.color = "#dc3545";
+        }
+    }
+
+    inputRecibido.addEventListener("input", actualizarCambioLote);
 </script>
 
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
