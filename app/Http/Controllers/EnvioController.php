@@ -165,7 +165,7 @@ public function guardarEntrega(Request $request)
     $ticketact->metodo = $metodo;
     $ticketact->nota = $nota;
     $ticketact->total = $total;
-    $ticketact->descuento = $descuento;
+    $ticketact->desceunto = $descuento;
     $ticketact->subtotal = $subtotal;
     $ticketact->entrega = $recibido;
     $ticketact->cambio = $cambio;
