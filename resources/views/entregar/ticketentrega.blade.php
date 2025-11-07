@@ -26,7 +26,10 @@
     
     text-align: right;
 }
-
+thead th {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
     </style>
 <div style="width:100%; " class="text-center centrar"> 
     <img src="../public/fotos/logo24.png" alt="" width="35%">
@@ -51,9 +54,11 @@
    TICKET Nº {{ $ticketact[0]->id }}
    <br>
    <div class="centrar" >
-    <h4 style="margin-bottom: 10px;">Código de Barras</h4>
+   
     {{-- Código de barras con milon/barcode --}}
+    <div style="margin-left: 127px;">
     {!! DNS1D::getBarcodeHTML($ticketact[0]->id, 'C128', 2, 50) !!}
+    </div>
 </div>
    <p></p>
    <hr>
@@ -64,10 +69,11 @@
    <span style="float:right; ">Hora: {{ now()->Format('H:i A')}}</span> 
    </div>
 
+
     
    <div class="centrar">
     <table class="centrar" style="width: 100%; display:table; " >
-        <thead  class="centrar" style="border-top: 2px solid black; border-bottom: 2px solid black; ">
+        <thead  class="centrar" >
             <tr>
             <th style="width: 250px;">DESCRIPCION</th>
            
@@ -164,10 +170,9 @@
 <hr>
 <div class="centrar">¡¡GRACIAS POR PREFERIRNOS!!</div>
 <hr>
-<div class="centrar" style="margin-top: 20px;">
-    <h4 style="margin-bottom: 10px;">Código QR</h4>
-    {{-- Código QR con simple-qrcode --}}
-    {!! QrCode::size(100)->generate($ticketact[0]->id) !!}
+<div class="centrar" style="margin-top: 20px; margin-left: 150px;">
+    
+    {!! DNS2D::getBarcodeHTML(strval($ticketact[0]->id), 'QRCODE', 5, 5) !!}
 </div>
 </div>
 

@@ -216,6 +216,7 @@ public function guardarLote(Request $request)
     $metodo = $request->input('metodo');
     $nota = $request->input('nota');
     $subtotal = $request->input('subtotal');
+    //dd( $subtotal);
     $recibido = $request->input('recibido');
     $cambio = $request->input('cambio');
     $agencia = $request->input('agencia');
@@ -245,8 +246,11 @@ $ticketact = Entrega::where('id', $entrega->id)
         $envios = Envio::where('entrega2', $entrega->id)
         ->get();
 
+        
+    
+    
     $pdf = PDF::loadView('entregar.ticketentrega', ['ticketact'=>$ticketact, 'envios'=>$envios]);
-       
+
         $customPaper = array(0,0,360,850);
        
         $pdf->setPaper($customPaper );

@@ -173,7 +173,7 @@ input.is-invalid {
                                                                 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Subtotal</label>
-                            <input type="text" id="subtotal-lote" class="form-control" readonly>
+                            <input type="text" id="subtotal-lote" name="subtotal" class="form-control" readonly>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Descuento</label>
