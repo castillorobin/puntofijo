@@ -6,6 +6,7 @@ use App\Models\Envio;
 use Illuminate\Http\Request;
 use App\Models\Empleado;
 use App\Models\Ticktpago;
+use App\Models\Entrega;
 use Illuminate\Support\Facades\Auth;
 use PDF; 
 use Carbon\Carbon;
@@ -214,18 +215,44 @@ public function guardarLote(Request $request)
     $descuento = $request->input('descuento');
     $metodo = $request->input('metodo');
     $nota = $request->input('nota');
+    $subtotal = $request->input('subtotal');
+    $recibido = $request->input('recibido');
+    $cambio = $request->input('cambio');
+    $agencia = $request->input('agencia');
+
+    $entrega = new Entrega();
+    $entrega->cajero = Auth::user()->name;
+    $entrega->metodo = $metodo;
+    $entrega->nota = $nota;
+    $entrega->total = $total;
+    $entrega->descuento = $descuento;
+    $entrega->subtotal = $subtotal;
+    $entrega->entrega = $recibido;
+    $entrega->cambio = $cambio;
+    $entrega->agencia = $agencia;
+    $entrega->save();
 
     foreach ($guias as $guia) {
         \DB::table('envios')->where('guia', $guia)->update([
             'estado' => 'Entregado',
-            'fecha_entrega' => now(),
-            'metodo_pago' => $metodo,
-            'nota' => $nota,
-            'updated_at' => now(),
+            'entrega2' => $entrega->id,
+            
         ]);
     }
 
-    return redirect()->back()->with('success', 'Entrega en lote registrada correctamente.');
+$ticketact = Entrega::where('id', $entrega->id)
+        ->get();
+        $envios = Envio::where('entrega2', $entrega->id)
+        ->get();
+
+    $pdf = PDF::loadView('entregar.ticketentrega', ['ticketact'=>$ticketact, 'envios'=>$envios]);
+       
+        $customPaper = array(0,0,360,750);
+       
+        $pdf->setPaper($customPaper );
+        return $pdf->stream();
+
+   // return redirect()->back()->with('success', 'Entrega en lote registrada correctamente.');
 }
 
 
