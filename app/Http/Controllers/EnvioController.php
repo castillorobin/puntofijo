@@ -140,11 +140,8 @@ public function guardarEntrega(Request $request)
         return back()->with('error', 'No se encontró el envío con la guía proporcionada.');
     }
 
-    
+/*    
    
-
-    
-
     $ticketact = new Ticktpago();
         $ticketact->userpago = Auth::user()->name;
         $ticketact->cajero = Auth::user()->name;
@@ -160,6 +157,20 @@ public function guardarEntrega(Request $request)
         $ticketact->agencia = $agencia;
         $ticketact->comercio = $envios->comercio;
         $ticketact->save();
+*/
+
+
+        $ticketact = new Entrega();
+    $ticketact->cajero = Auth::user()->name;
+    $ticketact->metodo = $metodo;
+    $ticketact->nota = $nota;
+    $ticketact->total = $total;
+    $ticketact->descuento = $descuento;
+    $ticketact->subtotal = $subtotal;
+    $ticketact->entrega = $recibido;
+    $ticketact->cambio = $cambio;
+    $ticketact->agencia = $agencia;
+    $ticketact->save();
 
 
  $updateData = [
@@ -182,9 +193,9 @@ public function guardarEntrega(Request $request)
 
 // Actualizar el registro
     \DB::table('envios')->where('guia', $guia)->update($updateData);
-        $pdf = PDF::loadView('entregar.pagoticketlista', ['ticketact'=>$ticketact, 'envios'=>$envios]);
+       $pdf = PDF::loadView('entregar.ticketentrega', ['ticketact'=>$ticketact, 'envios'=>$envios]);
        
-        $customPaper = array(0,0,360,750);
+        $customPaper = array(0,0,360,850);
        
         $pdf->setPaper($customPaper );
         return $pdf->stream();
