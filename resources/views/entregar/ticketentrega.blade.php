@@ -170,9 +170,9 @@ thead th {
 <hr>
 <div class="centrar">¡¡GRACIAS POR PREFERIRNOS!!</div>
 <hr>
-<div class="centrar" style="margin-top: 20px; margin-left: 150px;">
+<div class="centrar" style="margin-top: 20px; margin-left: 90px;">
     
-    {!! DNS2D::getBarcodeHTML(strval($ticketact[0]->id), 'QRCODE', 5, 5) !!}
+    {!! DNS2D::getBarcodeHTML(strval($ticketact[0]->id), 'QRCODE', 10, 10) !!}
 </div>
 </div>
 
