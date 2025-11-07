@@ -50,6 +50,11 @@
                         <div class="fecha centrar " style="font-weight: bolder;">
    TICKET Nº {{ $ticketact[0]->id }}
    <br>
+   <div class="centrar">
+    <h4 style="margin-bottom: 10px;">Código de Barras</h4>
+    {{-- Código de barras con milon/barcode --}}
+    {!! DNS1D::getBarcodeHTML($ticketact[0]->id, 'C128', 2, 50) !!}
+</div>
    <p></p>
    <hr>
    </div>
@@ -159,7 +164,11 @@
 <hr>
 <div class="centrar">¡¡GRACIAS POR PREFERIRNOS!!</div>
 <hr>
-
+<div class="centrar" style="margin-top: 20px;">
+    <h4 style="margin-bottom: 10px;">Código QR</h4>
+    {{-- Código QR con simple-qrcode --}}
+    {!! QrCode::size(100)->generate($ticketact[0]->id) !!}
+</div>
 </div>
 
    
