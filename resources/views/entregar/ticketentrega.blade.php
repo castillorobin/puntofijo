@@ -50,7 +50,7 @@
                         <div class="fecha centrar " style="font-weight: bolder;">
    TICKET Nº {{ $ticketact[0]->id }}
    <br>
-   <div class="centrar">
+   <div class="centrar" >
     <h4 style="margin-bottom: 10px;">Código de Barras</h4>
     {{-- Código de barras con milon/barcode --}}
     {!! DNS1D::getBarcodeHTML($ticketact[0]->id, 'C128', 2, 50) !!}

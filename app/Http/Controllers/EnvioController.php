@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\Envio;
 use Illuminate\Http\Request;
 use App\Models\Empleado;
@@ -247,7 +247,7 @@ $ticketact = Entrega::where('id', $entrega->id)
 
     $pdf = PDF::loadView('entregar.ticketentrega', ['ticketact'=>$ticketact, 'envios'=>$envios]);
        
-        $customPaper = array(0,0,360,750);
+        $customPaper = array(0,0,360,850);
        
         $pdf->setPaper($customPaper );
         return $pdf->stream();
