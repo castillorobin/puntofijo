@@ -193,6 +193,12 @@ public function guardarEntrega(Request $request)
 
 // Actualizar el registro
     \DB::table('envios')->where('guia', $guia)->update($updateData);
+
+
+$ticketact = Entrega::where('id', $ticketact->id)
+        ->get();
+        $envios = Envio::where('entrega2', $ticketact->id)
+        ->get();
        $pdf = PDF::loadView('entregar.ticketentrega', ['ticketact'=>$ticketact, 'envios'=>$envios]);
        
         $customPaper = array(0,0,360,850);
