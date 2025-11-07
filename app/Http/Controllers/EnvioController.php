@@ -165,7 +165,7 @@ public function guardarEntrega(Request $request)
     $entrega->metodo = $metodo;
     $entrega->nota = $nota;
     $entrega->total = $total;
-    $entrega->descuento = $descuento;
+    $entrega->desceunto = $descuento;
     $entrega->subtotal = $subtotal;
     $entrega->entrega = $recibido;
     $entrega->cambio = $cambio;
