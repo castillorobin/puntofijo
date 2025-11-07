@@ -155,7 +155,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <option value="Transferencia_comercio">Transferencia al comercio</option>
                             </select>
                         </div>
-
+                                                                
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Subtotal</label>
                             <input type="text" id="subtotal-lote" class="form-control" readonly>
@@ -170,13 +170,57 @@ License: For each use you must have a valid license purchased only from above li
                         </div>
                     </div>
 
-                    <div class="bg-light p-3 rounded text-end">
-                        <strong>Subtotal: </strong><span id="lbl-subtotal" class="text-success">$0.00</span><br>
-                        <strong>Descuento: </strong><span id="lbl-descuento" class="text-danger">$0.00</span><br>
-                        <strong>Total: </strong><span id="lbl-total" class="fs-4 fw-bold text-dark">$0.00</span>
-                        <input type="hidden" name="total" id="total-lote">
+
+                    <div class="d-flex flex-stack bg-success rounded-3 p-6 mb-5">
+                        <!-- Content -->
+                        <div class="fs-6 fw-bold text-white">
+                            <span class="d-block lh-1 mb-2">Subtotal</span>
+                            <span class="d-block mb-2">Descuento</span>
+                            <span class="d-block fs-2qx lh-1">Total</span>
+                        </div>
+                        <!-- Content -->
+                        <div class="fs-6 fw-bold text-white text-end">
+                                                                        
+                            <span id="lbl-subtotal" name="stotal" class="d-block lh-1 mb-2" data-kt-pos-element="total">$0.00</span>
+                            <span id="lbl-descuento" name="sdescuento" class="d-block mb-2" data-kt-pos-element="discount">$0.00</span>
+                            <span class="d-block fs-2qx lh-1" id="lbl-total" name="totalito" data-kt-pos-element="tot1">$0.00</span>
+                                        <input type="hidden" name="total" id="total-lote">                                                                                                       
+                        </div>
                     </div>
+
+                   
                 </div>
+
+                 <div class="row mb-8">
+                                                                    <!-- Content -->
+                                                                  
+                                                                   <div class="col-6 d-flex align-items-center justify-content-end">
+                                                                    <span class="form-label">Recibido</span>
+                                                                    </div>
+                                                                     <div class="col-6">
+                                                                    <input type="text" name="recibido" id="recibido" class="form-control form-control-solid" placeholder="$0.00" />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                <div class="col-6 d-flex align-items-center justify-content-end">
+                                                                    <span class="form-label">Cambio</span>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <!-- Visible SOLO para mostrar con $ -->
+                                                                    <input type="text" id="cambio_mostrado" class="form-control form-control-solid" placeholder="$0.00" readonly/>
+
+                                                                    <!-- Oculto: este se manda al backend sin símbolos -->
+                                                                    <input type="hidden" name="cambio" id="cambio_num" value="0">
+                                                                </div>
+                                                                </div>
+
+
+
+
+
+
+
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Entregar</button>

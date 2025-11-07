@@ -692,18 +692,18 @@ input.is-invalid {
                                                                 </div>
 
                                                                 <div class="row">
-  <div class="col-6 d-flex align-items-center justify-content-end">
-    <span class="form-label">Cambio</span>
-  </div>
-  <div class="col-6">
-    <!-- Visible SOLO para mostrar con $ -->
-    <input type="text" id="cambio_mostrado" class="form-control form-control-solid" placeholder="$0.00" readonly/>
+                                                                <div class="col-6 d-flex align-items-center justify-content-end">
+                                                                    <span class="form-label">Cambio</span>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <!-- Visible SOLO para mostrar con $ -->
+                                                                    <input type="text" id="cambio_mostrado" class="form-control form-control-solid" placeholder="$0.00" readonly/>
 
-    <!-- Oculto: este se manda al backend sin símbolos -->
-    <input type="hidden" name="cambio" id="cambio_num" value="0">
-  </div>
-</div>
- 
+                                                                    <!-- Oculto: este se manda al backend sin símbolos -->
+                                                                    <input type="hidden" name="cambio" id="cambio_num" value="0">
+                                                                </div>
+                                                                </div>
+                                                                
                                                                 
                                                                 <input type="text" name="tota" id="tota" hidden>
                                                                 <input type="text" name="stota" id="stota" hidden>
