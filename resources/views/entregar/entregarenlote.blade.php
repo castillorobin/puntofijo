@@ -241,7 +241,7 @@ input.is-invalid {
 
 
 	</x-default-layout>
-   
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Librería QR -->
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
@@ -289,9 +289,17 @@ document.addEventListener("DOMContentLoaded", function() {
                         actualizarTotales();
                         btnEntregar.disabled = false;
                     }
-                } else {
-                    alert("Código no encontrado.");
-                }
+                } } else {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Guía duplicada',
+        text: `La guía ${envio.guia} ya fue agregada a la lista.`,
+        timer: 2500,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end',
+    });
+}
             });
         } catch (err) {
             console.error("Error al iniciar cámara:", err);
