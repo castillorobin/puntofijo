@@ -160,23 +160,23 @@ public function guardarEntrega(Request $request)
 */
 
 
-        $ticketact = new Entrega();
-    $ticketact->cajero = Auth::user()->name;
-    $ticketact->metodo = $metodo;
-    $ticketact->nota = $nota;
-    $ticketact->total = $total;
-    $ticketact->desceunto = $descuento;
-    $ticketact->subtotal = $subtotal;
-    $ticketact->entrega = $recibido;
-    $ticketact->cambio = $cambio;
-    $ticketact->agencia = $agencia;
-    $ticketact->save();
+        $entrega = new Entrega();
+    $entrega->cajero = Auth::user()->name;
+    $entrega->metodo = $metodo;
+    $entrega->nota = $nota;
+    $entrega->total = $total;
+    $entrega->descuento = $descuento;
+    $entrega->subtotal = $subtotal;
+    $entrega->entrega = $recibido;
+    $entrega->cambio = $cambio;
+    $entrega->agencia = $agencia;
+    $entrega->save();
 
 
  $updateData = [
         'estado' => 'Entregado',
-        'fecha_entrega' => now(),
-        'pagoticket' => $ticketact->id,
+        //'fecha_entrega' => now(),
+        'entrega2' => $entrega->id,
         'updated_at' => now(),
     ];
 
@@ -195,10 +195,11 @@ public function guardarEntrega(Request $request)
     \DB::table('envios')->where('guia', $guia)->update($updateData);
 
 
-$ticketact = Entrega::where('id', $ticketact->id)
+$ticketact = Entrega::where('id', $entrega->id)
         ->get();
-        $envios = Envio::where('entrega2', $ticketact->id)
+        $envios = Envio::where('entrega2', $entrega->id)
         ->get();
+
        $pdf = PDF::loadView('entregar.ticketentrega', ['ticketact'=>$ticketact, 'envios'=>$envios]);
        
         $customPaper = array(0,0,360,850);
