@@ -270,36 +270,49 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Consultar datos del envío via AJAX
                 const response = await fetch(`/envio/buscar/${qrCodeMessage}`);
                 if (response.ok) {
-                    const envio = await response.json();
-                    if (!listaGuias.includes(envio.guia)) {
-                        listaGuias.push(envio.guia);
+    const envio = await response.json();
 
-                        const fila = `
-                            <tr data-guia="${envio.guia}">
-                                <td>${envio.guia}</td>
-                                <td>${envio.comercio}</td>
-                                <td>${envio.destinatario}</td>
-                                <td>${envio.direccion}</td>
-                                <td>${envio.nota || ''}</td>
-                                <td class="text-end">$${parseFloat(envio.total).toFixed(2)}</td>
-                                <td><button class="btn btn-sm btn-danger btn-quitar">X</button></td>
-                            </tr>
-                        `;
-                        tabla.insertAdjacentHTML('beforeend', fila);
-                        actualizarTotales();
-                        btnEntregar.disabled = false;
-                    }
-                } else {
-                    Swal.fire({
-        icon: 'warning',
-        title: 'Guía duplicada',
-        text: `La guía ${envio.guia} ya fue agregada a la lista.`,
+    // Verificar duplicado
+    if (!listaGuias.includes(envio.guia)) {
+        listaGuias.push(envio.guia);
+
+        const fila = `
+            <tr data-guia="${envio.guia}">
+                <td>${envio.guia}</td>
+                <td>${envio.comercio}</td>
+                <td>${envio.destinatario}</td>
+                <td>${envio.direccion}</td>
+                <td>${envio.nota || ''}</td>
+                <td class="text-end">$${parseFloat(envio.total).toFixed(2)}</td>
+                <td><button class="btn btn-sm btn-danger btn-quitar">X</button></td>
+            </tr>
+        `;
+        tabla.insertAdjacentHTML('beforeend', fila);
+        actualizarTotales();
+        btnEntregar.disabled = false;
+    } else {
+        // 🚨 AQUÍ va el mensaje de duplicado
+        Swal.fire({
+            icon: 'warning',
+            title: 'Guía duplicada',
+            text: `La guía ${envio.guia} ya fue agregada a la lista.`,
+            timer: 2500,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end',
+        });
+    }
+} else {
+    Swal.fire({
+        icon: 'error',
+        title: 'Guía no encontrada',
+        text: 'No se encontró la guía en la base de datos.',
         timer: 2500,
         showConfirmButton: false,
         toast: true,
         position: 'top-end',
     });
-                }
+}
             });
         } catch (err) {
             console.error("Error al iniciar cámara:", err);
