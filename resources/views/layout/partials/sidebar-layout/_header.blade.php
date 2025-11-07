@@ -9,9 +9,11 @@
 		<!--end::Sidebar mobile toggle-->
 		<!--begin::Mobile logo-->
 		<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-			<a href="/" class="d-lg-none">
-				<img alt="Logo" src="{{ image('logos/default-small.svg') }}" class="h-30px" />
-			</a>
+			
+			<h1 class="d-flex flex-column text-dark fw-bold my-1">
+								<span class="text-black fs-1">Hola, {{ Auth::user()->name }}</span>
+								<small class="text-gray-600 fs-6 fw-normal pt-2"></small>
+							</h1>
 		</div>
 		<!--end::Mobile logo-->
 		<!--begin::Header wrapper-->

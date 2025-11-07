@@ -4,7 +4,7 @@
 	<div class="app-navbar-item align-items-stretch ms-1 ms-md-3">
 		@include(config('settings.KT_THEME_LAYOUT_DIR').'/partials/sidebar-layout/search/_dropdown')
 	</div>
-	
+ Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt quos suscipit in voluptatem veniam inventore praesentium consectetur quibusdam repudiandae error sequi tempora rerum reprehenderit veritatis ipsum corporis omnis, et nulla.
 	<!--begin::Activities-->
 	<div class="app-navbar-item ms-1 ms-md-3">
 		<!--begin::Drawer toggle-->

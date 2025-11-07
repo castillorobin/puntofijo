@@ -7,6 +7,7 @@
 			<a href="/">
 				<img alt="Logo" src="{{ image('logos/default-dark.svg') }}" class="h-20px h-lg-30px app-sidebar-logo-default" />
 			</a>
+			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt quos suscipit in voluptatem veniam inventore praesentium consectetur quibusdam repudiandae error sequi tempora rerum reprehenderit veritatis ipsum corporis omnis, et nulla.
 		</div>
 		<!--end::Logo-->
 		<!--begin::Header wrapper-->

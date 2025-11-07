@@ -19,6 +19,7 @@
 		<li class="breadcrumb-item text-muted">Dashboards</li>
 		<!--end::Item-->
 	</ul>
+	Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt quos suscipit in voluptatem veniam inventore praesentium consectetur quibusdam repudiandae error sequi tempora rerum reprehenderit veritatis ipsum corporis omnis, et nulla.
 	<!--end::Breadcrumb-->
 </div>
 <!--end::Page title-->
