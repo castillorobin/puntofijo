@@ -289,8 +289,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         actualizarTotales();
                         btnEntregar.disabled = false;
                     }
-                } } else {
-    Swal.fire({
+                } else {
+                    Swal.fire({
         icon: 'warning',
         title: 'Guía duplicada',
         text: `La guía ${envio.guia} ya fue agregada a la lista.`,
@@ -299,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function() {
         toast: true,
         position: 'top-end',
     });
-}
+                }
             });
         } catch (err) {
             console.error("Error al iniciar cámara:", err);
