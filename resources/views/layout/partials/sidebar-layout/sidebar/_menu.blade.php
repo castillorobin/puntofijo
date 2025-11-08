@@ -76,7 +76,7 @@
 							<div class="menu-item">
 							<a class="menu-link " href="{{ url('/entregarenlote') }}">
 								<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-								<span class="menu-title">Entregar en Lote</span>
+								<span class="menu-title">Entrega multiple</span>
 							</a>
 							</div>
 						</div>

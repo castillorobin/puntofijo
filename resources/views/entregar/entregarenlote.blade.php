@@ -126,7 +126,7 @@ input.is-invalid {
             <div class="text-end mt-4">
                  <button type="button" id="btn-limpiar" class="btn btn-light-danger">Limpiar lista</button>
                 <button type="button" id="btn-entregar-lote" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEntregarLote" disabled>
-                    <i class="fas fa-check-circle"></i> Entrega multiple 
+                    <i class="fas fa-check-circle"></i> Entregar
                 </button>
             </div>
 
