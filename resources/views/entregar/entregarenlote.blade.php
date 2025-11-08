@@ -91,7 +91,7 @@ input.is-invalid {
 
     <div class="card shadow-sm">
         <div class="card-header bg-light">
-            <h3 class="card-title text-gray-700 fw-bold text-uppercase">Entregar multiple</h3>
+            <h3 class="card-title text-gray-700 fw-bold text-uppercase">Entrega multiple</h3>
         </div>
 
         <div class="card-body">
@@ -126,7 +126,7 @@ input.is-invalid {
             <div class="text-end mt-4">
                  <button type="button" id="btn-limpiar" class="btn btn-light-danger">Limpiar lista</button>
                 <button type="button" id="btn-entregar-lote" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEntregarLote" disabled>
-                    <i class="fas fa-check-circle"></i> Entregar multiple 
+                    <i class="fas fa-check-circle"></i> Entrega multiple 
                 </button>
             </div>
 
