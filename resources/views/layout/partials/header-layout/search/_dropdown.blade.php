@@ -10,7 +10,6 @@
 			{!! getIcon('magnifier', 'fs-2 fs-md-1') !!}
 		</div>
 	</div>
-	Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt quos suscipit in voluptatem veniam inventore praesentium consectetur quibusdam repudiandae error sequi tempora rerum reprehenderit veritatis ipsum corporis omnis, et nulla.
 	<!--end::Search toggle-->
 	<!--begin::Menu-->
 	<div data-kt-search-element="content" class="menu menu-sub menu-sub-dropdown p-7 w-325px w-md-375px">
