@@ -6,7 +6,7 @@
 		<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
 			
 				<!--end:Menu item-->
-			</div>
+			
 			<!--end:Menu sub-->
 		</div>
 		<!--end:Menu item-->
