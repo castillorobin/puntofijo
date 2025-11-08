@@ -91,7 +91,7 @@ input.is-invalid {
 
     <div class="card shadow-sm">
         <div class="card-header bg-light">
-            <h3 class="card-title text-gray-700 fw-bold text-uppercase">Entregar en Lote</h3>
+            <h3 class="card-title text-gray-700 fw-bold text-uppercase">Entregar multiple</h3>
         </div>
 
         <div class="card-body">
@@ -100,7 +100,7 @@ input.is-invalid {
             <div class="d-flex align-items-center mb-4">
                 <input id="qr-input" type="text" placeholder="Escanear código QR" readonly
                     class="form-control me-3" style="max-width: 300px;" />
-                <button type="button" id="btn-limpiar" class="btn btn-light-danger">Limpiar lista</button>
+               
             </div>
 
             <div id="qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
@@ -124,8 +124,9 @@ input.is-invalid {
             </div>
 
             <div class="text-end mt-4">
+                 <button type="button" id="btn-limpiar" class="btn btn-light-danger">Limpiar lista</button>
                 <button type="button" id="btn-entregar-lote" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEntregarLote" disabled>
-                    <i class="fas fa-check-circle"></i> Entregar en Lote
+                    <i class="fas fa-check-circle"></i> Entregar multiple 
                 </button>
             </div>
 
