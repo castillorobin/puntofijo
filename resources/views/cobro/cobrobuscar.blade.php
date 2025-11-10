@@ -182,7 +182,7 @@ License: For each use you must have a valid license purchased only from above li
             <!--begin:::Tab pane-->
             <div class="tab-pane fade active show" id="kt_ecommerce_settings_general" role="tabpanel">
       <!-- PERSONALIZADO -->
-<form class="guardar-envios" data-tipo="personalizado">
+<form class="guardar-envios" data-tipo="Personalizado">
     <div class="row mb-7">
         <div class="col-md-9 offset-md-3">
             <input id="personalizado-qr-input" type="text" placeholder="Escanear QR" readonly class="form-control me-2" style="max-width: 300px;" />
@@ -230,35 +230,21 @@ License: For each use you must have a valid license purchased only from above li
 
             <!--begin:::Tab pane-->
             <div class="tab-pane fade" id="kt_ecommerce_settings_store" role="tabpanel">
-               
-<!--begin::Form-->
-<form id="kt_ecommerce_settings_general_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
-    <!--begin::Heading-->
+              <!-- Punto fijo -->
+<form class="guardar-envios" data-tipo="Punto fijo">
     <div class="row mb-7">
         <div class="col-md-9 offset-md-3">
-            <div class="qr-container d-flex align-items-center">
-											
-    <input id="qr-input" type="text" placeholder="Escanear código QR" readonly class="form-control me-2" style="max-width: 300px;" />
-
-    
-</div>
-<div id="qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
+            <input id="puntofijo-qr-input" type="text" placeholder="Escanear QR" readonly class="form-control me-2" style="max-width: 300px;" />
+            <div id="puntofijo-qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
         </div>
     </div>
-    
-   <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_customers_table" style="width: 100%;"><colgroup><col data-dt-column="0" style="width: 33.5938px;"><col data-dt-column="1" style="width: 125px;"><col data-dt-column="2" style="width: 145.047px;"><col data-dt-column="3" style="width: 125px;"><col data-dt-column="4" style="width: 125px;"><col data-dt-column="5" style="width: 125px;"><col data-dt-column="6" style="width: 97.2188px;"></colgroup>
-    <thead>
-        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-			
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title"># de guía</span><span class="dt-column-order" role="button" aria-label="Customer Name: Activate to sort" tabindex="0"></span></div></th>
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title">Tipo de paquete</span><span class="dt-column-order" role="button" aria-label="Email: Activate to sort" tabindex="0"></span></div></th>
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="3" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title">Accion</span><span class="dt-column-order" role="button" aria-label="Company: Activate to sort" tabindex="0"></span></div></th>
-			</tr>
-    </thead>
-    <tbody class="fw-semibold text-gray-600">
-	
-	</tbody>
-<tfoot></tfoot></table>
+
+    <table class="table table-striped" id="puntofijo-tabla">
+        <thead>
+            <tr><th># Guía</th><th>Tipo</th><th>Acción</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
     <!--begin::Action buttons-->
     <div class="row py-5">
         <div class="col-md-9 offset-md-3">
@@ -289,35 +275,21 @@ License: For each use you must have a valid license purchased only from above li
 
             <!--begin:::Tab pane-->
             <div class="tab-pane fade" id="kt_ecommerce_settings_localization" role="tabpanel">
-                
-<!--begin::Form-->
-<form id="kt_ecommerce_settings_general_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
-    <!--begin::Heading-->
+            <!-- PERSONALIZADO DEPARTAMENTAL-->
+<form class="guardar-envios" data-tipo="Personalizado Departamental">
     <div class="row mb-7">
         <div class="col-md-9 offset-md-3">
-            <div class="qr-container d-flex align-items-center">
-											
-    <input id="qr-input" type="text" placeholder="Escanear código QR" readonly class="form-control me-2" style="max-width: 300px;" />
-
-    
-</div>
-<div id="qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
+            <input id="personalizado-departamental-qr-input" type="text" placeholder="Escanear QR" readonly class="form-control me-2" style="max-width: 300px;" />
+            <div id="personalizado-departamental-qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
         </div>
     </div>
-    
-   <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_customers_table" style="width: 100%;"><colgroup><col data-dt-column="0" style="width: 33.5938px;"><col data-dt-column="1" style="width: 125px;"><col data-dt-column="2" style="width: 145.047px;"><col data-dt-column="3" style="width: 125px;"><col data-dt-column="4" style="width: 125px;"><col data-dt-column="5" style="width: 125px;"><col data-dt-column="6" style="width: 97.2188px;"></colgroup>
-    <thead>
-        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-			
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title"># de guía</span><span class="dt-column-order" role="button" aria-label="Customer Name: Activate to sort" tabindex="0"></span></div></th>
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title">Tipo de paquete</span><span class="dt-column-order" role="button" aria-label="Email: Activate to sort" tabindex="0"></span></div></th>
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="3" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title">Accion</span><span class="dt-column-order" role="button" aria-label="Company: Activate to sort" tabindex="0"></span></div></th>
-			</tr>
-    </thead>
-    <tbody class="fw-semibold text-gray-600">
-	
-	</tbody>
-<tfoot></tfoot></table>
+
+    <table class="table table-striped" id="personalizado-departamental-tabla">
+        <thead>
+            <tr><th># Guía</th><th>Tipo</th><th>Acción</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
     <!--begin::Action buttons-->
     <div class="row py-5">
         <div class="col-md-9 offset-md-3">
@@ -348,35 +320,21 @@ License: For each use you must have a valid license purchased only from above li
 
             <!--begin:::Tab pane-->
             <div class="tab-pane fade" id="kt_ecommerce_settings_products" role="tabpanel">
-           
-<!--begin::Form-->
-<form id="kt_ecommerce_settings_general_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
-    <!--begin::Heading-->
+             <!-- PERSONALIZADO -->
+<form class="guardar-envios" data-tipo="Casillero">
     <div class="row mb-7">
         <div class="col-md-9 offset-md-3">
-            <div class="qr-container d-flex align-items-center">
-											
-    <input id="qr-input" type="text" placeholder="Escanear código QR" readonly class="form-control me-2" style="max-width: 300px;" />
-
-    
-</div>
-<div id="qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
+            <input id="casillero-qr-input" type="text" placeholder="Escanear QR" readonly class="form-control me-2" style="max-width: 300px;" />
+            <div id="casillero-qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
         </div>
     </div>
-    
-   <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_customers_table" style="width: 100%;"><colgroup><col data-dt-column="0" style="width: 33.5938px;"><col data-dt-column="1" style="width: 125px;"><col data-dt-column="2" style="width: 145.047px;"><col data-dt-column="3" style="width: 125px;"><col data-dt-column="4" style="width: 125px;"><col data-dt-column="5" style="width: 125px;"><col data-dt-column="6" style="width: 97.2188px;"></colgroup>
-    <thead>
-        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-			
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title"># de guía</span><span class="dt-column-order" role="button" aria-label="Customer Name: Activate to sort" tabindex="0"></span></div></th>
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title">Tipo de paquete</span><span class="dt-column-order" role="button" aria-label="Email: Activate to sort" tabindex="0"></span></div></th>
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="3" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title">Accion</span><span class="dt-column-order" role="button" aria-label="Company: Activate to sort" tabindex="0"></span></div></th>
-			</tr>
-    </thead>
-    <tbody class="fw-semibold text-gray-600">
-	
-	</tbody>
-<tfoot></tfoot></table>
+
+    <table class="table table-striped" id="casillero-tabla">
+        <thead>
+            <tr><th># Guía</th><th>Tipo</th><th>Acción</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
     <!--begin::Action buttons-->
     <div class="row py-5">
         <div class="col-md-9 offset-md-3">
@@ -602,7 +560,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <td>${tipo.charAt(0).toUpperCase() + tipo.slice(1)}</td>
                                 <td>
                                     <button class="btn btn-sm btn-danger btn-quitar" data-tipo="${tipo}" data-codigo="${codigo}">
-                                        Quitar
+                                        Borrar
                                     </button>
                                 </td>
                             </tr>
