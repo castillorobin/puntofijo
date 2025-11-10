@@ -96,6 +96,9 @@ Route::get('/caja/exportarexcel/{id}', [App\Http\Controllers\CajaController::cla
 Route::get('/cobro/cobrar', [App\Http\Controllers\CobroController::class, 'cobro'] )->name('cobro') ;
 Route::post('/cobro/buscar', [App\Http\Controllers\CobroController::class, 'buscar'] )->name('cobro.buscar') ;
 
+Route::post('/envios/guardarQR', [EnvioController::class, 'guardarQR'])->name('envios.guardarQR');
+
+
 
 Route::post('/logout', function () {
     Auth::logout();

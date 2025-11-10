@@ -181,39 +181,26 @@ License: For each use you must have a valid license purchased only from above li
         <div class="tab-content" id="myTabContent">
             <!--begin:::Tab pane-->
             <div class="tab-pane fade active show" id="kt_ecommerce_settings_general" role="tabpanel">
-                
-    
-<!--begin::Form-->
-<form id="kt_ecommerce_settings_general_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
-    <!--begin::Heading-->
+      <!-- PERSONALIZADO -->
+<form class="guardar-envios" data-tipo="personalizado">
     <div class="row mb-7">
         <div class="col-md-9 offset-md-3">
-            <div class="qr-container d-flex align-items-center">
-											
-    <input id="qr-input" type="text" placeholder="Escanear código QR" readonly class="form-control me-2" style="max-width: 300px;" />
-
-    
-</div>
-<div id="qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
+            <input id="personalizado-qr-input" type="text" placeholder="Escanear QR" readonly class="form-control me-2" style="max-width: 300px;" />
+            <div id="personalizado-qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
         </div>
     </div>
-    
-   <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_customers_table" style="width: 100%;"><colgroup><col data-dt-column="0" style="width: 33.5938px;"><col data-dt-column="1" style="width: 125px;"><col data-dt-column="2" style="width: 145.047px;"><col data-dt-column="3" style="width: 125px;"><col data-dt-column="4" style="width: 125px;"><col data-dt-column="5" style="width: 125px;"><col data-dt-column="6" style="width: 97.2188px;"></colgroup>
-    <thead>
-        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-			
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title"># de guía</span><span class="dt-column-order" role="button" aria-label="Customer Name: Activate to sort" tabindex="0"></span></div></th>
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title">Tipo de paquete</span><span class="dt-column-order" role="button" aria-label="Email: Activate to sort" tabindex="0"></span></div></th>
-			<th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="3" rowspan="1" colspan="1"><div class="dt-column-header"><span class="dt-column-title">Accion</span><span class="dt-column-order" role="button" aria-label="Company: Activate to sort" tabindex="0"></span></div></th>
-			</tr>
-    </thead>
-    <tbody class="fw-semibold text-gray-600">
-	
-	</tbody>
-<tfoot></tfoot></table>
+
+    <table class="table table-striped" id="personalizado-tabla">
+        <thead>
+            <tr><th># Guía</th><th>Tipo</th><th>Acción</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+ <!--begin::Action buttons
+    <button type="submit" class="btn btn-primary">Guardar Personalizados</button>
 
 
-    <!--begin::Action buttons-->
+   -->
     <div class="row py-5">
         <div class="col-md-9 offset-md-3">
             <div class="d-flex">
@@ -535,8 +522,170 @@ License: For each use you must have a valid license purchased only from above li
 	
 	
 
+
+
+
+
+
+
+
+
+
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 </x-default-layout>
+
+
+<!--begin::Javascript-->
+
+
+        <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const comercio = @json($comercio->comercio);
+    const tiposEnvio = ['personalizado', 'puntofijo', 'departamental', 'casillero'];
+    const listas = {
+        personalizado: [],
+        puntofijo: [],
+        departamental: [],
+        casillero: []
+    };
+
+    let lectorQR = null;
+    let pestañaActiva = 'personalizado';
+
+    // Detectar cambio de pestaña
+    document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+        tab.addEventListener("shown.bs.tab", e => {
+            pestañaActiva = e.target.textContent.trim().toLowerCase()
+                .replace(' ', '')
+                .replace('departamental', 'departamental'); // normalizar nombre
+        });
+    });
+
+    // Inicializar escáner para todos los inputs
+    tiposEnvio.forEach(tipo => {
+        const inputQR = document.querySelector(`#${tipo}-qr-input`);
+        const readerDiv = document.querySelector(`#${tipo}-qr-reader`);
+        const tabla = document.querySelector(`#${tipo}-tabla tbody`);
+
+        inputQR.addEventListener("click", async function () {
+            if (!lectorQR) lectorQR = new Html5Qrcode(`${tipo}-qr-reader`);
+
+            readerDiv.style.display = "block";
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+            try {
+                await lectorQR.start(
+                    { facingMode: "environment" },
+                    config,
+                    (codigo) => {
+                        lectorQR.stop();
+                        readerDiv.style.display = "none";
+                        inputQR.value = codigo;
+
+                        if (listas[tipo].includes(codigo)) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Duplicado',
+                                text: `El código ${codigo} ya está en la lista.`,
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            return;
+                        }
+
+                        listas[tipo].push(codigo);
+                        const fila = `
+                            <tr>
+                                <td>${codigo}</td>
+                                <td>${tipo.charAt(0).toUpperCase() + tipo.slice(1)}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger btn-quitar" data-tipo="${tipo}" data-codigo="${codigo}">
+                                        Quitar
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                        tabla.insertAdjacentHTML('beforeend', fila);
+                    }
+                );
+            } catch (err) {
+                console.error("Error con cámara:", err);
+            }
+        });
+    });
+
+    // Eliminar una fila
+    document.body.addEventListener("click", e => {
+        if (e.target.classList.contains("btn-quitar")) {
+            const tipo = e.target.dataset.tipo;
+            const codigo = e.target.dataset.codigo;
+            listas[tipo] = listas[tipo].filter(c => c !== codigo);
+            e.target.closest("tr").remove();
+        }
+    });
+
+    // Guardar todos los registros
+    document.querySelectorAll("form.guardar-envios").forEach(form => {
+        form.addEventListener("submit", async e => {
+            e.preventDefault();
+
+            const tipo = e.target.dataset.tipo;
+            const guias = listas[tipo];
+            if (guias.length === 0) {
+                Swal.fire({ icon: 'info', text: 'No hay guías para guardar.' });
+                return;
+            }
+
+            try {
+                const response = await fetch("{{ route('envios.guardarQR') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        comercio: comercio,
+                        tipo_envio: tipo,
+                        guias: guias
+                    })
+                });
+
+                if (response.ok) {
+                    listas[tipo] = [];
+                    document.querySelector(`#${tipo}-tabla tbody`).innerHTML = "";
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Guardado',
+                        text: 'Guías registradas correctamente.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                } else {
+                    throw new Error("Error al guardar");
+                }
+            } catch (error) {
+                Swal.fire({ icon: 'error', text: 'Error al guardar los envíos.' });
+                console.error(error);
+            }
+        });
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+    <!--begin::Custom Javascript(used for this page only)-->
+
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	   {{-- Global Metronic Scripts --}}
     <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
