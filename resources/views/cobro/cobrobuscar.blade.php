@@ -423,6 +423,86 @@ License: For each use you must have a valid license purchased only from above li
         </div>
     </div>
     <!--end::Heading-->
+    <div class="row fv-row mb-7 fv-plugins-icon-container">
+        <div class="col-md-3 text-md-end">
+            <!--begin::Label-->
+            <label class="fs-6 fw-semibold form-label mt-3">
+                Cajero
+   <!--end::Label-->
+        </div>
+
+        <div class="col-md-9">
+            <!--begin::Input-->
+            <input type="text" class="form-control form-control-solid" name="cajero" value="">
+            <!--end::Input-->
+        </div>
+    </div>
+
+     <div class="row fv-row mb-7 fv-plugins-icon-container">
+        <div class="col-md-3 text-md-end">
+            <!--begin::Label-->
+            <label class="fs-6 fw-semibold form-label mt-3">
+                Agencia
+   <!--end::Label-->
+        </div>
+
+        <div class="col-md-9">
+            <!--begin::Input-->
+            <input type="text" class="form-control form-control-solid" name="agencia" value="">
+            <!--end::Input-->
+        </div>
+    </div>
+
+
+     <div class="row fv-row mb-7 fv-plugins-icon-container">
+        <div class="col-md-3 text-md-end">
+            <!--begin::Label-->
+            <label class="fs-6 fw-semibold form-label mt-3">
+                Metodo de pago
+   <!--end::Label-->
+        </div>
+
+        <div class="col-md-9">
+            <select class="form-select form-select-solid" name="metodo" id="metodo" required>
+                <option value="Efectivo">Efectivo</option>
+                                                                                    
+                <option value="Transferencia_empresa">Transferencia a la empresa</option>
+                <option value="Transferencia_comercio">Transferencia al comercio</option>
+                                                                                    
+            </select>
+        </div>
+    </div>
+
+
+    <div class="row fv-row mb-7 fv-plugins-icon-container">
+        <div class="col-md-3 text-md-end">
+            <!--begin::Label-->
+            <label class="fs-6 fw-semibold form-label mt-3">
+                Pago
+   <!--end::Label-->
+        </div>
+
+        <div class="col-md-9">
+            <!--begin::Input-->
+            <input type="text" class="form-control form-control-solid" name="pago" placeholder="0.00">
+            <!--end::Input-->
+        </div>
+    </div>
+
+    <div class="row fv-row mb-7 fv-plugins-icon-container">
+        <div class="col-md-3 text-md-end">
+            <!--begin::Label-->
+            <label class="fs-6 fw-semibold form-label mt-3">
+                Cambio
+   <!--end::Label-->
+        </div>
+
+        <div class="col-md-9">
+            <!--begin::Input-->
+            <input type="text" class="form-control form-control-solid" name="cambio" placeholder="0.00">
+            <!--end::Input-->
+        </div>
+    </div>
 
 
 
@@ -439,7 +519,7 @@ License: For each use you must have a valid license purchased only from above li
                 <!--begin::Button-->
                 <button type="submit" data-kt-ecommerce-settings-type="submit" class="btn btn-primary">
                     <span class="indicator-label">
-                        Guardar
+                        Guardar e imprimir
                     </span>
                     <span class="indicator-progress">
                         Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
