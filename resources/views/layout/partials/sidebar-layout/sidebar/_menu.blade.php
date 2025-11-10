@@ -82,6 +82,24 @@
 						</div>
 					</div>
 
+
+
+
+					<div data-kt-menu-trigger="click" id="menu-item-caja" class="menu-item menu-accordion">
+						<a  href="{{ url('/cobro/cobrar') }}">
+						<span class="menu-link">
+							<span class="menu-icon">{!! getIcon('setting-3', 'fs-2') !!}</span>
+							<span class="menu-title">Cobrar</span>
+						
+						</span>
+						</a>
+
+						
+					</div>
+
+
+
+
 				</div>
 			
 				

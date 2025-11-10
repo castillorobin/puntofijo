@@ -91,6 +91,12 @@ Route::get('/caja/exportarticket/{id}', [App\Http\Controllers\CajaController::cl
 Route::get('/caja/exportarpdf/{id}', [App\Http\Controllers\CajaController::class, 'exportarpdf'])->name('caja.exportarpdf');
 Route::get('/caja/exportarexcel/{id}', [App\Http\Controllers\CajaController::class, 'exportarExcel'])->name('caja.exportarExcel');
 
+
+//Cobro
+Route::get('/cobro/cobrar', [App\Http\Controllers\CobroController::class, 'cobro'] )->name('cobro') ;
+Route::post('/cobro/buscar', [App\Http\Controllers\CobroController::class, 'buscar'] )->name('cobro.buscar') ;
+
+
 Route::post('/logout', function () {
     Auth::logout();
     session()->invalidate();
