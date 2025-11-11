@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Empleado;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 use App\Models\Comercio;
@@ -17,7 +19,7 @@ class CobroController extends Controller
     {
         $comercio = Comercio::find($request->input('comercio'));
        
-       
-        return view('cobro.cobrobuscar', compact('comercio' ));
+       $empleado = Empleado::where('nombre', Auth::user()->name)->get();
+        return view('cobro.cobrobuscar', compact('comercio', 'empleado' ));
     } 
 }
