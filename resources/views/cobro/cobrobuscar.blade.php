@@ -673,6 +673,43 @@ document.addEventListener("DOMContentLoaded", function () {
                             });
                             return;
                         }
+                        try {
+        const res = await fetch("{{ route('envios.verificar') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({ guia: codigo })
+        });
+
+        const data = await res.json();
+        if (data.exists) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Guía ya registrada',
+                text: `La guía ${codigo} ya existe en el sistema.`,
+                toast: true,
+                position: 'top-end',
+                timer: 2000,
+                showConfirmButton: false
+            });
+            return;
+        }
+    } catch (err) {
+        console.error("Error al verificar la guía:", err);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error de conexión',
+            text: 'No se pudo verificar la guía en la base de datos.',
+            toast: true,
+            position: 'top-end',
+            timer: 2000,
+            showConfirmButton: false
+        });
+        return;
+    }
+
 
                         listas[clave].push(codigo);
                         tabla.insertAdjacentHTML('beforeend', `

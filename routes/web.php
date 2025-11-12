@@ -100,7 +100,8 @@ Route::post('/envios/guardarQR', [EnvioController::class, 'guardarQR'])->name('e
 
 
 Route::post('/cobros/cobrar', [CobroController::class, 'cobrar'])->name('cobros.cobrar');
-
+Route::post('/verificar-guia', [App\Http\Controllers\EnviosController::class, 'verificarGuia'])
+    ->name('envios.verificar');
 
 
 

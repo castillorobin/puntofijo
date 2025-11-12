@@ -277,5 +277,18 @@ $ticketact = Entrega::where('id', $entrega->id)
    // return redirect()->back()->with('success', 'Entrega en lote registrada correctamente.');
 }
 
+public function verificarGuia(Request $request)
+{
+    $guia = $request->input('guia');
+
+    $existe = \DB::table('envios')
+        ->where('guia', $guia)
+        ->exists();
+
+    return response()->json([
+        'exists' => $existe
+    ]);
+}
+
 
 }
