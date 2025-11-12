@@ -99,6 +99,10 @@ Route::post('/cobro/buscar', [App\Http\Controllers\CobroController::class, 'busc
 Route::post('/envios/guardarQR', [EnvioController::class, 'guardarQR'])->name('envios.guardarQR');
 
 
+Route::post('/cobros/cobrar', [CobroController::class, 'cobrar'])->name('cobros.cobrar');
+
+
+
 
 Route::post('/logout', function () {
     Auth::logout();

@@ -44,6 +44,20 @@ License: For each use you must have a valid license purchased only from above li
 	<!--end::Global Stylesheets Bundle-->
 <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css"/>
 	
+<style>
+input.is-valid {
+    border: 2px solid #28a745 !important;
+    background-color: #e6f9ec !important;
+    color: #155724 !important;
+    font-weight: 600;
+}
+input.is-invalid {
+    border: 2px solid #dc3545 !important;
+    background-color: #f8d7da !important;
+    color: #721c24 !important;
+    font-weight: 600;
+}
+</style>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -201,6 +215,13 @@ License: For each use you must have a valid license purchased only from above li
 
 
    -->
+
+   <div class="row mt-4">
+    <div class="col-md-3 offset-md-3">
+        <label class="form-label fw-semibold">Subtotal</label>
+        <input type="number" id="personalizado-subtotal" class="form-control" placeholder="0.00" min="0" step="0.01">
+    </div>
+</div>
     <div class="row py-5">
         <div class="col-md-9 offset-md-3">
             <div class="d-flex">
@@ -245,6 +266,13 @@ License: For each use you must have a valid license purchased only from above li
         </thead>
         <tbody></tbody>
     </table>
+
+    <div class="row mt-4">
+    <div class="col-md-3 offset-md-3">
+        <label class="form-label fw-semibold">Subtotal</label>
+        <input type="number" id="puntofijo-subtotal" class="form-control" placeholder="0.00" min="0" step="0.01">
+    </div>
+</div>
     <!--begin::Action buttons-->
     <div class="row py-5">
         <div class="col-md-9 offset-md-3">
@@ -290,6 +318,13 @@ License: For each use you must have a valid license purchased only from above li
         </thead>
         <tbody></tbody>
     </table>
+
+    <div class="row mt-4">
+    <div class="col-md-3 offset-md-3">
+        <label class="form-label fw-semibold">Subtotal</label>
+        <input type="number" id="personalizado-departamental-subtotal" class="form-control" placeholder="0.00" min="0" step="0.01">
+    </div>
+</div>
     <!--begin::Action buttons-->
     <div class="row py-5">
         <div class="col-md-9 offset-md-3">
@@ -335,6 +370,12 @@ License: For each use you must have a valid license purchased only from above li
         </thead>
         <tbody></tbody>
     </table>
+    <div class="row mt-4">
+    <div class="col-md-3 offset-md-3">
+        <label class="form-label fw-semibold">Subtotal</label>
+        <input type="number" id="casillero-subtotal" class="form-control" placeholder="0.00" min="0" step="0.01">
+    </div>
+</div>
     <!--begin::Action buttons-->
     <div class="row py-5">
         <div class="col-md-9 offset-md-3">
@@ -430,7 +471,7 @@ License: For each use you must have a valid license purchased only from above li
                                                                         <!--end::Table head-->
                                                                         <!--begin::Table body-->
                                                                         <tbody>
-                                                                            <h2>Datos de pagar</h2>
+                                                                            <h2>Datos de cobro</h2>
                                                                             <br>
                                                                             <div class="form-floating col-lg-12 mb-4">
                                                                                 <input type="text" class="form-control form-control-solid" name="cajero" id="cajero" placeholder="Cajero" value="{{ Auth::user()->name }}" required readonly />
@@ -471,7 +512,7 @@ License: For each use you must have a valid license purchased only from above li
 
 
                                                                              <div class="form-floating col-lg-12 mb-4">
-                                                                                <input type="text" class="form-control form-control-solid" name="total" id="total" value="0.00"  readonly/>
+                                                                                <input type="text" class="form-control form-control-solid" name="total" id="total" value="0.00" readonly />
                                                                                 <label for="Cajero">Total</label>
                                                                                
                                                                             </div>
@@ -488,7 +529,7 @@ License: For each use you must have a valid license purchased only from above li
                                                                                
                                                                             </div>
                                                                             <div class="form-floating col-lg-12 mb-4">
-                                                                                <input type="text" class="form-control form-control-solid" name="cambio" id="cambio" value="0.00"/>
+                                                                                <input type="text" class="form-control form-control-solid" name="cambio" id="cambio" value="0.00" readonly />
                                                                                 <label for="Cajero">Cambio</label>
                                                                                
                                                                             </div>
@@ -558,10 +599,18 @@ License: For each use you must have a valid license purchased only from above li
 <!--begin::Javascript-->
 
 
-        <script>
+<script>
 document.addEventListener("DOMContentLoaded", function () {
     const comercio = @json($comercio->comercio);
-    const tiposEnvio = ['personalizado', 'puntofijo', 'departamental', 'casillero'];
+
+    // 🔹 Definición consistente entre IDs HTML y claves internas
+    const tiposEnvio = [
+        { clave: 'personalizado', id: 'personalizado' },
+        { clave: 'puntofijo', id: 'puntofijo' },
+        { clave: 'departamental', id: 'personalizado-departamental' },
+        { clave: 'casillero', id: 'casillero' }
+    ];
+
     const listas = {
         personalizado: [],
         puntofijo: [],
@@ -569,27 +618,30 @@ document.addEventListener("DOMContentLoaded", function () {
         casillero: []
     };
 
+    const subtotales = {
+        personalizado: 0,
+        puntofijo: 0,
+        departamental: 0,
+        casillero: 0
+    };
+
     let lectorQR = null;
-    let pestañaActiva = 'personalizado';
 
-    // Detectar cambio de pestaña
-    document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
-        tab.addEventListener("shown.bs.tab", e => {
-            pestañaActiva = e.target.textContent.trim().toLowerCase()
-                .replace(' ', '')
-                .replace('departamental', 'departamental'); // normalizar nombre
-        });
-    });
+    // === Inicialización del escáner y subtotal por pestaña ===
+    tiposEnvio.forEach(({ clave, id }) => {
+        const inputQR = document.querySelector(`#${id}-qr-input`);
+        const readerDiv = document.querySelector(`#${id}-qr-reader`);
+        const tabla = document.querySelector(`#${id}-tabla tbody`);
+        const subtotalInput = document.querySelector(`#${id}-subtotal`);
 
-    // Inicializar escáner para todos los inputs
-    tiposEnvio.forEach(tipo => {
-        const inputQR = document.querySelector(`#${tipo}-qr-input`);
-        const readerDiv = document.querySelector(`#${tipo}-qr-reader`);
-        const tabla = document.querySelector(`#${tipo}-tabla tbody`);
+        if (!subtotalInput) {
+            console.warn(`⚠️ No se encontró el input subtotal para ${id}`);
+            return;
+        }
 
+        // Iniciar escáner QR
         inputQR.addEventListener("click", async function () {
-            if (!lectorQR) lectorQR = new Html5Qrcode(`${tipo}-qr-reader`);
-
+            if (!lectorQR) lectorQR = new Html5Qrcode(`${id}-qr-reader`);
             readerDiv.style.display = "block";
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
@@ -602,41 +654,48 @@ document.addEventListener("DOMContentLoaded", function () {
                         readerDiv.style.display = "none";
                         inputQR.value = codigo;
 
-                        if (listas[tipo].includes(codigo)) {
+                        if (listas[clave].includes(codigo)) {
                             Swal.fire({
                                 icon: 'warning',
                                 title: 'Duplicado',
                                 text: `El código ${codigo} ya está en la lista.`,
                                 toast: true,
                                 position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 2000
+                                timer: 1500,
+                                showConfirmButton: false
                             });
                             return;
                         }
 
-                        listas[tipo].push(codigo);
+                        listas[clave].push(codigo);
                         const fila = `
                             <tr>
                                 <td>${codigo}</td>
-                                <td>${tipo.charAt(0).toUpperCase() + tipo.slice(1)}</td>
+                                <td>${clave.charAt(0).toUpperCase() + clave.slice(1)}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-danger btn-quitar" data-tipo="${tipo}" data-codigo="${codigo}">
+                                    <button class="btn btn-sm btn-danger btn-quitar" 
+                                            data-tipo="${clave}" 
+                                            data-codigo="${codigo}">
                                         Borrar
                                     </button>
                                 </td>
-                            </tr>
-                        `;
+                            </tr>`;
                         tabla.insertAdjacentHTML('beforeend', fila);
                     }
                 );
             } catch (err) {
-                console.error("Error con cámara:", err);
+                console.error("Error al iniciar cámara:", err);
             }
+        });
+
+        // Actualizar subtotal y total global
+        subtotalInput.addEventListener("input", () => {
+            subtotales[clave] = parseFloat(subtotalInput.value) || 0;
+            actualizarTotalGlobal();
         });
     });
 
-    // Eliminar una fila
+    // === Eliminar fila de la tabla ===
     document.body.addEventListener("click", e => {
         if (e.target.classList.contains("btn-quitar")) {
             const tipo = e.target.dataset.tipo;
@@ -646,58 +705,102 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Guardar todos los registros
-    document.querySelectorAll("form.guardar-envios").forEach(form => {
-        form.addEventListener("submit", async e => {
+    // === Botones Guardar: pasar a la siguiente pestaña ===
+    document.querySelectorAll("form.guardar-envios").forEach((form, index) => {
+        form.addEventListener("submit", e => {
             e.preventDefault();
-
-            const tipo = e.target.dataset.tipo;
-            const guias = listas[tipo];
-            if (guias.length === 0) {
-                Swal.fire({ icon: 'info', text: 'No hay guías para guardar.' });
-                return;
-            }
-
-            try {
-                const response = await fetch("{{ route('envios.guardarQR') }}", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    body: JSON.stringify({
-                        comercio: comercio,
-                        tipo_envio: tipo,
-                        guias: guias
-                    })
-                });
-
-                if (response.ok) {
-                    listas[tipo] = [];
-                    document.querySelector(`#${tipo}-tabla tbody`).innerHTML = "";
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Guardado',
-                        text: 'Guías registradas correctamente.',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                } else {
-                    throw new Error("Error al guardar");
-                }
-            } catch (error) {
-                Swal.fire({ icon: 'error', text: 'Error al guardar los envíos.' });
-                console.error(error);
-            }
+            const nextTab = document.querySelectorAll('[data-bs-toggle="tab"]')[index + 1];
+            if (nextTab) new bootstrap.Tab(nextTab).show();
         });
     });
+
+    // === Actualizar total global (en pestaña Cobrar) ===
+    function actualizarTotalGlobal() {
+        const total = Object.values(subtotales).reduce((a, b) => a + b, 0);
+        document.getElementById("total").value = total.toFixed(2);
+        actualizarCambio(); // recalcular cambio si cambia el total
+    }
+
+    // === Botón Cobrar ===
+    document.getElementById("pagadito").addEventListener("click", async function (e) {
+        e.preventDefault();
+
+        const total = parseFloat(document.getElementById("total").value) || 0;
+        const recibido = parseFloat(document.getElementById("recibido").value) || 0;
+        const cambio = recibido - total;
+
+        const payload = {
+            comercio: comercio,
+            tipos: listas,
+            subtotales: subtotales,
+            total: total,
+            recibido: recibido,
+            cambio: cambio >= 0 ? cambio : 0,
+            metodo: document.getElementById("metodo").value,
+            agencia: document.getElementById("agencia").value,
+            nota: document.getElementById("nota").value,
+            cajero: document.getElementById("cajero").value
+        };
+
+        try {
+            const res = await fetch("{{ route('cobros.cobrar') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Cobro realizado",
+                    text: "Los envíos y el ticket fueron registrados correctamente.",
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => location.reload());
+            } else {
+                throw new Error("Error al procesar el cobro");
+            }
+        } catch (err) {
+            Swal.fire({ icon: "error", title: "Error", text: "No se pudo guardar la información." });
+            console.error(err);
+        }
+    });
 });
+
+
+// === Cálculo de CAMBIO ===
+const inputTotal = document.getElementById("total");
+const inputRecibido = document.getElementById("recibido");
+const inputCambio = document.getElementById("cambio");
+
+function actualizarCambio() {
+    const total = parseFloat(inputTotal.value) || 0;
+    const recibido = parseFloat(inputRecibido.value) || 0;
+    const cambio = recibido - total;
+
+    if (recibido === 0) {
+        inputCambio.value = "0.00";
+        inputCambio.classList.remove("is-valid", "is-invalid");
+        return;
+    }
+
+    if (cambio >= 0) {
+        inputCambio.value = cambio.toFixed(2);
+        inputCambio.classList.add("is-valid");
+        inputCambio.classList.remove("is-invalid");
+    } else {
+        inputCambio.value = "0.00";
+        inputCambio.classList.add("is-invalid");
+        inputCambio.classList.remove("is-valid");
+    }
+}
+
+// Detectar cambios en el input Recibido
+inputRecibido.addEventListener("input", actualizarCambio);
 </script>
-
-
-
-
-
 
 
 
