@@ -597,11 +597,11 @@ input.is-invalid {
 
 
 <!--begin::Javascript-->
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const comercio = @json($comercio->comercio);
 
+    // 🔹 Identificadores por tipo
     const tiposEnvio = [
         { clave: 'personalizado', id: 'personalizado' },
         { clave: 'puntofijo', id: 'puntofijo' },
@@ -609,24 +609,12 @@ document.addEventListener("DOMContentLoaded", function () {
         { clave: 'casillero', id: 'casillero' }
     ];
 
-    const listas = {
-        personalizado: [],
-        puntofijo: [],
-        departamental: [],
-        casillero: []
-    };
+    // 🔹 Estructuras principales
+    const listas = { personalizado: [], puntofijo: [], departamental: [], casillero: [] };
+    const subtotales = { personalizado: 0, puntofijo: 0, departamental: 0, casillero: 0 };
+    const lectores = {}; // un lector independiente por pestaña
 
-    const subtotales = {
-        personalizado: 0,
-        puntofijo: 0,
-        departamental: 0,
-        casillero: 0
-    };
-
-    // 🔹 Manejaremos una instancia independiente por tipo
-    const lectores = {};
-
-    // === Inicialización ===
+    // === Inicialización por pestaña ===
     tiposEnvio.forEach(({ clave, id }) => {
         const inputQR = document.querySelector(`#${id}-qr-input`);
         const readerDiv = document.querySelector(`#${id}-qr-reader`);
@@ -636,15 +624,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!inputQR || !readerDiv) return;
 
         inputQR.addEventListener("click", async function () {
-            // 🔸 Detener cualquier lector activo antes de abrir uno nuevo
+            // 🔸 Detener cualquier lector activo
             for (const key in lectores) {
                 try {
                     await lectores[key].stop();
-                    document.querySelector(`#${tiposEnvio.find(t => t.clave === key).id}-qr-reader`).style.display = "none";
+                    const otherReader = document.querySelector(`#${tiposEnvio.find(t => t.clave === key).id}-qr-reader`);
+                    if (otherReader) otherReader.style.display = "none";
                 } catch (_) {}
             }
 
-            // 🔸 Crear una instancia nueva solo si no existe
+            // 🔸 Crear lector si no existe
             if (!lectores[clave]) {
                 lectores[clave] = new Html5Qrcode(`${id}-qr-reader`);
             }
@@ -656,11 +645,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 await lectores[clave].start(
                     { facingMode: "environment" },
                     config,
-                    (codigo) => {
-                        lectores[clave].stop(); // detener escaneo tras leer
+                    async (codigo) => {
+                        await lectores[clave].stop();
                         readerDiv.style.display = "none";
                         inputQR.value = codigo;
 
+                        // 🔹 1. Verificar duplicado local
                         if (listas[clave].includes(codigo)) {
                             Swal.fire({
                                 icon: 'warning',
@@ -668,49 +658,51 @@ document.addEventListener("DOMContentLoaded", function () {
                                 text: `El código ${codigo} ya está en la lista.`,
                                 toast: true,
                                 position: 'top-end',
-                                timer: 3000,
+                                timer: 1500,
                                 showConfirmButton: false
                             });
                             return;
                         }
+
+                        // 🔹 2. Verificar duplicado en la base de datos
                         try {
-        const res = await fetch("{{ route('envios.verificar') }}", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: JSON.stringify({ guia: codigo })
-        });
+                            const res = await fetch("{{ route('envios.verificar') }}", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                },
+                                body: JSON.stringify({ guia: codigo })
+                            });
 
-        const data = await res.json();
-        if (data.exists) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Guía ya registrada',
-                text: `La guía ${codigo} ya existe en el sistema.`,
-                toast: true,
-                position: 'top-end',
-                timer: 3000,
-                showConfirmButton: false
-            });
-            return;
-        }
-    } catch (err) {
-        console.error("Error al verificar la guía:", err);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error de conexión',
-            text: 'No se pudo verificar la guía en la base de datos.',
-            toast: true,
-            position: 'top-end',
-            timer: 3000,
-            showConfirmButton: false
-        });
-        return;
-    }
+                            const data = await res.json();
+                            if (data.exists) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Guía ya registrada',
+                                    text: `La guía ${codigo} ya existe en el sistema.`,
+                                    toast: true,
+                                    position: 'top-end',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                                return;
+                            }
+                        } catch (err) {
+                            console.error("Error al verificar la guía:", err);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error de conexión',
+                                text: 'No se pudo verificar la guía en la base de datos.',
+                                toast: true,
+                                position: 'top-end',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                            return;
+                        }
 
-
+                        // 🔹 3. Agregar guía válida
                         listas[clave].push(codigo);
                         tabla.insertAdjacentHTML('beforeend', `
                             <tr>
@@ -732,7 +724,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // 🔹 Subtotales
+        // Subtotales
         if (subtotalInput) {
             subtotalInput.addEventListener("input", () => {
                 subtotales[clave] = parseFloat(subtotalInput.value) || 0;
@@ -741,7 +733,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // === Eliminar fila de la tabla ===
+    // === Eliminar filas ===
     document.body.addEventListener("click", e => {
         if (e.target.classList.contains("btn-quitar")) {
             const tipo = e.target.dataset.tipo;
@@ -751,7 +743,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // === Botones Guardar: pasar a la siguiente pestaña ===
+    // === Botón guardar por pestaña ===
     document.querySelectorAll("form.guardar-envios").forEach((form, index) => {
         form.addEventListener("submit", e => {
             e.preventDefault();
@@ -852,7 +844,6 @@ function actualizarCambio() {
 }
 inputRecibido.addEventListener("input", actualizarCambio);
 </script>
-
 
 
     <!--begin::Custom Javascript(used for this page only)-->
