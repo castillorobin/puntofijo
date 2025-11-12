@@ -8,6 +8,7 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\EnvioController;
+use App\Http\Controllers\CobroController;
 
 /*
 |--------------------------------------------------------------------------

@@ -28,6 +28,8 @@ class CobroController extends Controller
     
 public function cobrar(Request $request)
 {
+
+    dd($request->all());
     $data = $request->validate([
         'comercio' => 'required|string',
         'tipos' => 'required|array',
