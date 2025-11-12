@@ -41,8 +41,10 @@ public function cobrar(Request $request)
         'cajero' => 'required|string',
     ]);
 
+
+
     // Guardar ticket
-    $ticket = Ticketc::create([
+    $ticketact = Ticketc::create([
         'comercio' => $data['comercio'],
         'cajero' => $data['cajero'],
         'metodo' => $data['metodo'],
@@ -51,6 +53,14 @@ public function cobrar(Request $request)
         'cambio' => $data['cambio'],
         'nota' => $data['nota'] ?? null,
         'agencia' => $data['agencia'],
+        'persoi' => $subtotales['personalizado'] ?? 0,
+        'depari' => $subtotales['departamental'] ?? 0,
+        'puntoi' => $subtotales['puntofijo'] ?? 0,
+        'casili' => $subtotales['casillero'] ?? 0,
+        'perso' => $cantidades['personalizado'] ?? 0,
+        'depar' => $cantidades['departamental'] ?? 0,
+        'punto' => $cantidades['puntofijo'] ?? 0,
+        'casil' => $cantidades['casillero'] ?? 0,
     ]);
 
     // Guardar envíos
@@ -60,12 +70,18 @@ public function cobrar(Request $request)
                 'comercio' => $data['comercio'],
                 'guia' => $guia,
                 'tipo' => ucfirst($tipo),
-                'ticketc' => $ticket->id,
+                'ticketc' => $ticketact->id,
             ]);
         }
     }
 
-    return response()->json(['success' => true]);
+   // return response()->json(['success' => true]);
+     $pdf = PDF::loadView('cobro.ticketcobros', ['ticketact'=>$ticketact]);
+        //return view('envios.ticketpagos');
+        $customPaper = array(0,0,360,650);
+        //$pdf->setPaper('b6', 'portrait');
+        $pdf->setPaper($customPaper );
+        return $pdf->stream();
 
 }
 }

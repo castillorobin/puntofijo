@@ -728,11 +728,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const total = parseFloat(document.getElementById("total").value) || 0;
         const recibido = parseFloat(document.getElementById("recibido").value) || 0;
         const cambio = recibido - total;
-
+        const cantidades = {
+            personalizado: listas.personalizado.length,
+            puntofijo: listas.puntofijo.length,
+            departamental: listas.departamental.length,
+            casillero: listas.casillero.length
+        };
         const payload = {
             comercio: comercio,
             tipos: listas,
             subtotales: subtotales,
+            cantidades: cantidades,
             total: total,
             recibido: recibido,
             cambio: cambio >= 0 ? cambio : 0,
