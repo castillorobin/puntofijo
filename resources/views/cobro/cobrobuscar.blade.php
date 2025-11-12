@@ -668,7 +668,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 text: `El código ${codigo} ya está en la lista.`,
                                 toast: true,
                                 position: 'top-end',
-                                timer: 1500,
+                                timer: 3000,
                                 showConfirmButton: false
                             });
                             return;
@@ -691,7 +691,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 text: `La guía ${codigo} ya existe en el sistema.`,
                 toast: true,
                 position: 'top-end',
-                timer: 2000,
+                timer: 3000,
                 showConfirmButton: false
             });
             return;
@@ -704,7 +704,7 @@ document.addEventListener("DOMContentLoaded", function () {
             text: 'No se pudo verificar la guía en la base de datos.',
             toast: true,
             position: 'top-end',
-            timer: 2000,
+            timer: 3000,
             showConfirmButton: false
         });
         return;
