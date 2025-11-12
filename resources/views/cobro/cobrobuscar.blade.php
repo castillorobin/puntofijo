@@ -598,12 +598,10 @@ input.is-invalid {
 
 <!--begin::Javascript-->
 
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const comercio = @json($comercio->comercio);
 
-    // 🔹 Definición consistente entre IDs HTML y claves internas
     const tiposEnvio = [
         { clave: 'personalizado', id: 'personalizado' },
         { clave: 'puntofijo', id: 'puntofijo' },
@@ -625,32 +623,41 @@ document.addEventListener("DOMContentLoaded", function () {
         casillero: 0
     };
 
-    let lectorQR = null;
+    // 🔹 Manejaremos una instancia independiente por tipo
+    const lectores = {};
 
-    // === Inicialización del escáner y subtotal por pestaña ===
+    // === Inicialización ===
     tiposEnvio.forEach(({ clave, id }) => {
         const inputQR = document.querySelector(`#${id}-qr-input`);
         const readerDiv = document.querySelector(`#${id}-qr-reader`);
         const tabla = document.querySelector(`#${id}-tabla tbody`);
         const subtotalInput = document.querySelector(`#${id}-subtotal`);
 
-        if (!subtotalInput) {
-            console.warn(`⚠️ No se encontró el input subtotal para ${id}`);
-            return;
-        }
+        if (!inputQR || !readerDiv) return;
 
-        // Iniciar escáner QR
         inputQR.addEventListener("click", async function () {
-            if (!lectorQR) lectorQR = new Html5Qrcode(`${id}-qr-reader`);
+            // 🔸 Detener cualquier lector activo antes de abrir uno nuevo
+            for (const key in lectores) {
+                try {
+                    await lectores[key].stop();
+                    document.querySelector(`#${tiposEnvio.find(t => t.clave === key).id}-qr-reader`).style.display = "none";
+                } catch (_) {}
+            }
+
+            // 🔸 Crear una instancia nueva solo si no existe
+            if (!lectores[clave]) {
+                lectores[clave] = new Html5Qrcode(`${id}-qr-reader`);
+            }
+
             readerDiv.style.display = "block";
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
             try {
-                await lectorQR.start(
+                await lectores[clave].start(
                     { facingMode: "environment" },
                     config,
                     (codigo) => {
-                        lectorQR.stop();
+                        lectores[clave].stop(); // detener escaneo tras leer
                         readerDiv.style.display = "none";
                         inputQR.value = codigo;
 
@@ -668,19 +675,19 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
 
                         listas[clave].push(codigo);
-                        const fila = `
+                        tabla.insertAdjacentHTML('beforeend', `
                             <tr>
                                 <td>${codigo}</td>
                                 <td>${clave.charAt(0).toUpperCase() + clave.slice(1)}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-danger btn-quitar" 
-                                            data-tipo="${clave}" 
+                                    <button class="btn btn-sm btn-danger btn-quitar"
+                                            data-tipo="${clave}"
                                             data-codigo="${codigo}">
                                         Borrar
                                     </button>
                                 </td>
-                            </tr>`;
-                        tabla.insertAdjacentHTML('beforeend', fila);
+                            </tr>
+                        `);
                     }
                 );
             } catch (err) {
@@ -688,11 +695,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Actualizar subtotal y total global
-        subtotalInput.addEventListener("input", () => {
-            subtotales[clave] = parseFloat(subtotalInput.value) || 0;
-            actualizarTotalGlobal();
-        });
+        // 🔹 Subtotales
+        if (subtotalInput) {
+            subtotalInput.addEventListener("input", () => {
+                subtotales[clave] = parseFloat(subtotalInput.value) || 0;
+                actualizarTotalGlobal();
+            });
+        }
     });
 
     // === Eliminar fila de la tabla ===
@@ -714,11 +723,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // === Actualizar total global (en pestaña Cobrar) ===
+    // === Actualizar total global ===
     function actualizarTotalGlobal() {
         const total = Object.values(subtotales).reduce((a, b) => a + b, 0);
         document.getElementById("total").value = total.toFixed(2);
-        actualizarCambio(); // recalcular cambio si cambia el total
+        actualizarCambio();
     }
 
     // === Botón Cobrar ===
@@ -728,12 +737,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const total = parseFloat(document.getElementById("total").value) || 0;
         const recibido = parseFloat(document.getElementById("recibido").value) || 0;
         const cambio = recibido - total;
+
         const cantidades = {
             personalizado: listas.personalizado.length,
             puntofijo: listas.puntofijo.length,
             departamental: listas.departamental.length,
             casillero: listas.casillero.length
         };
+
         const payload = {
             comercio: comercio,
             tipos: listas,
@@ -776,8 +787,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-// === Cálculo de CAMBIO ===
+// === Cálculo de cambio ===
 const inputTotal = document.getElementById("total");
 const inputRecibido = document.getElementById("recibido");
 const inputCambio = document.getElementById("cambio");
@@ -803,11 +813,8 @@ function actualizarCambio() {
         inputCambio.classList.remove("is-valid");
     }
 }
-
-// Detectar cambios en el input Recibido
 inputRecibido.addEventListener("input", actualizarCambio);
 </script>
-
 
 
 
