@@ -523,14 +523,18 @@ input.is-invalid {
                                                                                 <label for="nota" style="padding-left: 25px;">Nota</label>
                                                                             </div>
 
-                                                                             <div class="form-floating col-lg-12 mb-4">
-                                                                                <input type="text" class="form-control form-control-solid" name="recibido" id="recibido" placeholder="0.00" />
-                                                                                <label for="Cajero">Recibido</label>
-                                                                               
-                                                                            </div>
-                                                                            <div class="form-floating col-lg-12 mb-4">
+                                                                             <div class="col-lg-12 mb-4">
+  <label for="recibido" class="form-label">Recibido</label>
+  <input 
+      type="text" 
+      class="form-control form-control-solid" 
+      name="recibido" 
+      id="recibido" 
+      placeholder="0.00" 
+  />
+</div>                                                                    <div class="form-floating col-lg-12 mb-4">
                                                                                 <input type="text" class="form-control form-control-solid" name="cambio" id="cambio" value="0.00" readonly />
-                                                                                <label for="Cajero">Cambio</label>
+                                                                                <label for="cambio">Cambio</label>
                                                                                
                                                                             </div>
                                                                            
@@ -813,6 +817,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     showConfirmButton: false
                 }).then(() => {
                     window.open(`/cobros/ticket/${data.ticket_id}`, '_blank');
+
+                    window.location.href = "{{ route('cobro') }}";
                 });
             } else {
                 throw new Error("Error al procesar el cobro");
