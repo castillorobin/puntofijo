@@ -547,7 +547,7 @@ input.is-invalid {
                                                                 <br>
                                                                 <div class="modal-footer">
                                                                     <div class="d-flex justify-content-between w-100">
-                                                                        <button type="submit" id="pagadito" style="margin: 10px" class="btn btn-success flex-grow-1 mr-2" onclick="redireccionarPagina()" formtarget="_blank">Cobrar</button>
+                                                                        <button type="submit" id="pagadito" style="margin: 10px" class="btn btn-success flex-grow-1 mr-2" >Cobrar</button>
                                                                         <button type="button" style="margin: 10px" class="btn btn-secondary flex-grow-1 mr-2 btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
                                                                         
 
@@ -799,20 +799,31 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             if (res.ok) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Cobro realizado",
-                    text: "Los envíos y el ticket fueron registrados correctamente.",
-                    timer: 2000,
-                    showConfirmButton: false
-                }).then(() => location.reload());
-            } else {
+    const data = await res.json();
+
+    Swal.fire({
+        icon: "success",
+        title: "Cobro realizado",
+        text: "Los envíos y el ticket fueron registrados correctamente.",
+        timer: 1500,
+        showConfirmButton: false
+    }).then(() => {
+        window.open(`/cobros/ticket/${data.ticket_id}`, '_blank');
+    });
+} else {
                 throw new Error("Error al procesar el cobro");
             }
         } catch (err) {
-            Swal.fire({ icon: "error", title: "Error", text: "No se pudo guardar la información." });
-            console.error(err);
-        }
+    console.error("❌ Error en el bloque catch:", err);
+    if (err.response) {
+        console.error("Respuesta del servidor:", await err.response.text());
+    }
+    Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ocurrió un error al intentar guardar. Revisa la consola para más detalles."
+    });
+}
     });
 });
 

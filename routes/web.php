@@ -101,8 +101,9 @@ Route::post('/envios/guardarQR', [EnvioController::class, 'guardarQR'])->name('e
 
 
 Route::post('/cobros/cobrar', [CobroController::class, 'cobrar'])->name('cobros.cobrar');
-Route::post('/verificar-guia', [EnvioController::class, 'verificarGuia'])->name('envios.verificar');
 
+Route::post('/verificar-guia', [EnvioController::class, 'verificarGuia'])->name('envios.verificar');
+Route::get('/cobros/ticket/{id}', [CobroController::class, 'verTicket'])->name('cobros.ticket');
 
 
 Route::post('/logout', function () {

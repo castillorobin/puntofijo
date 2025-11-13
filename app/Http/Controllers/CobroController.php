@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\Empleado;
 use Illuminate\Support\Facades\Auth;
-
+use PDF;
 use Illuminate\Http\Request;
 use App\Models\Comercio;
 use App\Models\Envio;
 use App\Models\Ticketc;
+use Carbon\Carbon;
 
 class CobroController extends Controller
 {
@@ -25,15 +27,15 @@ class CobroController extends Controller
         return view('cobro.cobrobuscar', compact('comercio', 'empleado' ));
     } 
 
-    
-public function cobrar(Request $request)
+ public function cobrar(Request $request)
 {
 
-    dd($request->all());
+
     $data = $request->validate([
         'comercio' => 'required|string',
         'tipos' => 'required|array',
         'subtotales' => 'required|array',
+        'cantidades' => 'required|array',
         'total' => 'required|numeric',
         'recibido' => 'required|numeric',
         'cambio' => 'required|numeric',
@@ -43,11 +45,10 @@ public function cobrar(Request $request)
         'cajero' => 'required|string',
     ]);
 
-
-
     // Guardar ticket
     $ticketact = Ticketc::create([
         'comercio' => $data['comercio'],
+        'codigo' => 2025 + intval(date('ymdHis')),
         'cajero' => $data['cajero'],
         'metodo' => $data['metodo'],
         'total' => $data['total'],
@@ -55,14 +56,14 @@ public function cobrar(Request $request)
         'cambio' => $data['cambio'],
         'nota' => $data['nota'] ?? null,
         'agencia' => $data['agencia'],
-        'persoi' => $subtotales['personalizado'] ?? 0,
-        'depari' => $subtotales['departamental'] ?? 0,
-        'puntoi' => $subtotales['puntofijo'] ?? 0,
-        'casili' => $subtotales['casillero'] ?? 0,
-        'perso' => $cantidades['personalizado'] ?? 0,
-        'depar' => $cantidades['departamental'] ?? 0,
-        'punto' => $cantidades['puntofijo'] ?? 0,
-        'casil' => $cantidades['casillero'] ?? 0,
+        'persoi' => $data['subtotales']['personalizado'] ?? 0,
+        'depari' => $data['subtotales']['departamental'] ?? 0,
+        'puntoi' => $data['subtotales']['puntofijo'] ?? 0,
+        'casili' => $data['subtotales']['casillero'] ?? 0,
+        'perso' => $data['cantidades']['personalizado'] ?? 0,
+        'depar' => $data['cantidades']['departamental'] ?? 0,
+        'punto' => $data['cantidades']['puntofijo'] ?? 0,
+        'casil' => $data['cantidades']['casillero'] ?? 0,
     ]);
 
     // Guardar envíos
@@ -76,14 +77,33 @@ public function cobrar(Request $request)
             ]);
         }
     }
+    /*
+    // Generar ticket PDF
+    $pdf = PDF::loadView('cobro.ticketcobros', ['ticketact' => $ticketact]);
+    $customPaper = [0, 0, 360, 650];
+    $pdf->setPaper($customPaper);
 
-   // return response()->json(['success' => true]);
-     $pdf = PDF::loadView('cobro.ticketcobros', ['ticketact'=>$ticketact]);
-        //return view('envios.ticketpagos');
-        $customPaper = array(0,0,360,650);
-        //$pdf->setPaper('b6', 'portrait');
-        $pdf->setPaper($customPaper );
-        return $pdf->stream();
+    return $pdf->stream();
 
+    //return response()->json(['success' => true]);
+    */
+
+    return response()->json([
+    'success' => true,
+    'ticket_id' => $ticketact->id
+]);
 }
+
+public function verTicket($id)
+{
+    $ticketact = Ticketc::findOrFail($id);
+
+    $pdf = Pdf::loadView('cobro.ticketcobros', compact('ticketact'));
+    $customPaper = [0, 0, 360, 650];
+    $pdf->setPaper($customPaper);
+
+    return $pdf->stream('ticket-'.$ticketact->codigo.'.pdf');
+}
+
+
 }

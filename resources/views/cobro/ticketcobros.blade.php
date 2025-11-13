@@ -54,11 +54,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
        <br>
 
                         <div class="fecha centrar " style="font-weight: bolder;">
-   TICKET Nº {{ $ticketact[0]->codigo }}
+   TICKET Nº {{ $ticketact->codigo }}
   
    
    </div>
-   Comercio: <span style="font-weight: bolder;">{{ $ticketact[0]->comercio }}</span> 
+   Comercio: <span style="font-weight: bolder;">{{ $ticketact->comercio }}</span> 
    <hr>
    
    <div class="fecha ">
@@ -80,33 +80,33 @@ document.addEventListener("DOMContentLoaded", function(event) {
         <tbody>
             <tr>
                 <td style="text-align: left;">Personalizado</td>
-                <td>{{ $ticketact[0]->perso }}</td>
-                <td>${{ $ticketact[0]->persoi }}</td>
+                <td>{{ $ticketact->perso }}</td>
+                <td>${{ $ticketact->persoi }}</td>
             </tr>
             <tr>
                 <td style="text-align: left;">Punto fijo</td>
-                <td>{{ $ticketact[0]->punto }}</td>
-                <td>${{ $ticketact[0]->puntoi }}</td>
+                <td>{{ $ticketact->punto }}</td>
+                <td>${{ $ticketact->puntoi }}</td>
             </tr>
             <tr>
                 <td style="text-align: left;">Casillero</td>
-                <td>{{ $ticketact[0]->casil }}</td>
-                <td>${{ $ticketact[0]->casili }}</td>
+                <td>{{ $ticketact->casil }}</td>
+                <td>${{ $ticketact->casili }}</td>
             </tr>
             <tr>
                 <td style="text-align: left;">Personalizado Departamental</td>
-                <td>{{ $ticketact[0]->depar }}</td>
-                <td>${{ $ticketact[0]->depari }}</td>
+                <td>{{ $ticketact->depar }}</td>
+                <td>${{ $ticketact->depari }}</td>
             </tr>
             <tr >
                 <td style="text-align: left; border-bottom: 2px solid black;"> Guias</td>
-                <td style="border-bottom: 2px solid black;">{{ $ticketact[0]->guias }}</td>
-                <td style="border-bottom: 2px solid black;">${{ $ticketact[0]->guias }}<</td>
+                <td style="border-bottom: 2px solid black;">{{ $ticketact->guias }}</td>
+                <td style="border-bottom: 2px solid black;">${{ $ticketact->guias }}<</td>
             </tr>
             <tr style="text-align: left;">
                     
                     
-                    <td style=" " >Método de pago: {{ $ticketact[0]->metodo }} </td>
+                    <td style=" " >Método de pago: {{ $ticketact->metodo }} </td>
                     <td style="" class="centrar">
                      
                     </td>
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             <tr >
                 <td></td>
                 <td>SUBTOTAL</td>
-                <td style="text-align: left; padding-left: 25px;">${{ $ticketact[0]->persoi + $ticketact[0]->puntoi + $ticketact[0]->casili + $ticketact[0]->depari + $ticketact[0]->guias }}
+                <td style="text-align: left; padding-left: 25px;">${{ $ticketact->persoi + $ticketact->puntoi + $ticketact->casili + $ticketact->depari + $ticketact->guias }}
                  
                 </td>
                 
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             <tr >
                 <td></td>
                 <td>DESCUENTO</td>
-                <td style="text-align: left; padding-left: 25px;">${{ $ticketact[0]->descuento }}
+                <td style="text-align: left; padding-left: 25px;">${{ $ticketact->descuento }}
                  
                 </td>
                 
@@ -132,17 +132,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
             <tr>
                 <td></td>
                 <td style="font-weight: bolder;">TOTAL</td>
-                <td style="text-align: left; padding-left: 25px;">${{ $ticketact[0]->total }}</td>
+                <td style="text-align: left; padding-left: 25px;">${{ $ticketact->total }}</td>
             </tr>
             <tr>
                 
                 <td colspan="2" style="text-align: right;">ENTREGA EFECTIVO:</td>
-                <td style="text-align: left; padding-left: 25px;">${{ $ticketact[0]->entrega }}</td>
+                <td style="text-align: left; padding-left: 25px;">${{ $ticketact->entrega }}</td>
             </tr>
             <tr >
                 <td></td>
                 <td>CAMBIO:</td>
-                <td style="text-align: left; padding-left: 25px;">${{ $ticketact[0]->cambio }}</td>
+                <td style="text-align: left; padding-left: 25px;">${{ $ticketact->cambio }}</td>
             </tr>
            
         </tbody>
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 <hr>
 <div>¡¡GRACIAS POR PREFERIRNOS!!</div>
 <hr>
-<div style="padding-left: 75px;"> {!! DNS1D::getBarcodeHTML($ticketact[0]->codigo , 'C39') !!} <span style="padding-right: 80px; font-weight: bolder;"> {{ $ticketact[0]->codigo }} </span></div>
+<div style="padding-left: 75px;"> {!! DNS1D::getBarcodeHTML($ticketact->codigo , 'C39') !!} <span style="padding-right: 80px; font-weight: bolder;"> {{ $ticketact->codigo }} </span></div>
 </div>
 
 

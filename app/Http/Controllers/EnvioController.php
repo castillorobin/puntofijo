@@ -291,4 +291,6 @@ public function verificarGuia(Request $request)
 }
 
 
+
+
 }
