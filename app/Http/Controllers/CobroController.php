@@ -10,6 +10,8 @@ use App\Models\Comercio;
 use App\Models\Envio;
 use App\Models\Ticketc;
 use Carbon\Carbon;
+use App\Models\Caja;
+use App\Models\Detallecaja;
 
 class CobroController extends Controller
 {
@@ -29,6 +31,24 @@ class CobroController extends Controller
 
  public function cobrar(Request $request)
 {
+
+      //guardar movimiento
+        $idcaja = Caja::where('cajero', $request->get('cajero') )
+        ->where('estado', 0)
+        ->get();
+ 
+        if($idcaja->isEmpty()){
+           $conceptos = Conceptocaja::all();
+        $cajas = Detallecaja::all();
+         return response()->json([
+            'success' => false,
+            'message' => 'No hay caja abierta para este cajero.'
+        ]);
+        }
+        $ultimoMovi = Detallecaja::where('idcaja', $idcaja[0]->id)
+                ->latest('id') // o cualquier columna de ordenamiento como created_at
+                ->first();
+        $saldomovi = $ultimoMovi->saldo;
 
 
     $data = $request->validate([
@@ -77,6 +97,17 @@ $codigo = 2025 + intval(date('ymdHis'));
             ]);
         }
     }
+
+    $movimiento = new Detallecaja();
+    
+    $movimiento->cajero = $request->get('cajero') ;
+    $movimiento->agencia = $request->get('agencia') ;
+    $movimiento->tipo =  "Entrada";
+    $movimiento->concepto =  "Cobro del ticket " . $codigo;
+    $movimiento->valor =  $request->get('total');
+    $movimiento->saldo = $saldomovi + $request->get('total');
+    $movimiento->idcaja = $idcaja[0]->id ;
+    $movimiento->save();
    
     return response()->json([
     'success' => true,
