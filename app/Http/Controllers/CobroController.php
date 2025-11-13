@@ -44,11 +44,11 @@ class CobroController extends Controller
         'nota' => 'nullable|string',
         'cajero' => 'required|string',
     ]);
-
+$codigo = 2025 + intval(date('ymdHis'));
     // Guardar ticket
     $ticketact = Ticketc::create([
         'comercio' => $data['comercio'],
-        'codigo' => 2025 + intval(date('ymdHis')),
+        'codigo' => $codigo,
         'cajero' => $data['cajero'],
         'metodo' => $data['metodo'],
         'total' => $data['total'],
@@ -73,21 +73,11 @@ class CobroController extends Controller
                 'comercio' => $data['comercio'],
                 'guia' => $guia,
                 'tipo' => ucfirst($tipo),
-                'ticketc' => $ticketact->id,
+                'ticketc' => $codigo,
             ]);
         }
     }
-    /*
-    // Generar ticket PDF
-    $pdf = PDF::loadView('cobro.ticketcobros', ['ticketact' => $ticketact]);
-    $customPaper = [0, 0, 360, 650];
-    $pdf->setPaper($customPaper);
-
-    return $pdf->stream();
-
-    //return response()->json(['success' => true]);
-    */
-
+   
     return response()->json([
     'success' => true,
     'ticket_id' => $ticketact->id

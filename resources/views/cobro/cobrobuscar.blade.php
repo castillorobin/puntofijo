@@ -524,7 +524,7 @@ input.is-invalid {
                                                                             </div>
 
                                                                              <div class="form-floating col-lg-12 mb-4">
-                                                                                <input type="text" class="form-control form-control-solid" name="recibido" id="recibido" value="0.00" />
+                                                                                <input type="text" class="form-control form-control-solid" name="recibido" id="recibido" placeholder="0.00" />
                                                                                 <label for="Cajero">Recibido</label>
                                                                                
                                                                             </div>
@@ -595,8 +595,6 @@ input.is-invalid {
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 </x-default-layout>
 
-
-<!--begin::Javascript-->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const comercio = @json($comercio->comercio);
@@ -798,32 +796,35 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify(payload)
             });
 
-            if (res.ok) {
-    const data = await res.json();
+            console.log("🔍 Código de estado:", res.status);
 
-    Swal.fire({
-        icon: "success",
-        title: "Cobro realizado",
-        text: "Los envíos y el ticket fueron registrados correctamente.",
-        timer: 1500,
-        showConfirmButton: false
-    }).then(() => {
-        window.open(`/cobros/ticket/${data.ticket_id}`, '_blank');
-    });
-} else {
+            // ✅ Clonamos para depurar sin romper el stream
+            const clone = res.clone();
+            const text = await clone.text();
+            console.log("📦 Respuesta completa del servidor:", text);
+
+            if (res.ok) {
+                const data = await res.json();
+                Swal.fire({
+                    icon: "success",
+                    title: "Cobro realizado",
+                    text: "Los envíos y el ticket fueron registrados correctamente.",
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.open(`/cobros/ticket/${data.ticket_id}`, '_blank');
+                });
+            } else {
                 throw new Error("Error al procesar el cobro");
             }
         } catch (err) {
-    console.error("❌ Error en el bloque catch:", err);
-    if (err.response) {
-        console.error("Respuesta del servidor:", await err.response.text());
-    }
-    Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Ocurrió un error al intentar guardar. Revisa la consola para más detalles."
-    });
-}
+            console.error("❌ Error en el bloque catch:", err);
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Ocurrió un error al intentar guardar. Revisa la consola para más detalles."
+            });
+        }
     });
 });
 
@@ -853,6 +854,7 @@ function actualizarCambio() {
         inputCambio.classList.remove("is-valid");
     }
 }
+
 inputRecibido.addEventListener("input", actualizarCambio);
 </script>
 

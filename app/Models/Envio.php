@@ -14,7 +14,11 @@ class Envio extends Model
         'estado',
         'nota',
         'nota_repartidor',
-        'fecha_reprogramado', // Asegúrate de incluir este campo
+        'fecha_reprogramado',
+        'comercio',
+    'guia',
+    'tipo',
+    'ticketc',
     ];
     
       public function empleados()
