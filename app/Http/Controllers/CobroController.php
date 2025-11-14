@@ -12,6 +12,7 @@ use App\Models\Ticketc;
 use Carbon\Carbon;
 use App\Models\Caja;
 use App\Models\Detallecaja;
+use App\Models\Hestado;
 
 class CobroController extends Controller
 {
@@ -64,7 +65,13 @@ class CobroController extends Controller
         'nota' => 'nullable|string',
         'cajero' => 'required|string',
     ]);
-$codigo = 2025 + intval(date('ymdHis'));
+//$codigo = 2025 + intval(date('ymdHis'));
+    $ultimoid = Ticketc::latest('id')->first();
+            $idcompr = $ultimoid->id + 1;
+     
+            $date = Carbon::now();
+            $date = $date->format('Y');
+            $codigo = "$date".$idcompr;
     // Guardar ticket
     $ticketact = Ticketc::create([
         'comercio' => $data['comercio'],
@@ -86,17 +93,26 @@ $codigo = 2025 + intval(date('ymdHis'));
         'casil' => $data['cantidades']['casillero'] ?? 0,
     ]);
 
-    // Guardar envíos
-    foreach ($data['tipos'] as $tipo => $guias) {
-        foreach ($guias as $guia) {
-            Envio::create([
-                'comercio' => $data['comercio'],
-                'guia' => $guia,
-                'tipo' => ucfirst($tipo),
-                'ticketc' => $codigo,
-            ]);
-        }
+   // Guardar envíos
+foreach ($data['tipos'] as $tipo => $guias) {
+    foreach ($guias as $guia) {
+
+        // Crear el registro en ENVIO y obtener el modelo
+        $envio = Envio::create([
+            'comercio' => $data['comercio'],
+            'guia' => $guia,
+            'tipo' => ucfirst($tipo),
+            'ticketc' => $codigo,
+        ]);
+
+        // Registrar historial del estado
+        Hestado::create([
+            'idenvio' => $envio->id,     // ID del envío recién creado
+            'estado' => 'Recepcionado',
+            'usuario' => $data['cajero'],
+        ]);
     }
+}
 
     $movimiento = new Detallecaja();
     
