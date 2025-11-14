@@ -598,7 +598,6 @@ input.is-invalid {
 
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 </x-default-layout>
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const comercio = @json($comercio->comercio);
@@ -626,6 +625,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!inputQR || !readerDiv) return;
 
         inputQR.addEventListener("click", async function () {
+
             // 🔸 Detener cualquier lector activo
             for (const key in lectores) {
                 try {
@@ -648,25 +648,30 @@ document.addEventListener("DOMContentLoaded", function () {
                     { facingMode: "environment" },
                     config,
                     async (codigo) => {
+
                         await lectores[clave].stop();
                         readerDiv.style.display = "none";
                         inputQR.value = codigo;
 
-                        // 🔹 1. Verificar duplicado local
-                        if (listas[clave].includes(codigo)) {
+                        // 🔹 VALIDACIÓN GLOBAL DE DUPLICADO
+                        const duplicadoGlobal = Object.entries(listas)
+                            .find(([_, lista]) => lista.includes(codigo));
+
+                        if (duplicadoGlobal) {
+                            const tipoExistente = duplicadoGlobal[0];
                             Swal.fire({
                                 icon: 'warning',
                                 title: 'Duplicado',
-                                text: `El código ${codigo} ya está en la lista.`,
+                                text: `La guía ${codigo} ya fue agregada en el tipo "${tipoExistente.toUpperCase()}".`,
                                 toast: true,
                                 position: 'top-end',
-                                timer: 1500,
+                                timer: 2000,
                                 showConfirmButton: false
                             });
                             return;
                         }
 
-                        // 🔹 2. Verificar duplicado en la base de datos
+                        // 🔹 Verificar duplicado en la base de datos
                         try {
                             const res = await fetch("{{ route('envios.verificar') }}", {
                                 method: "POST",
@@ -690,8 +695,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                 });
                                 return;
                             }
+
                         } catch (err) {
-                            console.error("Error al verificar la guía:", err);
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error de conexión',
@@ -704,7 +709,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             return;
                         }
 
-                        // 🔹 3. Agregar guía válida
+                        // 🔹 Agregar guía si es válida
                         listas[clave].push(codigo);
                         tabla.insertAdjacentHTML('beforeend', `
                             <tr>
@@ -761,7 +766,7 @@ document.addEventListener("DOMContentLoaded", function () {
         actualizarCambio();
     }
 
-    // === Botón Cobrar ===
+    // === Botón C O B R A R ===
     document.getElementById("pagadito").addEventListener("click", async function (e) {
         e.preventDefault();
 
@@ -800,35 +805,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify(payload)
             });
 
-            console.log("🔍 Código de estado:", res.status);
-
-            // ✅ Clonamos para depurar sin romper el stream
-            const clone = res.clone();
-            const text = await clone.text();
-            console.log("📦 Respuesta completa del servidor:", text);
+            const text = await res.text();
+            console.log("📦 Servidor:", text);
 
             if (res.ok) {
-                const data = await res.json();
-                Swal.fire({
-                    icon: "success",
-                    title: "Cobro realizado",
-                    text: "Los envíos y el ticket fueron registrados correctamente.",
-                    timer: 1500,
-                    showConfirmButton: false
-                }).then(() => {
-                    window.open(`/cobros/ticket/${data.ticket_id}`, '_blank');
+                const data = JSON.parse(text);
 
-                    window.location.href = "{{ route('cobro') }}";
-                });
+                // Abrir ticket
+                window.open(`/cobros/ticket/${data.ticket_id}`, "_blank");
+
+                // Redirigir vista principal
+                window.location.href = "{{ route('cobro') }}";
+
             } else {
                 throw new Error("Error al procesar el cobro");
             }
         } catch (err) {
-            console.error("❌ Error en el bloque catch:", err);
+            console.error("❌ Error:", err);
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "Ocurrió un error al intentar guardar. Revisa la consola para más detalles."
+                text: "Ocurrió un error al intentar guardar."
             });
         }
     });
@@ -860,10 +857,8 @@ function actualizarCambio() {
         inputCambio.classList.remove("is-valid");
     }
 }
-
 inputRecibido.addEventListener("input", actualizarCambio);
 </script>
-
 
     <!--begin::Custom Javascript(used for this page only)-->
 
