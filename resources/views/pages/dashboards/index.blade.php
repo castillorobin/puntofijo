@@ -71,7 +71,7 @@ License: For each use you must have a valid license purchased only from above li
 	</script>
 
 	<x-default-layout>
-	<div class="d-flex flex-column flex-root">
+	<div class="d-flex flex-column flex-root pt-5">
 		<!--begin::Page-->
 		<div class="page d-flex flex-row flex-column-fluid">
 		
@@ -86,47 +86,6 @@ License: For each use you must have a valid license purchased only from above li
 							<div class="col-xl-4">
 								<!--begin::Misc Widget 1-->
 								<div class="row mb-5 mb-xl-8 g-5 g-xl-8">
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/dashboard" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-gift fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-												</i>
-												<span class="fs-4 fw-bold">Inicio</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/filtroasig" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-gift fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-												</i>
-												<span class="fs-4 fw-bold">Asignados</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-								
-									<!--end::Col-->
 									<!--begin::Col-->
 									<div class="col-6">
 										<!--begin::Card-->
@@ -152,12 +111,54 @@ License: For each use you must have a valid license purchased only from above li
 										<!--begin::Card-->
 										<div class="card card-stretch">
 											<!--begin::Link-->
-											<a href="/filtrofallido" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
+											<a href="/cobro/cobrar" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
+												<i class="ki-duotone ki-gift fs-2tx mb-5 ms-n1">
+													<span class="path1"></span>
+													<span class="path2"></span>
+													<span class="path3"></span>
+													<span class="path4"></span>
+												</i>
+												<span class="fs-4 fw-bold">Cobrar</span>
+											</a>
+											<!--end::Link-->
+										</div>
+										<!--end::Card-->
+									</div>
+									<!--end::Col-->
+									<!--begin::Col-->
+								
+									<!--end::Col-->
+									<!--begin::Col-->
+									<div class="col-6">
+										<!--begin::Card-->
+										<div class="card card-stretch">
+											<!--begin::Link-->
+											<a href="/" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
+												<i class="ki-duotone ki-fingerprint-scanning fs-2tx mb-5 ms-n1">
+													<span class="path1"></span>
+													<span class="path2"></span>
+													<span class="path3"></span>
+													<span class="path4"></span>
+													<span class="path5"></span>
+												</i>
+												<span class="fs-4 fw-bold">Pagar</span>
+											</a>
+											<!--end::Link-->
+										</div>
+										<!--end::Card-->
+									</div>
+									<!--end::Col-->
+									<!--begin::Col-->
+									<div class="col-6">
+										<!--begin::Card-->
+										<div class="card card-stretch">
+											<!--begin::Link-->
+											<a href="/caja/cajero" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
 												<i class="ki-duotone ki-abstract-26 fs-2tx mb-5 ms-n1">
 													<span class="path1"></span>
 													<span class="path2"></span>
 												</i>
-												<span class="fs-4 fw-bold">Fallidos</span>
+												<span class="fs-4 fw-bold">Caja</span>
 											</a>
 											<!--end::Link-->
 										</div>
