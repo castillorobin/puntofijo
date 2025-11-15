@@ -115,5 +115,6 @@ Route::post('/logout', function () {
 })->name('logout');
 
 
+Route::view('/bienvenida', '/pages/dashboards/inicio')->name('bienvenida');
 
 require __DIR__.'/auth.php';
