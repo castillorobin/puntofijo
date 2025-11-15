@@ -42,7 +42,17 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 	<!--end::Global Stylesheets Bundle-->
+<style>
+    /* Fondo blanco del aside en móviles */
+    #kt_aside {
+        background-color: #ffffff !important;
+    }
 
+    /* Quitar color oscuro del drawer */
+    .drawer .drawer-content {
+        background-color: #ffffff !important;
+    }
+</style>
 	
 </head>
 <!--end::Head-->
@@ -193,10 +203,35 @@ License: For each use you must have a valid license purchased only from above li
 			<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
 				
 				<!--end::Header tablet and mobile-->
+				<!--begin::Header mobile-->
+<div id="kt_header_mobile" class="header-mobile py-3 d-flex d-lg-none align-items-center">
+    <div class="container-fluid d-flex justify-content-between">
+
+        <!-- Logo -->
+        <a href="/dashboard">
+            <img alt="Logo" src="assets/media/logos/logo.png" class="h-30px" />
+        </a>
+
+        <!-- Toggle para mostrar el aside -->
+        <div class="d-flex align-items-center">
+            <button class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
+                <i class="ki-duotone ki-menu fs-1"></i>
+            </button>
+        </div>
+
+    </div>
+</div>
+<!--end::Header mobile-->
 				<!--begin::Header-->
 				<div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
-					<!--begin::Container-->
+					
+				<!--begin::Container-->
 					<div class="header-container container-xxl">
+						<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
+    <div class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
+        <i class="ki-duotone ki-abstract-14 fs-2"></i>
+    </div>
+</div>
 						<!--begin::Page title-->
 						<div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
 							<!--begin::Heading-->
