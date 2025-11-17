@@ -199,7 +199,7 @@ License: For each use you must have a valid license purchased only from above li
 					<div class="header-container container-xxl">
 							<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
    <button class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
-    <i class="ki-outline ki-menu fs-1"></i>
+     <i class="fas fa-bars" style="font-size: 28px;"></i>
 </button>
 </div>
 						<!--begin::Page title-->

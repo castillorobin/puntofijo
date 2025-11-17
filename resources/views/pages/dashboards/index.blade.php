@@ -194,26 +194,7 @@ License: For each use you must have a valid license purchased only from above li
 				
 				<!--end::Header tablet and mobile-->
 				<!--begin::Header mobile-->
-<div id="kt_header_mobile" class="header-mobile py-3 d-flex d-lg-none align-items-center">
-    <div class="container-fluid d-flex justify-content-between">
 
-        <!-- Logo -->
-        <a href="/dashboard">
-            <img alt="Logo" src="assets/media/logos/logo.png" class="h-30px" />
-        </a>
-
-        <!-- Toggle para mostrar el aside -->
-        <div class="d-flex align-items-center">
-            <button class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
-    <i class="ki-duotone ki-menu fs-1">
-        <span class="path1"></span>
-        <span class="path2"></span>
-    </i>
-</button>
-        </div>
-
-    </div>
-</div>
 <!--end::Header mobile-->
 				<!--begin::Header-->
 				<div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
@@ -222,7 +203,7 @@ License: For each use you must have a valid license purchased only from above li
 					<div class="header-container container-xxl">
 						<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
    <button class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
-    <i class="ki-outline ki-menu fs-1"></i>
+    <i class="fas fa-bars" style="font-size: 28px;"></i>
 </button>
 </div>
 						<!--begin::Page title-->
