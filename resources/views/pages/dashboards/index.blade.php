@@ -470,9 +470,26 @@ License: For each use you must have a valid license purchased only from above li
 										<!--end::Card-->
 									</div>
 									<!--end::Col-->
-									<!--begin::Col-->
+									</div>
+
+									<!-- Fila nueva para centrar un botón -->
+<div class="row mt-3">
+    <div class="col-12 justify-content-center">
+        <div class="card card-stretch" style="width: 100%;">
+            <a href="/entregarenlote" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column w-100 p-10">
+
+                <i class="ki-duotone ki-delivery fs-2tx mb-5 ms-n1">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+
+                <span class="fs-4 fw-bold">Entrega múltiple</span>
+            </a>
+        </div>
+    </div>
+</div>
 								
-								</div>
+								
 
 
 							</div>
