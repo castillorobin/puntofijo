@@ -437,23 +437,36 @@ License: For each use you must have a valid license purchased only from above li
         }, 3000);
     </script>
 @endif
-   <form id="formbsucar" method="POST" action="{{ route('cobro.buscar') }}">
+  <form id="formbsucar" method="POST" action="{{ route('cobro.buscar') }}"
+      class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3">
     @csrf
 
+    <!-- SELECT -->
     <select name="comercio" id="comercio"
             data-control="select2"
-            class="form-select form-select-lg mb-5"
-            aria-label=".form-select-lg example"
-            style="max-width: 300px; margin-left: 25px;">
+            class="form-select form-select-lg"
+            style="max-width: 300px;">
         <option value="" disabled selected>Seleccione un comercio</option>
         @foreach($comercios as $comercio)
             <option value="{{ $comercio->id }}">{{ $comercio->comercio }}</option>
         @endforeach
     </select>
 
-    <button type="submit" id="start-scan" class="btn btn-primary mx-5">
-        Buscar
-    </button>
+    <!-- CONTENEDOR PARA BOTONES -->
+    <div class="d-flex flex-row gap-2 text-center">
+
+        <!-- BOTÓN BUSCAR -->
+        <button type="submit" id="start-scan" class="btn btn-primary">
+            Buscar
+        </button>
+
+        <!-- BOTÓN CANCELAR -->
+        <a href="{{ route('dashboard') }}" class="btn btn-secondary">
+            Cancelar
+        </a>
+
+    </div>
+
 </form>
     
 </div>
