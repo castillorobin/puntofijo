@@ -405,21 +405,7 @@ License: For each use you must have a valid license purchased only from above li
                                         </h3>
                                     </div>
                                     <!--end::Header-->
-
-                                    <!--begin::Body-->
-
-                                    <div class="card-body py-3">
-                                        <div class="table-responsive" style="overflow-x: auto; padding: 0;">
-
-                                            <!--begin::Main wrapper-->
-                                            <div id="kt_docs_search_handler_basic"
-                                                data-kt-search-keypress="true"
-                                                data-kt-search-min-length="2"
-                                                data-kt-search-enter="true"
-                                                data-kt-search-layout="inline">
-
-                                               <div class="qr-container d-flex align-items-center">
-												 @if (session('success'))
+ @if (session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-success" style="margin-left: 25px;">
         {{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -437,6 +423,35 @@ License: For each use you must have a valid license purchased only from above li
         }, 3000);
     </script>
 @endif
+
+{{-- Mensaje de error general --}}
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+
+	<script>
+setTimeout(() => {
+    document.querySelectorAll('.alert').forEach(a => a.remove());
+}, 3000);
+</script>
+@endif
+                                    <!--begin::Body-->
+
+                                    <div class="card-body py-3">
+                                        <div class="table-responsive" style="overflow-x: auto; padding: 0;">
+
+                                            <!--begin::Main wrapper-->
+                                            <div id="kt_docs_search_handler_basic"
+                                                data-kt-search-keypress="true"
+                                                data-kt-search-min-length="2"
+                                                data-kt-search-enter="true"
+                                                data-kt-search-layout="inline">
+
+                                               <div class="qr-container d-flex align-items-center">
+												
+
     <input id="qr-input" type="text" placeholder="Escanear código QR" readonly class="form-control me-2" style="max-width: 300px;" />
  
 
