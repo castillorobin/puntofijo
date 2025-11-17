@@ -42,17 +42,7 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 	<!--end::Global Stylesheets Bundle-->
-<style>
-    /* Fondo blanco del aside en móviles */
-    #kt_aside {
-        background-color: #ffffff !important;
-    }
 
-    /* Quitar color oscuro del drawer */
-    .drawer .drawer-content {
-        background-color: #ffffff !important;
-    }
-</style>
 	
 </head>
 <!--end::Head-->
@@ -215,8 +205,11 @@ License: For each use you must have a valid license purchased only from above li
         <!-- Toggle para mostrar el aside -->
         <div class="d-flex align-items-center">
             <button class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
-                <i class="ki-duotone ki-menu fs-1"></i>
-            </button>
+    <i class="ki-duotone ki-menu fs-1">
+        <span class="path1"></span>
+        <span class="path2"></span>
+    </i>
+</button>
         </div>
 
     </div>
@@ -228,9 +221,9 @@ License: For each use you must have a valid license purchased only from above li
 				<!--begin::Container-->
 					<div class="header-container container-xxl">
 						<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
-    <div class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
-        <i class="ki-duotone ki-abstract-14 fs-2"></i>
-    </div>
+   <button class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
+    <i class="ki-outline ki-menu fs-1"></i>
+</button>
 </div>
 						<!--begin::Page title-->
 						<div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">

@@ -197,6 +197,11 @@ License: For each use you must have a valid license purchased only from above li
 				<div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
 					<!--begin::Container-->
 					<div class="header-container container-xxl">
+							<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
+   <button class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
+    <i class="ki-outline ki-menu fs-1"></i>
+</button>
+</div>
 						<!--begin::Page title-->
 						<div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
 							<!--begin::Heading-->
