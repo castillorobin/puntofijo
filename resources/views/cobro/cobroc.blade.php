@@ -437,20 +437,24 @@ License: For each use you must have a valid license purchased only from above li
         }, 3000);
     </script>
 @endif
-    <form id="formbsucar" method="POST" action="{{ route('cobro.buscar') }}">
-                @csrf
- 
-	<select name="comercio" id="comercio" data-control="select2" class="form-select form-select-lg " aria-label=".form-select-lg example" style="max-width: 300px; margin-left: 25px;">
-		<option value="" disabled selected>Seleccione un comercio</option>
-		@foreach($comercios as $comercio)
-			<option value="{{ $comercio->id }}">{{ $comercio->comercio }}</option>
-		@endforeach
-	</select>
-	<button type="submit" id="start-scan" class="btn btn-primary mx-3">Buscar</button>
+   <form id="formbsucar" method="POST" action="{{ route('cobro.buscar') }}">
+    @csrf
+
+    <select name="comercio" id="comercio"
+            data-control="select2"
+            class="form-select form-select-lg mb-5"
+            aria-label=".form-select-lg example"
+            style="max-width: 300px; margin-left: 25px;">
+        <option value="" disabled selected>Seleccione un comercio</option>
+        @foreach($comercios as $comercio)
+            <option value="{{ $comercio->id }}">{{ $comercio->comercio }}</option>
+        @endforeach
+    </select>
+
+    <button type="submit" id="start-scan" class="btn btn-primary mx-5">
+        Buscar
+    </button>
 </form>
-    <!-- Contenedor donde se mostrará la cámara 
-    <div id="qr-reader" style="width: 100%; max-width: 300px; margin:auto; display:none;"></div>
--->
     
 </div>
 <div id="qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
