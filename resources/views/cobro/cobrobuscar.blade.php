@@ -528,9 +528,11 @@ input.is-invalid {
         <div class="col-md-9 offset-md-3">
             <div class="d-flex">
                 <!--begin::Button-->
-                <button type="reset" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
+                <a href="/dashboard">
+                <button type="button" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
                    Cancelar
                 </button>
+                </a>
                 <!--end::Button-->
 
                 <!--begin::Button-->
@@ -580,9 +582,11 @@ input.is-invalid {
         <div class="col-md-9 offset-md-3">
             <div class="d-flex">
                 <!--begin::Button-->
-                <button type="reset" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
-                    Cancelar
+                <a href="/dashboard">
+                <button type="button" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
+                   Cancelar
                 </button>
+                </a>
                 <!--end::Button-->
 
                 <!--begin::Button-->
@@ -632,9 +636,11 @@ input.is-invalid {
         <div class="col-md-9 offset-md-3">
             <div class="d-flex">
                 <!--begin::Button-->
-                <button type="reset" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
-                    Cancelar
+                <a href="/dashboard">
+                <button type="button" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
+                   Cancelar
                 </button>
+                </a>
                 <!--end::Button-->
 
                 <!--begin::Button-->
@@ -683,9 +689,11 @@ input.is-invalid {
         <div class="col-md-9 offset-md-3">
             <div class="d-flex">
                 <!--begin::Button-->
-                <button type="reset" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
-                    Cancelar
+                <a href="/dashboard">
+                <button type="button" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
+                   Cancelar
                 </button>
+                </a>
                 <!--end::Button-->
 
                 <!--begin::Button-->
@@ -726,9 +734,11 @@ input.is-invalid {
         <div class="col-md-9 offset-md-3">
             <div class="d-flex">
                 <!--begin::Button-->
-                <button type="reset" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
-                    Cancelar
+                <a href="/dashboard">
+                <button type="button" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
+                   Cancelar
                 </button>
+                </a>
                 <!--end::Button-->
 
                 <!--begin::Button-->
