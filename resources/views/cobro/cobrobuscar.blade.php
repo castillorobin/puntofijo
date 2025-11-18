@@ -477,13 +477,6 @@ input.is-invalid {
             </li>
             <!--end:::Tab item-->
 
-            <!--begin:::Tab item-->
-            <li class="nav-item" role="presentation">
-                <a class="nav-link text-active-primary d-flex align-items-center pb-5" data-bs-toggle="tab" href="#kt_ecommerce_settings_customers" aria-selected="false" role="tab" tabindex="-1">
-                    <i class="ki-duotone ki-people fs-2 me-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i> Guias
-                </a>
-            </li>
-
 			<li class="nav-item" role="presentation">
                 <a class="nav-link text-active-primary d-flex align-items-center pb-5" data-bs-toggle="tab" href="#cobrar" aria-selected="false" role="tab" tabindex="-1">
                     <i class="ki-duotone ki-people fs-2 me-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i> Cobrar
@@ -798,51 +791,7 @@ input.is-invalid {
 </div>
             <!--end:::Tab pane-->
 
-            <!--begin:::Tab pane-->
-            <div class="tab-pane fade" id="kt_ecommerce_settings_customers" role="tabpanel">
-                 
-<!--begin::Form-->
-<form id="kt_ecommerce_settings_general_customers" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
-    <!--begin::Heading-->
-    <div class="row mb-7">
-        <div class="col-md-9 offset-md-3">
-            <h2>Guias</h2>
-        </div>
-    </div>
-    <!--end::Heading-->
-
-
-
-    <!--begin::Action buttons-->
-    <div class="row py-5">
-        <div class="col-md-9 offset-md-3">
-            <div class="d-flex">
-                <!--begin::Button-->
-                <a href="/dashboard">
-                <button type="button" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
-                   Cancelar
-                </button>
-                </a>
-                <!--end::Button-->
-
-                <!--begin::Button-->
-                <button type="submit" data-kt-ecommerce-settings-type="submit" class="btn btn-primary">
-                    <span class="indicator-label">
-                        Guardar
-                    </span>
-                    <span class="indicator-progress">
-                        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
-                </button>
-                <!--end::Button-->
-            </div>
-        </div>
-    </div>
-    <!--end::Action buttons-->
-</form>
-<!--end::Form-->            </div>
-            <!--end:::Tab pane-->
-        </div>
+           
         <!--end:::Tab content-->
 
 
@@ -852,7 +801,7 @@ input.is-invalid {
 <div class="tab-pane fade" id="cobrar" role="tabpanel">
 
     <div class="row ">  <!-- 🚀 CENTRA TODA LA SECCIÓN -->
-        <div class="col-lg-5">
+        <div class="col-lg-4">
 
             <form>
                 <div style="border: 2px solid white; border-radius: 30px; padding: 10px;">
@@ -869,30 +818,29 @@ input.is-invalid {
 
                             <tbody>
 
-                                <h2 class="text-center bg-success text-white py-5" style="border-radius: 10px 10px 0 0;">Datos de cobro</h2>
+                                <h2 class="text-center">Datos de cobro</h2>
                                 <br>
-                                <div class="row">
-                                <div class="form-floating col-lg-6 mb-4">
+
+                                <div class="form-floating col-lg-12 mb-4">
                                     <input type="text" class="form-control form-control-solid" name="cajero" id="cajero"
                                            placeholder="Cajero" value="{{ Auth::user()->name }}" readonly />
                                     <label for="Cajero">Cajero</label>
                                 </div>
 
-                                <div class="form-floating col-lg-6 mb-4">
+                                <div class="form-floating col-lg-12 mb-4">
                                     <input type="text" class="form-control form-control-solid" name="fecha_entrega"
                                            id="fecha_entrega" value="{{ \Carbon\Carbon::now()->format('j/n/Y') }}" readonly />
                                     <label for="fecha_entrega">Fecha de pago</label>
                                 </div>
-                                </div>
-                            <div class="row">
-                                <div class="form-floating col-lg-6 mb-4">
+
+                                <div class="form-floating col-lg-12 mb-4">
                                     <input type="text" name="agencia" id="agencia"
                                            class="form-control form-control-solid"
                                            value="{{ $empleado[0]->agencia }}" readonly />
                                     <label for="agencia" style="padding-left: 25px;">Agencia</label>
                                 </div>
 
-                                <div class="form-floating col-lg-6 mb-4">
+                                <div class="form-floating col-lg-12 mb-4">
                                     <select class="form-select form-select-solid" name="metodo" id="metodo" required>
                                         <option value="Efectivo">Efectivo</option>
                                         <option value="Transferencia_empresa">Transferencia a la empresa</option>
@@ -900,36 +848,82 @@ input.is-invalid {
                                     </select>
                                     <label for="metodo">Método de pago</label>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-floating col-lg-6 mb-4">
+
+                                <div class="form-floating col-lg-12 mb-4">
                                     <input type="text" class="form-control form-control-solid" name="total" id="total"
                                            value="0.00" readonly />
-                                    <label for="total">Total</label>
+                                    <label for="total">Subtotal</label>
                                 </div>
 
-                                <div class="form-floating col-lg-6 mb-4">
+                                <div class="form-floating col-lg-12 mb-4">
+                                    <input type="text" class="form-control form-control-solid" name="descuento"
+                                           id="descuento" placeholder="0.00"  />
+                                    <label for="descuento">Descuento</label>
+                                </div>
+
+                                <div class="form-floating col-lg-12 mb-4">
                                     <textarea class="form-control form-control-solid" name="nota" id="nota"
                                               placeholder="Nota"></textarea>
                                     <label for="nota" style="padding-left: 25px;">Nota</label>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-floating col-lg-6 mb-4">
-                                    
-                                    <input type="text" class="form-control form-control-solid" name="recibido"
-                                           id="recibido" placeholder="0.00" />
-                                           <label for="recibido" class="form-label">Recibido</label>
-                                </div>
 
-                                <div class="form-floating col-lg-6 mb-4">
-                                    <input type="text" class="form-control form-control-solid" name="cambio"
-                                           id="cambio" value="0.00" readonly />
-                                    <label for="cambio">Cambio</label>
-                                </div>
+                                                            <div class="row mb-8">
+                                                                    <!-- Content -->
+                                                                  
+                                                                   <div class="col-6 d-flex align-items-center justify-content-end">
+                                                                    <span class="form-label">Guias</span>
+                                                                    </div>
+                                                                     <div class="col-6">
+                                                                    <input type="text" name="guias" id="guias" class="form-control form-control-solid" placeholder="0" />
+                                                                    </div>
+                                                                </div>
 
-                                </div>
+                                                               
+                                                               
+                                                                </div>
 
+                                
+
+                                <div class="d-flex flex-stack bg-success rounded-3 p-6 mb-5">
+                                                                    <!-- Content -->
+                                                                    <div class="fs-6 fw-bold text-white">
+                                                                        <span class="d-block lh-1 mb-2">Subtotal</span>
+                                                                        <span class="d-block mb-2">Descuento</span>
+                                                                        <span class="d-block fs-2qx lh-1">Total</span>
+                                                                    </div>
+                                                                    <!-- Content -->
+                                                                    <div class="fs-6 fw-bold text-white text-end">
+                                                                        
+                                                                        <span id="stotal" name="stotal" class="d-block lh-1 mb-2" data-kt-pos-element="total">$</span>
+                                                                        <span id="sdescuento" name="sdescuento" class="d-block mb-2" data-kt-pos-element="discount">$0</span>
+                                                                        <span class="d-block fs-2qx lh-1" id="totalito" name="totalito" data-kt-pos-element="tot1">$</span>
+                                                                                                                                               
+                                                                    </div>
+                                                                 </div>
+
+                                                                <div class="row mb-8">
+                                                                    <!-- Content -->
+                                                                  
+                                                                   <div class="col-6 d-flex align-items-center justify-content-end">
+                                                                    <span class="form-label">Recibido</span>
+                                                                    </div>
+                                                                     <div class="col-6">
+                                                                    <input type="text" name="recibido" id="recibido" class="form-control form-control-solid" placeholder="$0.00" />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                <div class="col-6 d-flex align-items-center justify-content-end">
+                                                                    <span class="form-label">Cambio</span>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <!-- Visible SOLO para mostrar con $ -->
+                                                                    <input type="text" id="cambio_mostrado" class="form-control form-control-solid" placeholder="$0.00" readonly/>
+
+                                                                    <!-- Oculto: este se manda al backend sin símbolos -->
+                                                                    <input type="hidden" name="cambio" id="cambio_num" value="0">
+                                                                </div>
+                                                                </div>
                             </tbody>
                         </table>
                     </div>
