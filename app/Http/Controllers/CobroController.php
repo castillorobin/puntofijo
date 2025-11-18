@@ -52,19 +52,26 @@ class CobroController extends Controller
         $saldomovi = $ultimoMovi->saldo;
 
 
-    $data = $request->validate([
-        'comercio' => 'required|string',
-        'tipos' => 'required|array',
-        'subtotales' => 'required|array',
-        'cantidades' => 'required|array',
-        'total' => 'required|numeric',
-        'recibido' => 'required|numeric',
-        'cambio' => 'required|numeric',
-        'metodo' => 'required|string',
-        'agencia' => 'required|string',
-        'nota' => 'nullable|string',
-        'cajero' => 'required|string',
-    ]);
+    $validated = $request->validate([
+    'comercio' => 'required|string',
+    'tipos' => 'required|array',
+    'subtotales' => 'required|array',
+    'cantidades' => 'required|array',
+
+    'guias' => 'required|numeric',
+    'subtotal' => 'required|numeric',
+    'descuento' => 'required|numeric',
+    'iva' => 'required|numeric',
+    'total_final' => 'required|numeric',
+
+    'recibido' => 'required|numeric',
+    'cambio' => 'required|numeric',
+    'metodo' => 'required|string',
+    'agencia' => 'required|string',
+    'nota' => 'nullable|string',
+    'cajero' => 'required|string',
+    'comprobante' => 'required|string'
+]);
 //$codigo = 2025 + intval(date('ymdHis'));
     $ultimoid = Ticketc::latest('id')->first();
             $idcompr = $ultimoid->id + 1;
@@ -78,11 +85,23 @@ class CobroController extends Controller
         'codigo' => $codigo,
         'cajero' => $data['cajero'],
         'metodo' => $data['metodo'],
-        'total' => $data['total'],
-        'entrega' => $data['recibido'],
-        'cambio' => $data['cambio'],
         'nota' => $data['nota'] ?? null,
         'agencia' => $data['agencia'],
+        // NUEVOS CAMPOS
+    'guias' => $validated['guias'],
+    'subtotal' => $validated['subtotal'],
+    'descuento' => $validated['descuento'],
+    'iva' => $validated['iva'],
+    'total' => $validated['total_final'], // AHORA ESTE ES EL TOTAL REAL
+    'entrega' => $validated['recibido'],
+    'cambio' => $validated['cambio'],
+    'comprobante' => $validated['comprobante'],
+
+        
+        
+        
+        
+        
         'persoi' => $data['subtotales']['personalizado'] ?? 0,
         'depari' => $data['subtotales']['departamental'] ?? 0,
         'puntoi' => $data['subtotales']['puntofijo'] ?? 0,
