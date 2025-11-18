@@ -496,222 +496,306 @@ input.is-invalid {
         <!--begin:::Tab content-->
         <div class="tab-content" id="myTabContent">
             <!--begin:::Tab pane-->
-            <div class="tab-pane fade active show" id="kt_ecommerce_settings_general" role="tabpanel">
-      <!-- PERSONALIZADO -->
-<form class="guardar-envios" data-tipo="Personalizado">
-    <div class="row mb-7">
-        <div class="col-md-9 offset-md-3">
-            <input id="personalizado-qr-input" type="text" placeholder="Escanear QR" readonly class="form-control me-2" style="max-width: 300px;" />
-            <div id="personalizado-qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
-        </div>
-    </div>
+          <div class="tab-pane fade active show" id="kt_ecommerce_settings_general" role="tabpanel">
 
-    <table class="table table-striped" id="personalizado-tabla">
-        <thead>
-            <tr><th># Guía</th><th>Tipo</th><th>Acción</th></tr>
-        </thead>
-        <tbody></tbody>
-    </table>
- <!--begin::Action buttons
-    <button type="submit" class="btn btn-primary">Guardar Personalizados</button>
+    <form class="guardar-envios" data-tipo="Personalizado">
 
+        <!-- QR (siempre a la izquierda en PC, arriba en móvil) -->
+        <div class="row mb-4">
+            <div class="col-12 col-lg-6">
+                <input id="personalizado-qr-input" type="text"
+                       placeholder="Escanear QR"
+                       readonly
+                       class="form-control mb-3"
+                       style="max-width: 300px;" />
 
-   -->
-
-   <div class="row mt-4">
-    <div class="col-md-3 offset-md-3">
-        <label class="form-label fw-semibold">Subtotal</label>
-        <input type="number" id="personalizado-subtotal" class="form-control" placeholder="0.00" min="0" step="0.01">
-    </div>
-</div>
-    <div class="row py-5">
-        <div class="col-md-9 offset-md-3">
-            <div class="d-flex">
-                <!--begin::Button-->
-                <a href="/dashboard">
-                <button type="button" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
-                   Cancelar
-                </button>
-                </a>
-                <!--end::Button-->
-
-                <!--begin::Button-->
-                <button type="submit" data-kt-ecommerce-settings-type="submit" class="btn btn-primary">
-                    <span class="indicator-label">
-                        Guardar
-                    </span>
-                    <span class="indicator-progress">
-                        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
-                </button>
-                <!--end::Button-->
+                <div id="personalizado-qr-reader"
+                     style="width:100%; display:none;"
+                     class="border rounded p-2 mb-3"></div>
             </div>
         </div>
-    </div>
-    <!--end::Action buttons-->
-</form>
-<!--end::Form-->            </div>
+
+        <!-- TABLA (ANCHO COMPLETO) -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <table class="table align-middle table-row-dashed fs-6 gy-5" id="personalizado-tabla">
+                    <thead>
+                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                            <th># Guía</th>
+                            <th>Tipo</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SUBTOTAL + BOTONES (alineados a la derecha en PC, debajo de tabla) -->
+        <div class="row justify-content-lg-end">
+
+            <div class="col-12 col-lg-4 d-flex flex-column align-items-lg-end">
+
+                <!-- Subtotal -->
+                <div class="mb-3 w-100" style="max-width: 200px;">
+                    
+                    <input type="number" id="personalizado-subtotal"
+                           class="form-control"
+                           placeholder="0.00" min="0" step="0.01">
+                </div>
+
+                <!-- Botones -->
+                <div class="d-flex gap-3 mt-2">
+                    <a href="/cobro/cobrar" class="btn btn-light">Cancelar</a>
+
+                    <button type="submit"
+                            data-kt-ecommerce-settings-type="submit"
+                            class="btn btn-primary">
+                        <span class="indicator-label">Guardar</span>
+                        <span class="indicator-progress">
+                            Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
             <!--end:::Tab pane-->
 
             <!--begin:::Tab pane-->
-            <div class="tab-pane fade" id="kt_ecommerce_settings_store" role="tabpanel">
-              <!-- Punto fijo -->
-<form class="guardar-envios" data-tipo="Punto fijo">
-    <div class="row mb-7">
-        <div class="col-md-9 offset-md-3">
-            <input id="puntofijo-qr-input" type="text" placeholder="Escanear QR" readonly class="form-control me-2" style="max-width: 300px;" />
-            <div id="puntofijo-qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
-        </div>
-    </div>
+           <div class="tab-pane fade" id="kt_ecommerce_settings_store" role="tabpanel">
 
-    <table class="table table-striped" id="puntofijo-tabla">
-        <thead>
-            <tr><th># Guía</th><th>Tipo</th><th>Acción</th></tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <form class="guardar-envios" data-tipo="Punto fijo">
 
-    <div class="row mt-4">
-    <div class="col-md-3 offset-md-3">
-        <label class="form-label fw-semibold">Subtotal</label>
-        <input type="number" id="puntofijo-subtotal" class="form-control" placeholder="0.00" min="0" step="0.01">
-    </div>
-</div>
-    <!--begin::Action buttons-->
-    <div class="row py-5">
-        <div class="col-md-9 offset-md-3">
-            <div class="d-flex">
-                <!--begin::Button-->
-                <a href="/dashboard">
-                <button type="button" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
-                   Cancelar
-                </button>
-                </a>
-                <!--end::Button-->
+        <!-- QR (arriba izquierda en PC / arriba en móvil) -->
+        <div class="row mb-4">
+            <div class="col-12 col-lg-6">
+                <input id="puntofijo-qr-input" type="text"
+                       placeholder="Escanear QR"
+                       readonly
+                       class="form-control mb-3"
+                       style="max-width: 300px;" />
 
-                <!--begin::Button-->
-                <button type="submit" data-kt-ecommerce-settings-type="submit" class="btn btn-primary">
-                    <span class="indicator-label">
-                        Guardar
-                    </span>
-                    <span class="indicator-progress">
-                        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
-                </button>
-                <!--end::Button-->
+                <div id="puntofijo-qr-reader"
+                     style="width:100%; display:none;"
+                     class="border rounded p-2 mb-3"></div>
             </div>
         </div>
-    </div>
-    <!--end::Action buttons-->
-</form>
-<!--end::Form-->            </div>
+
+        <!-- TABLA (ancho completo) -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <table class="table align-middle table-row-dashed fs-6 gy-5" id="puntofijo-tabla">
+                    <thead>
+                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                            <th># Guía</th>
+                            <th>Tipo</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SUBTOTAL + BOTONES alineados a la derecha (PC) -->
+        <div class="row justify-content-lg-end">
+
+            <div class="col-12 col-lg-4 d-flex flex-column align-items-lg-end">
+
+                <!-- Subtotal -->
+                <div class="mb-3 w-100" style="max-width: 200px;">
+                    <input type="number" id="puntofijo-subtotal"
+                           class="form-control"
+                           placeholder="0.00" min="0" step="0.01">
+                </div>
+
+                <!-- Botones -->
+                <div class="d-flex gap-3 mt-2">
+
+                    <a href="/cobro/cobrar" class="btn btn-light">
+                        Cancelar
+                    </a>
+
+                    <button type="submit"
+                            data-kt-ecommerce-settings-type="submit"
+                            class="btn btn-primary">
+                        <span class="indicator-label">Guardar</span>
+                        <span class="indicator-progress">
+                            Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
             <!--end:::Tab pane-->
 
             <!--begin:::Tab pane-->
-            <div class="tab-pane fade" id="kt_ecommerce_settings_localization" role="tabpanel">
-            <!-- PERSONALIZADO DEPARTAMENTAL-->
-<form class="guardar-envios" data-tipo="Personalizado Departamental">
-    <div class="row mb-7">
-        <div class="col-md-9 offset-md-3">
-            <input id="personalizado-departamental-qr-input" type="text" placeholder="Escanear QR" readonly class="form-control me-2" style="max-width: 300px;" />
-            <div id="personalizado-departamental-qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
-        </div>
-    </div>
+           <div class="tab-pane fade" id="kt_ecommerce_settings_localization" role="tabpanel">
 
-    <table class="table table-striped" id="personalizado-departamental-tabla">
-        <thead>
-            <tr><th># Guía</th><th>Tipo</th><th>Acción</th></tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <form class="guardar-envios" data-tipo="Personalizado Departamental">
 
-    <div class="row mt-4">
-    <div class="col-md-3 offset-md-3">
-        <label class="form-label fw-semibold">Subtotal</label>
-        <input type="number" id="personalizado-departamental-subtotal" class="form-control" placeholder="0.00" min="0" step="0.01">
-    </div>
-</div>
-    <!--begin::Action buttons-->
-    <div class="row py-5">
-        <div class="col-md-9 offset-md-3">
-            <div class="d-flex">
-                <!--begin::Button-->
-                <a href="/dashboard">
-                <button type="button" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
-                   Cancelar
-                </button>
-                </a>
-                <!--end::Button-->
+        <!-- QR (arriba izquierda en PC / arriba en móvil) -->
+        <div class="row mb-4">
+            <div class="col-12 col-lg-6">
+                <input id="personalizado-departamental-qr-input" type="text"
+                       placeholder="Escanear QR"
+                       readonly
+                       class="form-control mb-3"
+                       style="max-width: 300px;" />
 
-                <!--begin::Button-->
-                <button type="submit" data-kt-ecommerce-settings-type="submit" class="btn btn-primary">
-                    <span class="indicator-label">
-                        Guardar
-                    </span>
-                    <span class="indicator-progress">
-                        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
-                </button>
-                <!--end::Button-->
+                <div id="personalizado-departamental-qr-reader"
+                     style="width:100%; display:none;"
+                     class="border rounded p-2 mb-3"></div>
             </div>
         </div>
-    </div>
-    <!--end::Action buttons-->
-</form>
-<!--end::Form-->            </div>
+
+        <!-- TABLA (ancho completo) -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <table class="table align-middle table-row-dashed fs-6 gy-5" id="personalizado-departamental-tabla">
+                    <thead>
+                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                            <th># Guía</th>
+                            <th>Tipo</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SUBTOTAL + BOTONES alineados a la derecha (PC) -->
+        <div class="row justify-content-lg-end">
+
+            <div class="col-12 col-lg-4 d-flex flex-column align-items-lg-end">
+
+                <!-- Subtotal -->
+                <div class="mb-3 w-100" style="max-width: 200px;">
+                    <input type="number" id="personalizado-departamental-subtotal"
+                           class="form-control"
+                           placeholder="0.00"
+                           min="0" step="0.01">
+                </div>
+
+                <!-- Botones -->
+                <div class="d-flex gap-3 mt-2">
+
+                    <a href="/cobro/cobrar" class="btn btn-light">
+                        Cancelar
+                    </a>
+
+                    <button type="submit"
+                            data-kt-ecommerce-settings-type="submit"
+                            class="btn btn-primary">
+                        <span class="indicator-label">Guardar</span>
+                        <span class="indicator-progress">
+                            Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
             <!--end:::Tab pane-->
 
             <!--begin:::Tab pane-->
-            <div class="tab-pane fade" id="kt_ecommerce_settings_products" role="tabpanel">
-             <!-- PERSONALIZADO -->
-<form class="guardar-envios" data-tipo="Casillero">
-    <div class="row mb-7">
-        <div class="col-md-9 offset-md-3">
-            <input id="casillero-qr-input" type="text" placeholder="Escanear QR" readonly class="form-control me-2" style="max-width: 300px;" />
-            <div id="casillero-qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
-        </div>
-    </div>
+           <div class="tab-pane fade" id="kt_ecommerce_settings_products" role="tabpanel">
 
-    <table class="table table-striped" id="casillero-tabla">
-        <thead>
-            <tr><th># Guía</th><th>Tipo</th><th>Acción</th></tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <div class="row mt-4">
-    <div class="col-md-3 offset-md-3">
-        <label class="form-label fw-semibold">Subtotal</label>
-        <input type="number" id="casillero-subtotal" class="form-control" placeholder="0.00" min="0" step="0.01">
-    </div>
-</div>
-    <!--begin::Action buttons-->
-    <div class="row py-5">
-        <div class="col-md-9 offset-md-3">
-            <div class="d-flex">
-                <!--begin::Button-->
-                <a href="/dashboard">
-                <button type="button" data-kt-ecommerce-settings-type="cancel" class="btn btn-light me-3">
-                   Cancelar
-                </button>
-                </a>
-                <!--end::Button-->
+    <form class="guardar-envios" data-tipo="Casillero">
 
-                <!--begin::Button-->
-                <button type="submit" data-kt-ecommerce-settings-type="submit" class="btn btn-primary">
-                    <span class="indicator-label">
-                        Guardar
-                    </span>
-                    <span class="indicator-progress">
-                        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
-                </button>
-                <!--end::Button-->
+        <!-- QR (arriba izquierda en PC / arriba en móvil) -->
+        <div class="row mb-4">
+            <div class="col-12 col-lg-6">
+                <input id="casillero-qr-input" type="text"
+                       placeholder="Escanear QR"
+                       readonly
+                       class="form-control mb-3"
+                       style="max-width: 300px;" />
+
+                <div id="casillero-qr-reader"
+                     style="width:100%; display:none;"
+                     class="border rounded p-2 mb-3"></div>
             </div>
         </div>
-    </div>
-    <!--end::Action buttons-->
-</form>
-<!--end::Form-->            </div>
+
+        <!-- TABLA ANCHO COMPLETO -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <table class="table align-middle table-row-dashed fs-6 gy-5" id="casillero-tabla">
+                    <thead>
+                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                            <th># Guía</th>
+                            <th>Tipo</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SUBTOTAL + BOTONES alineados a la derecha (PC) -->
+        <div class="row justify-content-lg-end">
+
+            <div class="col-12 col-lg-4 d-flex flex-column align-items-lg-end">
+
+                <!-- Subtotal -->
+                <div class="mb-3 w-100" style="max-width: 200px;">
+                    <input type="number" id="casillero-subtotal"
+                           class="form-control"
+                           placeholder="0.00"
+                           min="0" step="0.01">
+                </div>
+
+                <!-- Botones -->
+                <div class="d-flex gap-3 mt-2">
+
+                    <a href="/cobro/cobrar" class="btn btn-light">
+                        Cancelar
+                    </a>
+
+                    <button type="submit"
+                            data-kt-ecommerce-settings-type="submit"
+                            class="btn btn-primary">
+                        <span class="indicator-label">Guardar</span>
+                        <span class="indicator-progress">
+                            Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
             <!--end:::Tab pane-->
 
             <!--begin:::Tab pane-->
