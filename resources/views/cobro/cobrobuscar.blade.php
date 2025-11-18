@@ -850,7 +850,7 @@ input.is-invalid {
                                 </div>
 
                                 <div class="form-floating col-lg-12 mb-4">
-                                    <input type="text" class="form-control form-control-solid" name="total" id="total"
+                                    <input type="text" class="form-control form-control-solid" name="subtotal" id="subtotal"
                                            value="0.00" readonly />
                                     <label for="total">Subtotal</label>
                                 </div>
@@ -897,6 +897,7 @@ input.is-invalid {
                                                                     <div class="fs-6 fw-bold text-white">
                                                                         <span class="d-block lh-1 mb-2">Subtotal</span>
                                                                         <span class="d-block mb-2">Descuento</span>
+                                                                        <span class="d-block mb-2">IVA</span>
                                                                         <span class="d-block fs-2qx lh-1">Total</span>
                                                                     </div>
                                                                     <!-- Content -->
@@ -904,6 +905,7 @@ input.is-invalid {
                                                                         
                                                                         <span id="stotal" name="stotal" class="d-block lh-1 mb-2" data-kt-pos-element="total">$</span>
                                                                         <span id="sdescuento" name="sdescuento" class="d-block mb-2" data-kt-pos-element="discount">$0</span>
+                                                                        <span id="iva" name="iva" class="d-block mb-2" data-kt-pos-element="discount">$0</span>
                                                                         <span class="d-block fs-2qx lh-1" id="totalito" name="totalito" data-kt-pos-element="tot1">$</span>
                                                                                                                                                
                                                                     </div>
