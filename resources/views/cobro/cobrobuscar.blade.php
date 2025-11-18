@@ -986,12 +986,11 @@ input.is-invalid {
 
 
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const comercio = @json($comercio->comercio);
 
-    // 🔹 Identificadores por tipo
+    // === Tipos de envíos ===
     const tiposEnvio = [
         { clave: 'personalizado', id: 'personalizado' },
         { clave: 'puntofijo', id: 'puntofijo' },
@@ -999,12 +998,11 @@ document.addEventListener("DOMContentLoaded", function () {
         { clave: 'casillero', id: 'casillero' }
     ];
 
-    // 🔹 Estructuras principales
     const listas = { personalizado: [], puntofijo: [], departamental: [], casillero: [] };
     const subtotales = { personalizado: 0, puntofijo: 0, departamental: 0, casillero: 0 };
-    const lectores = {}; // un lector independiente por pestaña
+    const lectores = {};
 
-    // === Inicialización por pestaña ===
+    // === Inicialización QR por tipo ===
     tiposEnvio.forEach(({ clave, id }) => {
         const inputQR = document.querySelector(`#${id}-qr-input`);
         const readerDiv = document.querySelector(`#${id}-qr-reader`);
@@ -1015,43 +1013,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
         inputQR.addEventListener("click", async function () {
 
-            // 🔸 Detener cualquier lector activo
             for (const key in lectores) {
                 try {
                     await lectores[key].stop();
-                    const otherReader = document.querySelector(`#${tiposEnvio.find(t => t.clave === key).id}-qr-reader`);
-                    if (otherReader) otherReader.style.display = "none";
+                    document.querySelector(`#${tiposEnvio.find(t => t.clave === key).id}-qr-reader`).style.display = "none";
                 } catch (_) {}
             }
 
-            // 🔸 Crear lector si no existe
             if (!lectores[clave]) {
                 lectores[clave] = new Html5Qrcode(`${id}-qr-reader`);
             }
 
             readerDiv.style.display = "block";
-            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
             try {
                 await lectores[clave].start(
                     { facingMode: "environment" },
-                    config,
+                    { fps: 10, qrbox: { width: 250, height: 250 } },
                     async (codigo) => {
-
                         await lectores[clave].stop();
                         readerDiv.style.display = "none";
                         inputQR.value = codigo;
 
-                        // 🔹 VALIDACIÓN GLOBAL DE DUPLICADO
+                        // 🔹 VALIDAR DUPLICADOS ENTRE TODAS LAS PESTAÑAS
                         const duplicadoGlobal = Object.entries(listas)
                             .find(([_, lista]) => lista.includes(codigo));
 
                         if (duplicadoGlobal) {
-                            const tipoExistente = duplicadoGlobal[0];
                             Swal.fire({
                                 icon: 'warning',
                                 title: 'Duplicado',
-                                text: `La guía ${codigo} ya fue agregada en el tipo "${tipoExistente.toUpperCase()}".`,
+                                text: `La guía ${codigo} ya fue agregada en el tipo "${duplicadoGlobal[0].toUpperCase()}".`,
                                 toast: true,
                                 position: 'top-end',
                                 timer: 2000,
@@ -1060,36 +1052,22 @@ document.addEventListener("DOMContentLoaded", function () {
                             return;
                         }
 
-                        // 🔹 Verificar duplicado en la base de datos
-                        try {
-                            const res = await fetch("{{ route('envios.verificar') }}", {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                                },
-                                body: JSON.stringify({ guia: codigo })
-                            });
+                        // 🔹 Verificar duplicado en BD
+                        const res = await fetch("{{ route('envios.verificar') }}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                            },
+                            body: JSON.stringify({ guia: codigo })
+                        });
 
-                            const data = await res.json();
-                            if (data.exists) {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Guía ya registrada',
-                                    text: `La guía ${codigo} ya existe en el sistema.`,
-                                    toast: true,
-                                    position: 'top-end',
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                });
-                                return;
-                            }
-
-                        } catch (err) {
+                        const data = await res.json();
+                        if (data.exists) {
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Error de conexión',
-                                text: 'No se pudo verificar la guía en la base de datos.',
+                                title: 'Guía ya registrada',
+                                text: `La guía ${codigo} ya existe en el sistema.`,
                                 toast: true,
                                 position: 'top-end',
                                 timer: 2000,
@@ -1098,12 +1076,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             return;
                         }
 
-                        // 🔹 Agregar guía si es válida
+                        // 🔹 Agregar fila
                         listas[clave].push(codigo);
                         tabla.insertAdjacentHTML('beforeend', `
                             <tr>
                                 <td>${codigo}</td>
-                                <td>${clave.charAt(0).toUpperCase() + clave.slice(1)}</td>
+                                <td>${clave.toUpperCase()}</td>
                                 <td>
                                     <button class="btn btn-sm btn-danger btn-quitar"
                                             data-tipo="${clave}"
@@ -1120,16 +1098,16 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Subtotales
+        // === Subtotales individuales ===
         if (subtotalInput) {
             subtotalInput.addEventListener("input", () => {
                 subtotales[clave] = parseFloat(subtotalInput.value) || 0;
-                actualizarTotalGlobal();
+                actualizarTotalesCobro();
             });
         }
     });
 
-    // === Eliminar filas ===
+    // === ELIMINAR FILAS ===
     document.body.addEventListener("click", e => {
         if (e.target.classList.contains("btn-quitar")) {
             const tipo = e.target.dataset.tipo;
@@ -1139,7 +1117,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // === Botón guardar por pestaña ===
+    // === PASAR A SIGUIENTE PESTAÑA ===
     document.querySelectorAll("form.guardar-envios").forEach((form, index) => {
         form.addEventListener("submit", e => {
             e.preventDefault();
@@ -1148,40 +1126,110 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // === Actualizar total global ===
-    function actualizarTotalGlobal() {
-        const total = Object.values(subtotales).reduce((a, b) => a + b, 0);
-        document.getElementById("total").value = total.toFixed(2);
+    // ============================================================
+    // 🔥 CALCULOS DE COBRO
+    // ============================================================
+
+    const inputGuias = document.getElementById("guias");
+    const inputSubtotal = document.getElementById("subtotal");
+    const inputDescuento = document.getElementById("descuento");
+    const spanSTotal = document.getElementById("stotal");
+    const spanSDescuento = document.getElementById("sdescuento");
+    const spanIVA = document.getElementById("iva");
+    const spanTotalFinal = document.getElementById("totalito");
+
+    const inputRecibido = document.getElementById("recibido");
+    const inputCambioMostrado = document.getElementById("cambio_mostrado");
+    const inputCambioReal = document.getElementById("cambio_num");
+
+    // === Calcula subtotal general ===
+    function calcularSubtotalGeneral() {
+        const sumaSubtotales = Object.values(subtotales).reduce((a, b) => a + b, 0);
+        const guias = parseFloat(inputGuias.value) || 0;
+
+        return sumaSubtotales + guias;
+    }
+
+    // === Actualizar los valores del cuadro verde ===
+    function actualizarTotalesCobro() {
+
+        const subtotalGeneral = calcularSubtotalGeneral();
+        inputSubtotal.value = subtotalGeneral.toFixed(2);
+        spanSTotal.textContent = "$" + subtotalGeneral.toFixed(2);
+
+        const desc = parseFloat(inputDescuento.value) || 0;
+        spanSDescuento.textContent = "$" + desc.toFixed(2);
+
+        const base = subtotalGeneral - desc;
+        const iva = base * 0.13;
+        spanIVA.textContent = "$" + iva.toFixed(2);
+
+        const totalFinal = base + iva;
+        spanTotalFinal.textContent = "$" + totalFinal.toFixed(2);
+
         actualizarCambio();
     }
 
-    // === Botón C O B R A R ===
+    // === Cambio ===
+    function actualizarCambio() {
+        const total = parseFloat(spanTotalFinal.textContent.replace("$", "")) || 0;
+        const recibido = parseFloat(inputRecibido.value) || 0;
+
+        let cambio = recibido - total;
+
+        if (recibido === 0) {
+            inputCambioMostrado.value = "$0.00";
+            inputCambioReal.value = 0;
+            return;
+        }
+
+        if (cambio >= 0) {
+            inputCambioMostrado.value = "$" + cambio.toFixed(2);
+            inputCambioReal.value = cambio.toFixed(2);
+        } else {
+            inputCambioMostrado.value = "$0.00";
+            inputCambioReal.value = 0;
+        }
+    }
+
+    // Eventos que recalculan todo
+    inputGuias.addEventListener("input", actualizarTotalesCobro);
+    inputDescuento.addEventListener("input", actualizarTotalesCobro);
+    inputRecibido.addEventListener("input", actualizarCambio);
+
+    // ============================================================
+    // 🔥 BOTÓN COBRAR
+    // ============================================================
+
     document.getElementById("pagadito").addEventListener("click", async function (e) {
         e.preventDefault();
-
-        const total = parseFloat(document.getElementById("total").value) || 0;
-        const recibido = parseFloat(document.getElementById("recibido").value) || 0;
-        const cambio = recibido - total;
-
-        const cantidades = {
-            personalizado: listas.personalizado.length,
-            puntofijo: listas.puntofijo.length,
-            departamental: listas.departamental.length,
-            casillero: listas.casillero.length
-        };
 
         const payload = {
             comercio: comercio,
             tipos: listas,
             subtotales: subtotales,
-            cantidades: cantidades,
-            total: total,
-            recibido: recibido,
-            cambio: cambio >= 0 ? cambio : 0,
+            cantidades: {
+                personalizado: listas.personalizado.length,
+                puntofijo: listas.puntofijo.length,
+                departamental: listas.departamental.length,
+                casillero: listas.casillero.length
+            },
+
+            // 🔥 Nuevos campos
+            guias: parseFloat(inputGuias.value) || 0,
+            subtotal: parseFloat(inputSubtotal.value) || 0,
+            descuento: parseFloat(inputDescuento.value) || 0,
+            iva: parseFloat(spanIVA.textContent.replace("$","")) || 0,
+            total_final: parseFloat(spanTotalFinal.textContent.replace("$","")) || 0,
+
+            recibido: parseFloat(inputRecibido.value) || 0,
+            cambio: parseFloat(inputCambioReal.value) || 0,
+
             metodo: document.getElementById("metodo").value,
             agencia: document.getElementById("agencia").value,
             nota: document.getElementById("nota").value,
-            cajero: document.getElementById("cajero").value
+            cajero: document.getElementById("cajero").value,
+            comprobante: document.getElementById("comprobante").value
         };
 
         try {
@@ -1200,53 +1248,20 @@ document.addEventListener("DOMContentLoaded", function () {
             if (res.ok) {
                 const data = JSON.parse(text);
 
-                // Abrir ticket
                 window.open(`/cobros/ticket/${data.ticket_id}`, "_blank");
-
-                // Redirigir vista principal
                 window.location.href = "{{ route('cobro') }}";
-
             } else {
                 throw new Error("Error al procesar el cobro");
             }
         } catch (err) {
-            console.error("❌ Error:", err);
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "Ocurrió un error al intentar guardar."
+                text: "Ocurrió un problema al cobrar."
             });
         }
     });
 });
-
-// === Cálculo de cambio ===
-const inputTotal = document.getElementById("total");
-const inputRecibido = document.getElementById("recibido");
-const inputCambio = document.getElementById("cambio");
-
-function actualizarCambio() {
-    const total = parseFloat(inputTotal.value) || 0;
-    const recibido = parseFloat(inputRecibido.value) || 0;
-    const cambio = recibido - total;
-
-    if (recibido === 0) {
-        inputCambio.value = "0.00";
-        inputCambio.classList.remove("is-valid", "is-invalid");
-        return;
-    }
-
-    if (cambio >= 0) {
-        inputCambio.value = cambio.toFixed(2);
-        inputCambio.classList.add("is-valid");
-        inputCambio.classList.remove("is-invalid");
-    } else {
-        inputCambio.value = "0.00";
-        inputCambio.classList.add("is-invalid");
-        inputCambio.classList.remove("is-valid");
-    }
-}
-inputRecibido.addEventListener("input", actualizarCambio);
 </script>
 
     <!--begin::Custom Javascript(used for this page only)-->
