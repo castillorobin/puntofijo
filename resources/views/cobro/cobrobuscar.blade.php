@@ -868,8 +868,8 @@ input.is-invalid {
                                 </div>
                                 <div class="form-floating col-lg-12 mb-4">
                                     <select class="form-select form-select-solid" name="comprobante" id="comprobante" required>
-                                        <option value="Consumidor final">Consumidor final</option>
-                                        <option value="Credito fiscal">Credito fiscal</option>
+                                        <option value="Consumidor_final">Consumidor final</option>
+                                        <option value="Credito_fiscal">Credito fiscal</option>
                                         <option value="Ticket">Ticket</option>
                                     </select>
                                     <label for="comprobante">Tipo de comprobante </label>
