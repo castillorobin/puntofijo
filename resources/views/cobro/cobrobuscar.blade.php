@@ -848,119 +848,102 @@ input.is-invalid {
 
 
 
-          <!--begin:::Tab pane-->
-            <div class="tab-pane fade" id="cobrar" role="tabpanel">
-       <div class="col-lg-12">
-                                                            <div style="border: 2px solid white; border-radius: 30px; padding: 10px;">
+         <!--begin:::Tab pane-->
+<div class="tab-pane fade" id="cobrar" role="tabpanel">
 
-                                                                <div class="table-responsive mb-8">
-                                                                    <!--begin::Table-->
-                                                                    <table class="table align-middle gs-0 gy-4 my-0">
-                                                                        <!--begin::Table head-->
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th class="min-w-100px"></th>
-                                                                                <th class="w-200px"></th>
-                                                                                <th class="w-60px"></th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <!--end::Table head-->
-                                                                        <!--begin::Table body-->
-                                                                        <tbody>
-                                                                            <h2>Datos de cobro</h2>
-                                                                            <br>
-                                                                            <div class="form-floating col-lg-12 mb-4">
-                                                                                <input type="text" class="form-control form-control-solid" name="cajero" id="cajero" placeholder="Cajero" value="{{ Auth::user()->name }}" required readonly />
-                                                                                <label for="Cajero">Cajero</label>
-                                                                                <div id="CajeroValidationFeedback" class="invalid-feedback">
-                                                                                    Por favor ingrese el destinatario.
-                                                                                </div>
-                                                                            </div>
-                                                                             <div class="form-floating col-lg-12 mb-4">
-                                                                                <input type="text" class="form-control form-control-solid"  name="fecha_entrega" id="fecha_entrega" value="{{ \Carbon\Carbon::now()->format('j/n/Y') }}" readonly />
-                                                                                <label for="fecha_entrega">Fecha de pago</label>
-                                                                                <div id="fechaEntregaValidationFeedback" class="invalid-feedback">
-                                                                                    Por favor seleccione una fecha de entrega.
-                                                                                </div>
-                                                                            </div>
-                                                                             <div class="form-floating col-lg-12 mb-4">
-                                        
-                                        
-                                                                                            
-                                              <input type="text" name="agencia" id="agencia" class="form-control form-control-solid" value="{{$empleado[0]->agencia}}" readonly/>         
-                                                    
-                                                    <label for="cenvio" style="padding-left: 25px;">Agencia</label>
-                                                </div>
-                                                                        </div>
-                                                                            <div class="form-floating col-lg-12 mb-4">
-                                                                                <select class="form-select form-select-solid" name="metodo" id="metodo" required>
-                                                                                    <option value="Efectivo">Efectivo</option>
-                                                                                    
-                                                                                    <option value="Transferencia_empresa">Transferencia a la empresa</option>
-                                                                                    <option value="Transferencia_comercio">Transferencia al comercio</option>
-                                                                                    
-                                                                                </select>
-                                                                                <label for="estado_envio">Método de pago</label>
-                                                                                <div id="estadoEnvioValidationFeedback" class="invalid-feedback">
-                                                                                    Por favor seleccione el método de pago.
-                                                                                </div>
-                                                                            </div>
+    <div class="row justify-content-center">  <!-- 🚀 CENTRA TODA LA SECCIÓN -->
+        <div class="col-lg-4">
 
+            <form>
+                <div style="border: 2px solid white; border-radius: 30px; padding: 10px;">
 
-                                                                             <div class="form-floating col-lg-12 mb-4">
-                                                                                <input type="text" class="form-control form-control-solid" name="total" id="total" value="0.00" readonly />
-                                                                                <label for="Cajero">Total</label>
-                                                                               
-                                                                            </div>
-                                                                           
-                                                                       
-                                                                            <div class="form-floating col-lg-12 mb-4">
-                                                                                <textarea class="form-control form-control-solid" name="nota" id="nota" placeholder="Nota"></textarea>
-                                                                                <label for="nota" style="padding-left: 25px;">Nota</label>
-                                                                            </div>
+                    <div class="table-responsive mb-8">
+                        <table class="table align-middle gs-0 gy-4 my-0">
+                            <thead>
+                                <tr>
+                                    <th class="min-w-100px"></th>
+                                    <th class="w-200px"></th>
+                                    <th class="w-60px"></th>
+                                </tr>
+                            </thead>
 
-                                                                             <div class="col-lg-12 mb-4">
-  <label for="recibido" class="form-label">Recibido</label>
-  <input 
-      type="text" 
-      class="form-control form-control-solid" 
-      name="recibido" 
-      id="recibido" 
-      placeholder="0.00" 
-  />
-</div>                                                                    <div class="form-floating col-lg-12 mb-4">
-                                                                                <input type="text" class="form-control form-control-solid" name="cambio" id="cambio" value="0.00" readonly />
-                                                                                <label for="cambio">Cambio</label>
-                                                                               
-                                                                            </div>
-                                                                           
-                                                                            
-                                                                        </tbody>
-                                                                        <!--end::Table body-->
-                                                                    </table>
-                                                                    <!--end::Table-->
-                                                                </div>                                     
-                                                                
-                                                                <input type="text" name="tota" id="tota" hidden>
-                                                                <input type="text" name="stota" id="stota" hidden>
-                                                                <!-- End of Payment and Change -->
-                                                                <br>
-                                                                <div class="modal-footer">
-                                                                    <div class="d-flex justify-content-between w-100">
-                                                                        <button type="submit" id="pagadito" style="margin: 10px" class="btn btn-success flex-grow-1 mr-2" >Cobrar</button>
-                                                                        <button type="button" style="margin: 10px" class="btn btn-secondary flex-grow-1 mr-2 btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
-                                                                        
+                            <tbody>
 
-                                                                            <!--
-                                                                        <button type="submit" id="pagadito" style="margin: 10px" class="btn btn-secondary flex-grow-1 mr-2" onclick="redireccionarPagina()" formtarget="_blank" disabled>Pagar</button>
-                                                                        -->
-                                                                        
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-<!--end::Form-->            </div>
-            <!--end:::Tab pane-->
+                                <h2 class="text-center">Datos de cobro</h2>
+                                <br>
+
+                                <div class="form-floating col-lg-12 mb-4">
+                                    <input type="text" class="form-control form-control-solid" name="cajero" id="cajero"
+                                           placeholder="Cajero" value="{{ Auth::user()->name }}" readonly />
+                                    <label for="Cajero">Cajero</label>
+                                </div>
+
+                                <div class="form-floating col-lg-12 mb-4">
+                                    <input type="text" class="form-control form-control-solid" name="fecha_entrega"
+                                           id="fecha_entrega" value="{{ \Carbon\Carbon::now()->format('j/n/Y') }}" readonly />
+                                    <label for="fecha_entrega">Fecha de pago</label>
+                                </div>
+
+                                <div class="form-floating col-lg-12 mb-4">
+                                    <input type="text" name="agencia" id="agencia"
+                                           class="form-control form-control-solid"
+                                           value="{{ $empleado[0]->agencia }}" readonly />
+                                    <label for="agencia" style="padding-left: 25px;">Agencia</label>
+                                </div>
+
+                                <div class="form-floating col-lg-12 mb-4">
+                                    <select class="form-select form-select-solid" name="metodo" id="metodo" required>
+                                        <option value="Efectivo">Efectivo</option>
+                                        <option value="Transferencia_empresa">Transferencia a la empresa</option>
+                                        <option value="Transferencia_comercio">Transferencia al comercio</option>
+                                    </select>
+                                    <label for="metodo">Método de pago</label>
+                                </div>
+
+                                <div class="form-floating col-lg-12 mb-4">
+                                    <input type="text" class="form-control form-control-solid" name="total" id="total"
+                                           value="0.00" readonly />
+                                    <label for="total">Total</label>
+                                </div>
+
+                                <div class="form-floating col-lg-12 mb-4">
+                                    <textarea class="form-control form-control-solid" name="nota" id="nota"
+                                              placeholder="Nota"></textarea>
+                                    <label for="nota" style="padding-left: 25px;">Nota</label>
+                                </div>
+
+                                <div class="col-lg-12 mb-4">
+                                    <label for="recibido" class="form-label">Recibido</label>
+                                    <input type="text" class="form-control form-control-solid" name="recibido"
+                                           id="recibido" placeholder="0.00" />
+                                </div>
+
+                                <div class="form-floating col-lg-12 mb-4">
+                                    <input type="text" class="form-control form-control-solid" name="cambio"
+                                           id="cambio" value="0.00" readonly />
+                                    <label for="cambio">Cambio</label>
+                                </div>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="d-flex justify-content-between w-100">
+                            <button type="submit" id="pagadito" class="btn btn-success flex-grow-1 mx-2">Cobrar</button>
+                            <button type="button" class="btn btn-secondary flex-grow-1 mx-2 btn-cancelar"
+                                    data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<!--end:::Tab pane-->
         </div>
 
     </div>
