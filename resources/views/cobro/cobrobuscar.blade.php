@@ -866,6 +866,14 @@ input.is-invalid {
                                               placeholder="Nota"></textarea>
                                     <label for="nota" style="padding-left: 25px;">Nota</label>
                                 </div>
+                                <div class="form-floating col-lg-12 mb-4">
+                                    <select class="form-select form-select-solid" name="comprobante" id="comprobante" required>
+                                        <option value="Consumidor final">Consumidor final</option>
+                                        <option value="Credito fiscal">Credito fiscal</option>
+                                        <option value="Ticket">Ticket</option>
+                                    </select>
+                                    <label for="comprobante">Tipo de comprobante </label>
+                                </div>
 
                                                             <div class="row mb-8">
                                                                     <!-- Content -->
