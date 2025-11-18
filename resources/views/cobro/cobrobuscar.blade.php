@@ -851,8 +851,8 @@ input.is-invalid {
          <!--begin:::Tab pane-->
 <div class="tab-pane fade" id="cobrar" role="tabpanel">
 
-    <div class="row justify-content-center">  <!-- 🚀 CENTRA TODA LA SECCIÓN -->
-        <div class="col-lg-4">
+    <div class="row ">  <!-- 🚀 CENTRA TODA LA SECCIÓN -->
+        <div class="col-lg-5">
 
             <form>
                 <div style="border: 2px solid white; border-radius: 30px; padding: 10px;">
@@ -869,29 +869,30 @@ input.is-invalid {
 
                             <tbody>
 
-                                <h2 class="text-center">Datos de cobro</h2>
+                                <h2 class="text-center bg-success text-white py-5" style="border-radius: 10px 10px 0 0;">Datos de cobro</h2>
                                 <br>
-
-                                <div class="form-floating col-lg-12 mb-4">
+                                <div class="row">
+                                <div class="form-floating col-lg-6 mb-4">
                                     <input type="text" class="form-control form-control-solid" name="cajero" id="cajero"
                                            placeholder="Cajero" value="{{ Auth::user()->name }}" readonly />
                                     <label for="Cajero">Cajero</label>
                                 </div>
 
-                                <div class="form-floating col-lg-12 mb-4">
+                                <div class="form-floating col-lg-6 mb-4">
                                     <input type="text" class="form-control form-control-solid" name="fecha_entrega"
                                            id="fecha_entrega" value="{{ \Carbon\Carbon::now()->format('j/n/Y') }}" readonly />
                                     <label for="fecha_entrega">Fecha de pago</label>
                                 </div>
-
-                                <div class="form-floating col-lg-12 mb-4">
+                                </div>
+                            <div class="row">
+                                <div class="form-floating col-lg-6 mb-4">
                                     <input type="text" name="agencia" id="agencia"
                                            class="form-control form-control-solid"
                                            value="{{ $empleado[0]->agencia }}" readonly />
                                     <label for="agencia" style="padding-left: 25px;">Agencia</label>
                                 </div>
 
-                                <div class="form-floating col-lg-12 mb-4">
+                                <div class="form-floating col-lg-6 mb-4">
                                     <select class="form-select form-select-solid" name="metodo" id="metodo" required>
                                         <option value="Efectivo">Efectivo</option>
                                         <option value="Transferencia_empresa">Transferencia a la empresa</option>
@@ -899,29 +900,34 @@ input.is-invalid {
                                     </select>
                                     <label for="metodo">Método de pago</label>
                                 </div>
-
-                                <div class="form-floating col-lg-12 mb-4">
+                            </div>
+                            <div class="row">
+                                <div class="form-floating col-lg-6 mb-4">
                                     <input type="text" class="form-control form-control-solid" name="total" id="total"
                                            value="0.00" readonly />
                                     <label for="total">Total</label>
                                 </div>
 
-                                <div class="form-floating col-lg-12 mb-4">
+                                <div class="form-floating col-lg-6 mb-4">
                                     <textarea class="form-control form-control-solid" name="nota" id="nota"
                                               placeholder="Nota"></textarea>
                                     <label for="nota" style="padding-left: 25px;">Nota</label>
                                 </div>
-
-                                <div class="col-lg-12 mb-4">
-                                    <label for="recibido" class="form-label">Recibido</label>
+                            </div>
+                            <div class="row">
+                                <div class="form-floating col-lg-6 mb-4">
+                                    
                                     <input type="text" class="form-control form-control-solid" name="recibido"
                                            id="recibido" placeholder="0.00" />
+                                           <label for="recibido" class="form-label">Recibido</label>
                                 </div>
 
-                                <div class="form-floating col-lg-12 mb-4">
+                                <div class="form-floating col-lg-6 mb-4">
                                     <input type="text" class="form-control form-control-solid" name="cambio"
                                            id="cambio" value="0.00" readonly />
                                     <label for="cambio">Cambio</label>
+                                </div>
+
                                 </div>
 
                             </tbody>
