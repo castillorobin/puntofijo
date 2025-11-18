@@ -32,14 +32,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
     text-align: center;
 }
-
+.izqui{
+    
+    text-align: right;
+}
+thead th {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
     </style>
 <div style="width:100%; " class="text-center centrar">
     <img src="../public/fotos/logoticket.jpeg" alt="" width="40%">
     <br>
             <div class="margen "> <span class="page__heading melo" >Expertos en paqueteria</span></div>
             
-           <!-- <img alt="image" src="/public/img/logo.png" > -->
+           <!-- <img alt="image" src="/public/img/logo.png" > --> 
            
            <div class="margenint " style="background-color: black; color:white; width:100%;">  <span style="background-color: black; color:white; width:100%;">Comprobante de cobro</span> </div>
            
@@ -56,20 +63,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
                         <div class="fecha centrar " style="font-weight: bolder;">
    TICKET Nº {{ $ticketact->codigo }}
   
+   <br>
+   <div class="centrar" >
    
+    {{-- Código de barras con milon/barcode --}}
+    <div style="margin-left: 100px;">
+    {!! DNS1D::getBarcodeHTML($ticketact->codigo, 'C128', 2, 50) !!}
+    </div>
    </div>
-   Comercio: <span style="font-weight: bolder;">{{ $ticketact->comercio }}</span> 
+ </div>
+  <div  style="font-weight: bolder; margin-top: 20px;">
+   Comercio {{ $ticketact->comercio }}
+   <br>
+   
    <hr>
+   </div>
    
    <div class="fecha ">
    <span > Fecha: {{ now()->Format('d/m/Y')}} </span>
    <span style="float:right; ">Hora: {{ now()->Format('H:i A')}}</span> 
    </div>
-
    
    
    <div class="centrar">
-<table class="centrar" style="width: 100%;">
+<table class="centrar" style="width: 100%; display:table;">
     <thead class="centrar" style="border-top: 2px solid black; border-bottom: 2px solid black;">
         <tr>
         <th style="width: 200px;">DESCRIPCION</th>
@@ -154,7 +171,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 <hr>
 <div>¡¡GRACIAS POR PREFERIRNOS!!</div>
 <hr>
-<div style="padding-left: 75px;"> {!! DNS1D::getBarcodeHTML($ticketact->codigo , 'C39') !!} <span style="padding-right: 80px; font-weight: bolder;"> {{ $ticketact->codigo }} </span></div>
+<div class="centrar" style="margin-top: 20px; margin-left: 90px;">
+    
+    {!! DNS2D::getBarcodeHTML(strval($ticketact->codigo), 'QRCODE', 10, 10) !!}
 </div>
 
 

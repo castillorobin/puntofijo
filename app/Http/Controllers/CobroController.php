@@ -52,7 +52,7 @@ class CobroController extends Controller
         $saldomovi = $ultimoMovi->saldo;
 
 
-    $validated = $request->validate([
+    $data = $request->validate([
     'comercio' => 'required|string',
     'tipos' => 'required|array',
     'subtotales' => 'required|array',
@@ -88,14 +88,14 @@ class CobroController extends Controller
         'nota' => $data['nota'] ?? null,
         'agencia' => $data['agencia'],
         // NUEVOS CAMPOS
-    'guias' => $validated['guias'],
-    'subtotal' => $validated['subtotal'],
-    'descuento' => $validated['descuento'],
-    'iva' => $validated['iva'],
-    'total' => $validated['total_final'], // AHORA ESTE ES EL TOTAL REAL
-    'entrega' => $validated['recibido'],
-    'cambio' => $validated['cambio'],
-    'comprobante' => $validated['comprobante'],
+    'guias' => $data['guias'],
+    'subtotal' => $data['subtotal'],
+    'descuento' => $data['descuento'],
+    'iva' => $data['iva'],
+    'total' => $data['total_final'], // AHORA ESTE ES EL TOTAL REAL
+    'entrega' => $data['recibido'],
+    'cambio' => $data['cambio'],
+    'comprobante' => $data['comprobante'],
 
         
         
@@ -155,7 +155,7 @@ public function verTicket($id)
     $ticketact = Ticketc::findOrFail($id);
 
     $pdf = Pdf::loadView('cobro.ticketcobros', compact('ticketact'));
-    $customPaper = [0, 0, 360, 650];
+    $customPaper = [0, 0, 360, 800];
     $pdf->setPaper($customPaper);
 
     return $pdf->stream('ticket-'.$ticketact->codigo.'.pdf');

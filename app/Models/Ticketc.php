@@ -12,22 +12,32 @@ class Ticketc extends Model
     protected $table = 'ticketcs'; // o el nombre real de tu tabla
 
     protected $fillable = [
-        'comercio',
-        'codigo',
-        'cajero',
-        'metodo',
-        'total',
-        'entrega',
-        'cambio',
-        'nota',
-        'agencia',
-        'persoi',
-        'depari',
-        'puntoi',
-        'casili',
-        'perso',
-        'depar',
-        'punto',
-        'casil',
+         'comercio',
+    'codigo',
+    'cajero',
+    'metodo',
+    'nota',
+    'agencia',
+
+    // NUEVOS CAMPOS
+    'guias',
+    'subtotal',
+    'descuento',
+    'iva',
+    'total',
+    'entrega',
+    'cambio',
+    'comprobante',
+
+    // CAMPOS DE TIPOS Y SUBTOTALES
+    'persoi',
+    'depari',
+    'puntoi',
+    'casili',
+
+    'perso',
+    'depar',
+    'punto',
+    'casil',
     ];
 }

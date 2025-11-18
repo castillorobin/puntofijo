@@ -55,7 +55,7 @@
    <div class="fecha " style="font-weight: bolder;">
    Comercio {{ $ticketact->comercio }}
    <br>
-   
+    
    <hr>
    </div>
    

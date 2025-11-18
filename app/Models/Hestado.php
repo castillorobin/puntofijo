@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Hestado extends Model
 {
-    use HasFactory;
+    protected $table = 'hestados';
+
+    protected $fillable = [
+        'idenvio',
+        'estado',
+        'usuario',
+    ];
 }
