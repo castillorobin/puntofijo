@@ -9,6 +9,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\EnvioController;
 use App\Http\Controllers\CobroController;
+use App\Http\Controllers\PagoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,6 +105,17 @@ Route::post('/cobros/cobrar', [CobroController::class, 'cobrar'])->name('cobros.
 
 Route::post('/verificar-guia', [EnvioController::class, 'verificarGuia'])->name('envios.verificar');
 Route::get('/cobros/ticket/{id}', [CobroController::class, 'verTicket'])->name('cobros.ticket');
+
+
+//Pagar
+
+Route::get('/pago/pagar', [App\Http\Controllers\PagoController::class, 'pagar'] )->name('pagar') ;
+Route::post('/pagar/verificar', [PagoController::class, 'verificar'])
+    ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
+    ->name('pagar.verificar');
+
+Route::get('/pagar/buscar', [PagoController::class, 'buscar'])
+    ->name('pagar.buscar');
 
 
 Route::post('/logout', function () {

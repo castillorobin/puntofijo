@@ -80,7 +80,7 @@ License: For each use you must have a valid license purchased only from above li
 				<!--begin::Logo-->
 				<div class="aside-logo flex-column-auto pt-10 pt-lg-20" id="kt_aside_logo">
 					<a href="/dashboard">
-						<img alt="Logo" src="assets/media/logos/logo.png" class="h-40px" />
+						<img alt="Logo" src="assets/media/logos/demo9.svg" class="h-40px" />
 					</a>
 				</div>
 				<!--end::Logo-->
@@ -112,7 +112,7 @@ License: For each use you must have a valid license purchased only from above li
 											<span class="menu-bullet">
 												<span class="bullet bullet-dot"></span>
 											</span>
-											<span class="menu-title">Inicio</span>
+											<span class="menu-title">Pagar</span>
 										</a>
 										
 										<!--end:Menu link-->
@@ -193,17 +193,13 @@ License: For each use you must have a valid license purchased only from above li
 			<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
 				
 				<!--end::Header tablet and mobile-->
-				<!--begin::Header mobile-->
-
-<!--end::Header mobile-->
 				<!--begin::Header-->
 				<div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
-					
-				<!--begin::Container-->
+					<!--begin::Container-->
 					<div class="header-container container-xxl">
-						<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
+							<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
    <button class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
-    <i class="fas fa-bars" style="font-size: 28px;"></i>
+     <i class="fas fa-bars" style="font-size: 28px;"></i>
 </button>
 </div>
 						<!--begin::Page title-->
@@ -388,169 +384,92 @@ License: For each use you must have a valid license purchased only from above li
 						<!--begin::Row-->
 						<div class="row g-5 g-xl-8">
 							<!--begin::Col-->
-							<div class="col-xl-4">
-								<!--begin::Misc Widget 1-->
-								<div class="row mb-5 mb-xl-8 g-5 g-xl-8">
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/entregarenvio" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-fingerprint-scanning fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-													<span class="path5"></span>
-												</i>
-												<span class="fs-4 fw-bold">Entregar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/cobro/cobrar" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-gift fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-												</i>
-												<span class="fs-4 fw-bold">Cobrar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-								
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/pago/pagar" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-fingerprint-scanning fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-													<span class="path5"></span>
-												</i>
-												<span class="fs-4 fw-bold">Pagar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/caja/cajero" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-abstract-26 fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-												</i>
-												<span class="fs-4 fw-bold">Caja</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									</div>
-
-									<!-- Fila nueva para centrar un botón -->
-<div class="row mt-3">
-    <div class="col-12 justify-content-center">
-        <div class="card card-stretch" style="width: 100%;">
-            <a href="/entregarenlote" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column w-100 p-10">
-
-                <i class="ki-duotone ki-delivery fs-2tx mb-5 ms-n1">
-                    <span class="path1"></span>
-                    <span class="path2"></span>
-                </i>
-
-                <span class="fs-4 fw-bold">Entrega múltiple</span>
-            </a>
-        </div>
-    </div>
-</div>
-								
-								
-
-
-							</div>
+						
 							<!--end::Col-->
 							<!--begin::Col-->
-							<div class="col-xl-8 ps-xl-12">
-								<!--begin::Engage widget 1-->
-								<div class="card bgi-position-y-bottom bgi-position-x-end bgi-no-repeat bgi-size-cover min-h-250px bg-primary mb-5 mb-xl-8" style="background-color:white !important; " dir="ltr">
-									<!--begin::Body-->
-									<!--begin::Header-->
-									<div class="card-header border-0 pt-5">
-										<h3 class="card-title align-items-start flex-column">
-											<span class="card-label fw-bold fs-3 mb-1">Dashboard</span>
-											<span class="text-muted mt-1 fw-semibold fs-7"></span>
-										</h3>
+							<div class="col-xl-11 ps-xl-4 " >
+                                <!--begin::Engage widget 1-->
+                                <div class="card bgi-position-y-bottom bgi-position-x-end bgi-no-repeat bgi-size-cover min-h-250px bg-primary mb-5 mb-xl-8"
+                                    style="background-color:white !important; " dir="ltr">
+                                    <!--begin::Header-->
+                                    <div class="card-header border-0 pt-5">
+                                        <h3 class="card-title align-items-start flex-column">
+                                            <span class="card-label fw-bold fs-3 mb-1 text-gray-600 text-uppercase">
+                                               
+                                                Pagar
+                                               
+                                            </span>
+                                            <span class="text-muted mt-1 fw-semibold fs-7">
+                                                <!-- Puedes agregar un subtítulo dinámico aquí si lo necesitas -->
+                                            </span>
+                                        </h3>
+                                    </div>
+                                    <!--end::Header-->
+ @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-success" style="margin-left: 25px;">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 
-									</div>
-									<!--end::Header-->
-									<!--begin::Body-->
-									<div class="card-body py-3">
-										<div class="tab-content">
-											<!--begin::Tap pane-->
-											<div class="tab-pane fade show active" id="kt_table_widget_5_tab_1">
-												<!--begin::Table container-->
-												<div class="table-responsive">
-													<!--begin::Table-->
-													<table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
-														<!--begin::Table head-->
-														<thead>
-															<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-																<th class="p-0 w-170px">Guia</th>
-																<th class="p-0 min-w-100px">Comercio</th>
-																<th class="p-0 min-w-100px">Destinatario</th>
-																<th class="p-0 min-w-110px">Fecha</th>
-																<th class="p-0 min-w-50px">Precio</th>
-																<th class="p-0 min-w-50px">Estado</th>
-															</tr>
-														</thead>
-														<!--end::Table head-->
+    <script>
+        // Espera 4 segundos (4000 ms) y luego oculta el mensaje
+        setTimeout(function () {
+            let alertBox = document.getElementById('alert-success');
+            if (alertBox) {
+                alertBox.classList.remove('show');
+                alertBox.classList.add('fade');
+                alertBox.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+@endif
 
+{{-- Mensaje de error general --}}
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
 
-														<!--begin::Table body-->
-														<tbody>
+	<script>
+setTimeout(() => {
+    document.querySelectorAll('.alert').forEach(a => a.remove());
+}, 3000);
+</script>
+@endif
+                                    <!--begin::Body-->
 
+                                    <div class="card-body py-3">
+                                        <div class="table-responsive" style="overflow-x: auto; padding: 0;">
 
-														</tbody>
-														<!--end::Table body-->
-													</table>
-												</div>
-												<!--end::Table-->
-											</div>
-											<!--end::Tap pane-->
-										
-										</div>
-									</div>
-									<!--end::Body-->
-								</div>
-								<!--end::Engage widget 1-->
-							
-							</div>
-						</div>
+                                            <!--begin::Main wrapper-->
+                                            <div id="kt_docs_search_handler_basic"
+                                                data-kt-search-keypress="true"
+                                                data-kt-search-min-length="2"
+                                                data-kt-search-enter="true"
+                                                data-kt-search-layout="inline">
+
+                                               <div class="qr-container d-flex align-items-center">
+												
+
+    <input id="qr-input" type="text" placeholder="Ingrese o escanee QR" class="form-control me-2" style="max-width:300px;" />
+<button id="btnBuscar" class="btn btn-primary">Buscar</button>
+
+    <!-- Contenedor donde se mostrará la cámara 
+    <div id="qr-reader" style="width: 100%; max-width: 300px; margin:auto; display:none;"></div>
+-->
+    
+</div>
+<div id="qr-reader" style="max-width:500px; display:none; margin-top: 25px;" class="border rounded p-2 mb-3"></div>
+                                            </div>
+                                            <!--end::Main wrapper-->
+
+                                            
+                                            <a href="/dashboard">
+<div style="margin-top: 20px;">
+    <button type="button" class="btn btn-secondary" style="float: right">Cerrar</button>
+</div>
+</a>
 						<!--end::Row-->
 
 						<!--end::Tables Widget 5-->
@@ -572,9 +491,96 @@ License: For each use you must have a valid license purchased only from above li
 	
 		<!--end::Modal dialog-->
 	</div>
+    </div></div></div>
 	
 	
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const qrInput = document.getElementById("qr-input");
+    const qrReader = document.getElementById("qr-reader");
+    const buscarBtn = document.getElementById("btnBuscar");
+    let qrScanner = null;
+
+    // 📌 Escanear QR opcional
+    qrInput.addEventListener("click", async function () {
+
+        if (qrScanner) {
+            try { await qrScanner.stop(); } catch(e){}
+        }
+
+        qrScanner = new Html5Qrcode("qr-reader");
+        qrReader.style.display = "block";
+
+        try {
+            await qrScanner.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: { width: 250, height: 250 } },
+                qrCodeMessage => {
+
+                    qrInput.value = qrCodeMessage;
+
+                    qrScanner.stop().then(() => {
+                        qrReader.style.display = "none";
+                    });
+                }
+            );
+        } catch (err) {
+            console.error("Error cámara:", err);
+        }
+    });
+
+    // 📌 BOTÓN BUSCAR
+    buscarBtn.addEventListener("click", async function () {
+        const codigo = qrInput.value.trim();
+
+        if (codigo === "") {
+            Swal.fire({
+                icon: "warning",
+                title: "Código vacío",
+                text: "Ingrese un código o escanee un QR antes de buscar."
+            });
+            return;
+        }
+
+        try {
+            const res = await fetch("{{ route('pagar.verificar') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({ codigo })
+            });
+
+            const data = await res.json();
+            console.log("RESPUESTA:", data);
+
+            if (!data.exists) {
+                Swal.fire({
+                    icon: "error",
+                    title: "No encontrado",
+                    text: `No existe un ticket con el código ${codigo}`,
+                });
+                return;
+            }
+
+            window.location.href = `/pagar/buscar?codigo=${encodeURIComponent(codigo)}`;
+
+        } catch (err) {
+            console.error("Error FETCH:", err);
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "No se pudo conectar con el servidor."
+            });
+        }
+    });
+});
+</script>
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 
 

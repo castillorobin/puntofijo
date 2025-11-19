@@ -80,7 +80,7 @@ License: For each use you must have a valid license purchased only from above li
 				<!--begin::Logo-->
 				<div class="aside-logo flex-column-auto pt-10 pt-lg-20" id="kt_aside_logo">
 					<a href="/dashboard">
-						<img alt="Logo" src="assets/media/logos/logo.png" class="h-40px" />
+						<img alt="Logo" src="assets/media/logos/demo9.svg" class="h-40px" />
 					</a>
 				</div>
 				<!--end::Logo-->
@@ -112,7 +112,7 @@ License: For each use you must have a valid license purchased only from above li
 											<span class="menu-bullet">
 												<span class="bullet bullet-dot"></span>
 											</span>
-											<span class="menu-title">Inicio</span>
+											<span class="menu-title">Pagar</span>
 										</a>
 										
 										<!--end:Menu link-->
@@ -193,17 +193,13 @@ License: For each use you must have a valid license purchased only from above li
 			<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
 				
 				<!--end::Header tablet and mobile-->
-				<!--begin::Header mobile-->
-
-<!--end::Header mobile-->
 				<!--begin::Header-->
 				<div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
-					
-				<!--begin::Container-->
+					<!--begin::Container-->
 					<div class="header-container container-xxl">
-						<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
+							<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
    <button class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
-    <i class="fas fa-bars" style="font-size: 28px;"></i>
+     <i class="fas fa-bars" style="font-size: 28px;"></i>
 </button>
 </div>
 						<!--begin::Page title-->
@@ -388,174 +384,181 @@ License: For each use you must have a valid license purchased only from above li
 						<!--begin::Row-->
 						<div class="row g-5 g-xl-8">
 							<!--begin::Col-->
-							<div class="col-xl-4">
-								<!--begin::Misc Widget 1-->
-								<div class="row mb-5 mb-xl-8 g-5 g-xl-8">
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/entregarenvio" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-fingerprint-scanning fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-													<span class="path5"></span>
-												</i>
-												<span class="fs-4 fw-bold">Entregar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/cobro/cobrar" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-gift fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-												</i>
-												<span class="fs-4 fw-bold">Cobrar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-								
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/pago/pagar" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-fingerprint-scanning fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-													<span class="path5"></span>
-												</i>
-												<span class="fs-4 fw-bold">Pagar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/caja/cajero" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-abstract-26 fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-												</i>
-												<span class="fs-4 fw-bold">Caja</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									</div>
-
-									<!-- Fila nueva para centrar un botón -->
-<div class="row mt-3">
-    <div class="col-12 justify-content-center">
-        <div class="card card-stretch" style="width: 100%;">
-            <a href="/entregarenlote" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column w-100 p-10">
-
-                <i class="ki-duotone ki-delivery fs-2tx mb-5 ms-n1">
-                    <span class="path1"></span>
-                    <span class="path2"></span>
-                </i>
-
-                <span class="fs-4 fw-bold">Entrega múltiple</span>
-            </a>
-        </div>
-    </div>
-</div>
-								
-								
-
-
-							</div>
+						
 							<!--end::Col-->
 							<!--begin::Col-->
-							<div class="col-xl-8 ps-xl-12">
-								<!--begin::Engage widget 1-->
-								<div class="card bgi-position-y-bottom bgi-position-x-end bgi-no-repeat bgi-size-cover min-h-250px bg-primary mb-5 mb-xl-8" style="background-color:white !important; " dir="ltr">
-									<!--begin::Body-->
-									<!--begin::Header-->
-									<div class="card-header border-0 pt-5">
-										<h3 class="card-title align-items-start flex-column">
-											<span class="card-label fw-bold fs-3 mb-1">Dashboard</span>
-											<span class="text-muted mt-1 fw-semibold fs-7"></span>
-										</h3>
+							<div class="col-xl-11 ps-xl-4 " >
+                                <!--begin::Engage widget 1-->
+                                <div class="card bgi-position-y-bottom bgi-position-x-end bgi-no-repeat bgi-size-cover min-h-250px bg-primary mb-5 mb-xl-8"
+                                    style="background-color:white !important; " dir="ltr">
+                                    <!--begin::Header-->
+                                    <div class="card-header border-0 pt-5">
+                                        <h3 class="card-title align-items-start flex-column">
+                                            <span class="card-label fw-bold fs-3 mb-1 text-gray-600 text-uppercase">
+                                               
+                                                Pagar
+                                               
+                                            </span>
+                                            <span class="text-muted mt-1 fw-semibold fs-7">
+                                                <!-- Puedes agregar un subtítulo dinámico aquí si lo necesitas -->
+                                            </span>
+                                        </h3>
+                                    </div>
+                                    <!--end::Header-->
+ @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-success" style="margin-left: 25px;">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 
-									</div>
-									<!--end::Header-->
-									<!--begin::Body-->
-									<div class="card-body py-3">
-										<div class="tab-content">
-											<!--begin::Tap pane-->
-											<div class="tab-pane fade show active" id="kt_table_widget_5_tab_1">
-												<!--begin::Table container-->
-												<div class="table-responsive">
-													<!--begin::Table-->
-													<table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
-														<!--begin::Table head-->
-														<thead>
-															<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-																<th class="p-0 w-170px">Guia</th>
-																<th class="p-0 min-w-100px">Comercio</th>
-																<th class="p-0 min-w-100px">Destinatario</th>
-																<th class="p-0 min-w-110px">Fecha</th>
-																<th class="p-0 min-w-50px">Precio</th>
-																<th class="p-0 min-w-50px">Estado</th>
-															</tr>
-														</thead>
-														<!--end::Table head-->
+    <script>
+        // Espera 4 segundos (4000 ms) y luego oculta el mensaje
+        setTimeout(function () {
+            let alertBox = document.getElementById('alert-success');
+            if (alertBox) {
+                alertBox.classList.remove('show');
+                alertBox.classList.add('fade');
+                alertBox.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+@endif
+
+{{-- Mensaje de error general --}}
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+
+	<script>
+setTimeout(() => {
+    document.querySelectorAll('.alert').forEach(a => a.remove());
+}, 3000);
+</script>
+@endif
+                                    <!--begin::Body-->
+
+                                    <div class="card-body py-3">
+                                        <div class="table-responsive" style="overflow-x: auto; padding: 0;">
+
+                                            <!--begin::Main wrapper-->
+                                            <div id="kt_docs_search_handler_basic"
+                                                data-kt-search-keypress="true"
+                                                data-kt-search-min-length="2"
+                                                data-kt-search-enter="true"
+                                                data-kt-search-layout="inline">
+
+<div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                               <form action="{{ url('/pago/pagoticket') }}" method="POST" id="formElement">
+                                        @csrf
+                                    <table class="table align-middle table-row-dashed fs-6 gy-5 " id="kt_ecommerce_report_shipping_table" data-ordering="false">
+                                        <thead>
+                                            <tr class="text-start text-gray-400 fw-bold fs-7 gs-0">
+                                                <th><div class="form-group form-check" style="width: 5px;">
+                                               
+                                                    <input type="checkbox" class="form-check-input" id="checktodo" name="checked[]" >
+                                                    <input type="checkbox" class="form-check-input" id="checknada" name="checked[]" style="display:none;">
+                                                    
+                                                   </div></th>
+                                                <th class="min-w-50px"># De guia</th>
+                                                <th class="min-w-50px">Comercio</th>
+                                                <th class="min-w-50px">Destinatario</th>
+                                                <th class="min-w-150px">Dirección </th>
+                                                <th class="min-w-50px text-center">Tipo de envío</th>
+                                                <th class="min-w-100px text-center">Estado del envío</th>
+                                                <th class="min-w-100px text-center">Fecha de entrega</th>
+                                                <th class="min-w-100px text-center">Estado del pago</th>
+                                                <th class="min-w-50px text-center">Precio del paquete</th>
+                                                <th class="min-w-50px text-center">Precio de envío</th>
+                                                <th class="min-w-50px text-center">Total </th>
+                                                <th class="min-w-100px text-center">Cobro del envío</th>
+                                               
+                                              
+                                                
+                                             
+                                            </tr>
+                                        </thead>
+                                        <tbody class="fw-semibold text-black-400" style="font-size: 10px;">
+                                            <span hidden id="total3"> {{ $total4 = 0 }}</span>
+
+                                            
+                                            @foreach ($pedidos as $pedido)                                               
+                                           
+                                            <tr
+                                            data-id="{{ $pedido->id }}"
+                                            >
+
+                                                <td >
+                                                    <div class="form-group form-check" style="width: 5px;">
+                                                        @if($pedido->pagado == 0)
+                                                     <input type="checkbox" value="{{ $pedido->id }}" class="form-check-input" id="check3" name="checked[]" >
+                                                    @endif
+                                                    </div>
+                                                    </td>
 
 
-														<!--begin::Table body-->
-														<tbody>
+                                                <td>
+                                                <a href="/envios/detalle/{{ $pedido->guia }}" class="text-gray-900 text-hover-primary">
+                                                    {{$pedido->guia}}
+                                                    </a>
+                                                </td>
+                                                <td >{{$pedido->comercio}}</td>
+                                                <td>{{$pedido->destinatario}}</td>
+                                                <td>{{$pedido->direccion}}</td>
+                                                <td class="text-center"><span class="badge badge-dark">{{$pedido->tipo}}</span></td>
+                                                <td class="text-center">
+                                                    @if( $pedido->estado == 'No entregado')
+                                                    <span class="badge badge-danger">{{ $pedido->estado }}</span>
+                                                    @elseif( $pedido->estado == 'Creado')
+                                                    <span class="badge badge-warning">{{ $pedido->estado }}</span>
+                                                    @elseif( $pedido->estado == 'Entregado')
+                                                    <span class="badge badge-success">{{ $pedido->estado }}</span>
+                                                    @elseif( $pedido->estado == 'En ruta')
+                                                    <span class="badge badge-info">{{ $pedido->estado }}</span>
+                                                    @elseif( $pedido->estado == 'Reprogramado')
+                                                    <span class="badge badge-dark">{{ $pedido->estado }}</span>
+                                                    @elseif( $pedido->estado == 'Devuelto al comercio')
+                                                    <span class="badge badge-primary">{{ $pedido->estado }}</span>
+                                                    @else
+                                                    <span class="badge badge-light">{{ $pedido->estado }}</span>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">{{$pedido->fecha_entrega}}</td>
+                                                <td class="editable estado-pago text-center">
+                                                    @if( $pedido->pago == 'Pagado')
+                                                    <span class="badge badge-success">{{ $pedido->pago}}</span>
+                                                    @else
+                                                    <span class="badge badge-danger">{{ $pedido->pago }}</span>
+                                                    @endif
 
+                                                </td>
+                                                <td class="editable text-center precio" data-field="precio">${{$pedido->precio}}</td>
+                                                <td class="editable text-center envio" data-field="envio">${{$pedido->envio}}</td>
+                                                <td class="editable text-center total" data-field="total">${{$pedido->total}}</td>
+                                                <span hidden id="tot{{ $pedido->id }}"> {{ $pedido->total }}</span>
+                                                <td class="editable text-center cobro">
+                                                    @if($pedido->cobro == 'Pagado')
+                                                        <span class="badge badge-success">{{ $pedido->cobro }}</span>
+                                                    @else
+                                                        <span class="badge badge-danger">{{ $pedido->cobro }}</span>
+                                                    @endif
+                                                </td>
+                                               
 
-														</tbody>
-														<!--end::Table body-->
-													</table>
-												</div>
-												<!--end::Table-->
-											</div>
-											<!--end::Tap pane-->
-										
-										</div>
-									</div>
-									<!--end::Body-->
-								</div>
-								<!--end::Engage widget 1-->
-							
-							</div>
-						</div>
-						<!--end::Row-->
+                                              
+                                                                          
+                                                
+                                            </tr>
+                                            <span hidden >  {{ $total4 = $total4 + $pedido->total}}</span>
+                                            @endforeach
 
-						<!--end::Tables Widget 5-->
-
-						<!--end::Row-->
+                                            <span hidden id="total5"> {{ $total4 }}</span>
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                                            
 					</div>
 					<!--end::Container-->
 				</div>
@@ -572,7 +575,7 @@ License: For each use you must have a valid license purchased only from above li
 	
 		<!--end::Modal dialog-->
 	</div>
-	
+    </div></div></div>
 	
 
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
