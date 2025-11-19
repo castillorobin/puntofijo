@@ -10,6 +10,8 @@ use App\Models\Entrega;
 use Illuminate\Support\Facades\Auth;
 use PDF; 
 use Carbon\Carbon;
+use App\Models\Hestado;
+
 class EnvioController extends Controller
 {
 
@@ -42,6 +44,13 @@ class EnvioController extends Controller
     public function entregarenvio()
     {
         return view('entregar.entregar');
+    }
+
+    public function noentregados()
+    {
+         $empleado = Empleado::where('nombre', Auth::user()->name)->get();
+        return view('envios.noentregados', compact('empleado'));
+      
     }
 
     public function buscar(Request $request)
@@ -290,6 +299,53 @@ public function verificarGuia(Request $request)
         'exists' => $existe
     ]);
 }
+
+
+
+
+    public function verificar(Request $request)
+    {
+        $guia = $request->guia;
+
+        $envio = Envio::where('guia', $guia)->first();
+
+        if (!$envio) {
+            return response()->json(['exists' => false]);
+        }
+
+        return response()->json([
+            'exists' => true,
+            'envio'  => $envio
+        ]);
+    }
+
+
+    public function actualizarLote(Request $request)
+    {
+         $guias = json_decode($request->guias, true);
+
+    if (!$guias || !is_array($guias)) {
+        return back()->with('error', 'No se recibieron guías válidas.');
+    }
+
+    foreach ($guias as $guia) {
+
+        $envio = Envio::where('guia', $guia)->first();
+        if (!$envio) continue;
+
+        $envio->estado = "No entregado";
+        $envio->ubicacion = $request->ubicacion;
+        $envio->save();
+
+        Hestado::create([
+            'idenvio' => $envio->id,
+            'estado' => "No entregado",
+            'usuario' => auth()->user()->name
+        ]);
+    }
+
+    return back()->with('success', 'Envíos actualizados correctamente.');
+    }
 
 
 

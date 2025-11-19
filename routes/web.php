@@ -118,6 +118,19 @@ Route::get('/pagar/buscar', [PagoController::class, 'buscar'])
     ->name('pagar.buscar');
 
 
+//No entregados
+Route::get('/envios/noentregados', [EnvioController::class, 'noentregados'])->name('envios.noentregados');
+
+// Verificar si un envío existe por QR
+Route::post('/noentregados/verificar', [App\Http\Controllers\EnvioController::class, 'verificar'])
+    ->name('noentregado.verificar');
+
+// Actualizar lote
+Route::post('/noentregados/actualizar', [App\Http\Controllers\EnvioController::class, 'actualizarLote'])
+    ->name('noentregado.actualizar');
+
+    
+
 Route::post('/logout', function () {
     Auth::logout();
     session()->invalidate();

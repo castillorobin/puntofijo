@@ -43,6 +43,21 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 	<!--end::Global Stylesheets Bundle-->
 
+    <style>
+input.is-valid {
+    border: 2px solid #28a745 !important;
+    background-color: #e6f9ec !important;
+    color: #155724 !important;
+    font-weight: 600;
+}
+input.is-invalid {
+    border: 2px solid #dc3545 !important;
+    background-color: #f8d7da !important;
+    color: #721c24 !important;
+    font-weight: 600;
+}
+</style>
+
 	
 </head>
 <!--end::Head-->
@@ -80,7 +95,7 @@ License: For each use you must have a valid license purchased only from above li
 				<!--begin::Logo-->
 				<div class="aside-logo flex-column-auto pt-10 pt-lg-20" id="kt_aside_logo">
 					<a href="/dashboard">
-						<img alt="Logo" src="assets/media/logos/logo.png" class="h-40px" />
+						<img alt="Logo" src="assets/media/logos/demo9.svg" class="h-40px" />
 					</a>
 				</div>
 				<!--end::Logo-->
@@ -193,17 +208,13 @@ License: For each use you must have a valid license purchased only from above li
 			<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
 				
 				<!--end::Header tablet and mobile-->
-				<!--begin::Header mobile-->
-
-<!--end::Header mobile-->
 				<!--begin::Header-->
 				<div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
-					
-				<!--begin::Container-->
+					<!--begin::Container-->
 					<div class="header-container container-xxl">
-						<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
+							<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
    <button class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
-    <i class="fas fa-bars" style="font-size: 28px;"></i>
+     <i class="fas fa-bars" style="font-size: 28px;"></i>
 </button>
 </div>
 						<!--begin::Page title-->
@@ -387,217 +398,331 @@ License: For each use you must have a valid license purchased only from above li
 					<div class="container-fluid m-0" id="kt_content_container">
 						<!--begin::Row-->
 						<div class="row g-5 g-xl-8">
-							<!--begin::Col-->
-							<div class="col-xl-4">
-								<!--begin::Misc Widget 1-->
-								<div class="row mb-5 mb-xl-8 g-5 g-xl-8">
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/entregarenvio" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-fingerprint-scanning fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-													<span class="path5"></span>
-												</i>
-												<span class="fs-4 fw-bold">Entregar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/cobro/cobrar" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-gift fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-												</i>
-												<span class="fs-4 fw-bold">Cobrar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-								
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/pago/pagar" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-fingerprint-scanning fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-													<span class="path5"></span>
-												</i>
-												<span class="fs-4 fw-bold">Pagar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/caja/cajero" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-abstract-26 fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-												</i>
-												<span class="fs-4 fw-bold">Caja</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
+						
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-light">
+            <h3 class="card-title text-gray-700 fw-bold text-uppercase">No entregados</h3>
+        </div>
+
+@if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-success" style="margin-left: 25px;">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <script>
+        // Espera 4 segundos (4000 ms) y luego oculta el mensaje
+        setTimeout(function () {
+            let alertBox = document.getElementById('alert-success');
+            if (alertBox) {
+                alertBox.classList.remove('show');
+                alertBox.classList.add('fade');
+                alertBox.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+@endif
+
+{{-- Mensaje de error general --}}
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+
+	<script>
+setTimeout(() => {
+    document.querySelectorAll('.alert').forEach(a => a.remove());
+}, 3000);
+</script>
+@endif
+
+        <div class="card-body">
+
+            <!-- Escáner QR -->
+            <div class="d-flex align-items-center mb-4">
+                <input id="qr-input" type="text" placeholder="Escanear código QR" readonly
+                    class="form-control me-3" style="max-width: 300px;" />
+               
+            </div>
+
+            <div id="qr-reader" style="width:100%; display:none;" class="border rounded p-2 mb-3"></div>
+
+            <!-- Tabla de envíos -->
+            <div class="table-responsive">
+                <table class="table align-middle table-row-dashed fs-6 gy-5"  id="tabla-lote">
+                    <thead >
+                        <tr class="text-start text-gray-400 fw-bold fs-7 gs-0">
+                            <th>Guía</th>
+                            <th>Comercio</th>
+                            <th>Destinatario</th>
+                            <th>Estado</th>
+                            
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="text-end mt-4">
+                 <button type="button" id="btn-limpiar" class="btn btn-light-danger">Limpiar lista</button>
+                <button type="button" id="btn-entregar-lote" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEntregarLote">
+                    <i class="fas fa-check-circle"></i> Actualizar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Entregar en Lote -->
+<div class="modal fade" id="modalEntregarLote" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form id="formnoentrega" method="POST" action="{{ route('noentregado.actualizar') }}">
+    @csrf
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Detalles de la Actualizacion</h5>
+                    <button type="button" class="btn btn-icon btn-sm btn-light" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                   
+                    
+                    <div class="row">
+						<input type="hidden" name="guias" id="guias-lote">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Cajero</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->name }}" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Fecha</label>
+                            <input type="text" class="form-control" value="{{ now()->format('j/n/Y') }}" readonly>
+                        </div>
+						<div class="col-md-6 mb-3">
+                            <label class="form-label">Estado</label>
+                            <input type="text" id="estado" name="estado" class="form-control" value="No entregado" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Agencia</label>
+                            <input type="text" class="form-control" value="{{ $empleado[0]->agencia }}" readonly>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            
+                            <select class="form-select" name="ubicacion" required>
+                                <option value="caja">Caja</option>
+                                <option value="suelto">Suelto</option>
+                                
+                            </select>
+                        </div>
+                                                                
+                        
+                        
+                    </div>
 
 
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/entregarenlote" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-fingerprint-scanning fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-													<span class="path5"></span>
-												</i>
-												<span class="fs-4 fw-bold">Entrega múltiple</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/envios/noentregados" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-abstract-26 fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-												</i>
-												<span class="fs-4 fw-bold">No entregados</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									</div>
+                   
 
-									
-
-									<!-- Fila nueva para centrar un botón -->
-					
-								
+                   
+                </div>
 
 
-							</div>
-							<!--end::Col-->
-							<!--begin::Col-->
-							<div class="col-xl-8 ps-xl-12">
-								<!--begin::Engage widget 1-->
-								<div class="card bgi-position-y-bottom bgi-position-x-end bgi-no-repeat bgi-size-cover min-h-250px bg-primary mb-5 mb-xl-8" style="background-color:white !important; " dir="ltr">
-									<!--begin::Body-->
-									<!--begin::Header-->
-									<div class="card-header border-0 pt-5">
-										<h3 class="card-title align-items-start flex-column">
-											<span class="card-label fw-bold fs-3 mb-1">Dashboard</span>
-											<span class="text-muted mt-1 fw-semibold fs-7"></span>
-										</h3>
 
-									</div>
-									<!--end::Header-->
-									<!--begin::Body-->
-									<div class="card-body py-3">
-										<div class="tab-content">
-											<!--begin::Tap pane-->
-											<div class="tab-pane fade show active" id="kt_table_widget_5_tab_1">
-												<!--begin::Table container-->
-												<div class="table-responsive">
-													<!--begin::Table-->
-													<table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
-														<!--begin::Table head-->
-														<thead>
-															<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-																<th class="p-0 w-170px">Guia</th>
-																<th class="p-0 min-w-100px">Comercio</th>
-																<th class="p-0 min-w-100px">Destinatario</th>
-																<th class="p-0 min-w-110px">Fecha</th>
-																<th class="p-0 min-w-50px">Precio</th>
-																<th class="p-0 min-w-50px">Estado</th>
-															</tr>
-														</thead>
-														<!--end::Table head-->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Actualizar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
-														<!--begin::Table body-->
-														<tbody>
 
 
-														</tbody>
-														<!--end::Table body-->
-													</table>
-												</div>
-												<!--end::Table-->
-											</div>
-											<!--end::Tap pane-->
-										
-										</div>
-									</div>
-									<!--end::Body-->
-								</div>
-								<!--end::Engage widget 1-->
-							
-							</div>
-						</div>
-						<!--end::Row-->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Librería QR -->
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
-						<!--end::Tables Widget 5-->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
 
-						<!--end::Row-->
-					</div>
-					<!--end::Container-->
-				</div>
-			
-				<!--end::Footer-->
-			</div>
-			<!--end::Wrapper-->
-		</div>
-		<!--end::Page-->
-	</div>
-	<!--end::Root-->
-	<!--begin::Drawers-->
-	
-	
-		<!--end::Modal dialog-->
-	</div>
-	
-	
+    let listaGuias = [];               // Lista de guías agregadas
+    const tablaBody = document.querySelector("#tabla-lote tbody");
+    const inputQR = document.getElementById("qr-input");
+    const readerDiv = document.getElementById("qr-reader");
+    const hiddenGuias = document.getElementById("guias-lote");
+    const btnLimpiar = document.getElementById("btn-limpiar");
+
+    let qrScanner = null;
+
+    // =====================================================
+    // 🔥 FUNCIÓN ÚNICA PARA ACTUALIZAR EL INPUT HIDDEN
+    // =====================================================
+    function actualizarHidden() {
+       
+let listaEscapada = listaGuias.map(g => g.replace(/"/g, '\\"').replace(/'/g, "\\'"));
+
+hiddenGuias.value = JSON.stringify(listaEscapada);
+    }
+
+    // ======================================================
+    // 🔥 ABRIR CÁMARA AL CLIC EN EL INPUT
+    // ======================================================
+    inputQR.addEventListener("click", async function () {
+
+        if (qrScanner) {
+            try { await qrScanner.stop(); } catch(e){}
+        }
+
+        qrScanner = new Html5Qrcode("qr-reader");
+        readerDiv.style.display = "block";
+
+        try {
+            await qrScanner.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: { width: 250, height: 250 } },
+                async codigoQR => {
+
+                    inputQR.value = codigoQR;
+
+                    qrScanner.stop().then(() => {
+                        readerDiv.style.display = "none";
+                    });
+
+                    verificarYAgregar(codigoQR);
+                }
+            );
+        } catch (error) {
+            console.error("Error al iniciar cámara:", error);
+        }
+    });
+
+
+    // ======================================================
+    // 🔥 VERIFICAR EN BD Y AGREGAR A LA TABLA
+    // ======================================================
+    async function verificarYAgregar(guia) {
+
+        guia = guia.trim();
+
+        if (listaGuias.includes(guia)) {
+            Swal.fire({
+                icon: "warning",
+                title: "Duplicado",
+                text: `La guía ${guia} ya está en la lista.`
+            });
+            return;
+        }
+
+        const res = await fetch("{{ route('noentregado.verificar') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({ guia })
+        });
+
+        const data = await res.json();
+
+        if (!data.exists) {
+            Swal.fire({
+                icon: "error",
+                title: "No existe",
+                text: `La guía ${guia} no está registrada.`,
+            });
+            return;
+        }
+
+        agregarFila(data.envio);
+    }
+
+
+    // ======================================================
+    // 🔥 AGREGAR FILA A LA TABLA Y ACTUALIZAR HIDDEN
+    // ======================================================
+    function agregarFila(envio) {
+
+        listaGuias.push(envio.guia);
+        actualizarHidden();
+
+        tablaBody.insertAdjacentHTML("beforeend", `
+            <tr data-guia="${envio.guia}">
+                <td>${envio.guia}</td>
+                <td>${envio.comercio ?? ''}</td>
+                <td>${envio.destinatario ?? ''}</td>
+                <td>${envio.estado ?? ''}</td>
+                <td>
+                    <button class="btn btn-sm btn-danger btn-quitar" data-guia="${envio.guia}">
+                        Borrar
+                    </button>
+                </td>
+            </tr>
+        `);
+    }
+
+
+    // ======================================================
+    // 🔥 QUITAR FILA DE LA TABLA
+    // ======================================================
+    tablaBody.addEventListener("click", function(e) {
+
+        if (!e.target.classList.contains("btn-quitar")) return;
+
+        const guia = e.target.dataset.guia;
+
+        listaGuias = listaGuias.filter(g => g !== guia);
+        actualizarHidden();
+
+        e.target.closest("tr").remove();
+    });
+
+
+    // ======================================================
+    // 🔥 LIMPIAR TODA LA LISTA
+    // ======================================================
+    btnLimpiar.addEventListener("click", function () {
+
+        listaGuias = [];
+        actualizarHidden();
+        tablaBody.innerHTML = "";
+
+        Swal.fire({
+            icon: "success",
+            title: "Lista vacía",
+            text: "Se han eliminado todas las guías.",
+            timer: 1500,
+            showConfirmButton: false
+        });
+    });
+
+
+    // ======================================================
+    // 🔥 ENVIAR FORMULARIO DESDE EL MODAL
+    // ======================================================
+    document.getElementById("formnoentrega").addEventListener("submit", function(e) {
+
+        if (listaGuias.length === 0) {
+            e.preventDefault();
+            Swal.fire({
+                icon: "warning",
+                title: "Lista vacía",
+                text: "Debe agregar al menos una guía antes de actualizar."
+            });
+            return;
+        }
+
+        actualizarHidden(); // GUARDA la lista ANTES del submit
+    });
+
+});
+</script>
 
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 
