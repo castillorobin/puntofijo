@@ -391,180 +391,105 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--begin::Engage widget 1-->
                                 <div class="card bgi-position-y-bottom bgi-position-x-end bgi-no-repeat bgi-size-cover min-h-250px bg-primary mb-5 mb-xl-8"
                                     style="background-color:white !important; " dir="ltr">
-                                    <!--begin::Header-->
-                                    <div class="card-header border-0 pt-5">
-                                        <h3 class="card-title align-items-start flex-column">
-                                            <span class="card-label fw-bold fs-3 mb-1 text-gray-600 text-uppercase">
-                                               
-                                                Pagar
-                                               
-                                            </span>
-                                            <span class="text-muted mt-1 fw-semibold fs-7">
-                                                <!-- Puedes agregar un subtítulo dinámico aquí si lo necesitas -->
-                                            </span>
-                                        </h3>
-                                    </div>
-                                    <!--end::Header-->
- @if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-success" style="margin-left: 25px;">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  
+                              
+
+									<div class="card mb-5 mb-xl-10">
+    <!--begin::Card header-->
+    <div class="card-header card-header-stretch pb-0">
+        <!--begin::Title-->
+        <div class="card-title">
+            <h3 class="m-0">Información de Ticket</h3>
+        </div>
+        <!--end::Title-->
+
+        <!--begin::Toolbar-->
+        <div class="card-toolbar m-0">
+           
+            <!--end::Tab nav-->
+        </div>
+        <!--end::Toolbar-->
     </div>
+    <!--end::Card header-->
 
-    <script>
-        // Espera 4 segundos (4000 ms) y luego oculta el mensaje
-        setTimeout(function () {
-            let alertBox = document.getElementById('alert-success');
-            if (alertBox) {
-                alertBox.classList.remove('show');
-                alertBox.classList.add('fade');
-                alertBox.style.display = 'none';
-            }
-        }, 3000);
-    </script>
-@endif
+    <!--begin::Tab content-->
+    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
+        <!--begin::Tab panel-->
+        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel" "="" aria-labelledby="kt_billing_creditcard_tab">
+            <!--begin::Title-->
+            
+            <!--end::Title-->
 
-{{-- Mensaje de error general --}}
-@if (session('error'))
-    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-    </div>
+            <!--begin::Row-->
+            <div class="row gx-9 gy-6">
+                <!--begin::Col-->
+                <div class="col-xl-6" data-kt-billing-element="card">
+                    <!--begin::Card-->
+                    <div class="card card-dashed h-xl-100 flex-row flex-stack flex-wrap p-6">
+                        <!--begin::Info-->
+                        <div class="d-flex flex-column py-2">
+                            <!--begin::Owner-->
+                         
 
-	<script>
-setTimeout(() => {
-    document.querySelectorAll('.alert').forEach(a => a.remove());
-}, 3000);
-</script>
-@endif
-                                    <!--begin::Body-->
+                            <!--begin::Wrapper-->
+							
+                            <div class="d-flex align-items-center">
+                                <!--begin::Icon-->
+                               
+                                <!--end::Icon-->
 
-                                    <div class="card-body py-3">
-                                        <div class="table-responsive" style="overflow-x: auto; padding: 0;">
-
-                                            <!--begin::Main wrapper-->
-                                            <div id="kt_docs_search_handler_basic"
-                                                data-kt-search-keypress="true"
-                                                data-kt-search-min-length="2"
-                                                data-kt-search-enter="true"
-                                                data-kt-search-layout="inline">
-
-<div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-                               <form action="{{ url('/pago/pagoticket') }}" method="POST" id="formElement">
-                                        @csrf
-                                    <table class="table align-middle table-row-dashed fs-6 gy-5 " id="kt_ecommerce_report_shipping_table" data-ordering="false">
-                                        <thead>
-                                            <tr class="text-start text-gray-400 fw-bold fs-7 gs-0">
-                                                <th><div class="form-group form-check" style="width: 5px;">
-                                               
-                                                    <input type="checkbox" class="form-check-input" id="checktodo" name="checked[]" >
-                                                    <input type="checkbox" class="form-check-input" id="checknada" name="checked[]" style="display:none;">
-                                                    
-                                                   </div></th>
-                                                <th class="min-w-50px"># De guia</th>
-                                                <th class="min-w-50px">Comercio</th>
-                                                <th class="min-w-50px">Destinatario</th>
-                                                <th class="min-w-150px">Dirección </th>
-                                                <th class="min-w-50px text-center">Tipo de envío</th>
-                                                <th class="min-w-100px text-center">Estado del envío</th>
-                                                <th class="min-w-100px text-center">Fecha de entrega</th>
-                                                <th class="min-w-100px text-center">Estado del pago</th>
-                                                <th class="min-w-50px text-center">Precio del paquete</th>
-                                                <th class="min-w-50px text-center">Precio de envío</th>
-                                                <th class="min-w-50px text-center">Total </th>
-                                                <th class="min-w-100px text-center">Cobro del envío</th>
-                                               
-                                              
-                                                
-                                             
-                                            </tr>
-                                        </thead>
-                                        <tbody class="fw-semibold text-black-400" style="font-size: 10px;">
-                                            <span hidden id="total3"> {{ $total4 = 0 }}</span>
-
-                                            
-                                            @foreach ($pedidos as $pedido)                                               
-                                           
-                                            <tr
-                                            data-id="{{ $pedido->id }}"
-                                            >
-
-                                                <td >
-                                                    <div class="form-group form-check" style="width: 5px;">
-                                                        @if($pedido->pagado == 0)
-                                                     <input type="checkbox" value="{{ $pedido->id }}" class="form-check-input" id="check3" name="checked[]" >
-                                                    @endif
-                                                    </div>
-                                                    </td>
-
-
-                                                <td>
-                                                <a href="/envios/detalle/{{ $pedido->guia }}" class="text-gray-900 text-hover-primary">
-                                                    {{$pedido->guia}}
-                                                    </a>
-                                                </td>
-                                                <td >{{$pedido->comercio}}</td>
-                                                <td>{{$pedido->destinatario}}</td>
-                                                <td>{{$pedido->direccion}}</td>
-                                                <td class="text-center"><span class="badge badge-dark">{{$pedido->tipo}}</span></td>
-                                                <td class="text-center">
-                                                    @if( $pedido->estado == 'No entregado')
-                                                    <span class="badge badge-danger">{{ $pedido->estado }}</span>
-                                                    @elseif( $pedido->estado == 'Creado')
-                                                    <span class="badge badge-warning">{{ $pedido->estado }}</span>
-                                                    @elseif( $pedido->estado == 'Entregado')
-                                                    <span class="badge badge-success">{{ $pedido->estado }}</span>
-                                                    @elseif( $pedido->estado == 'En ruta')
-                                                    <span class="badge badge-info">{{ $pedido->estado }}</span>
-                                                    @elseif( $pedido->estado == 'Reprogramado')
-                                                    <span class="badge badge-dark">{{ $pedido->estado }}</span>
-                                                    @elseif( $pedido->estado == 'Devuelto al comercio')
-                                                    <span class="badge badge-primary">{{ $pedido->estado }}</span>
-                                                    @else
-                                                    <span class="badge badge-light">{{ $pedido->estado }}</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">{{$pedido->fecha_entrega}}</td>
-                                                <td class="editable estado-pago text-center">
-                                                    @if( $pedido->pago == 'Pagado')
-                                                    <span class="badge badge-success">{{ $pedido->pago}}</span>
-                                                    @else
-                                                    <span class="badge badge-danger">{{ $pedido->pago }}</span>
-                                                    @endif
-
-                                                </td>
-                                                <td class="editable text-center precio" data-field="precio">${{$pedido->precio}}</td>
-                                                <td class="editable text-center envio" data-field="envio">${{$pedido->envio}}</td>
-                                                <td class="editable text-center total" data-field="total">${{$pedido->total}}</td>
-                                                <span hidden id="tot{{ $pedido->id }}"> {{ $pedido->total }}</span>
-                                                <td class="editable text-center cobro">
-                                                    @if($pedido->cobro == 'Pagado')
-                                                        <span class="badge badge-success">{{ $pedido->cobro }}</span>
-                                                    @else
-                                                        <span class="badge badge-danger">{{ $pedido->cobro }}</span>
-                                                    @endif
-                                                </td>
-                                               
-
-                                              
-                                                                          
-                                                
-                                            </tr>
-                                            <span hidden >  {{ $total4 = $total4 + $pedido->total}}</span>
-                                            @endforeach
-
-                                            <span hidden id="total5"> {{ $total4 }}</span>
-                                        </tbody>
-                                    </table>
-                                
+                                <!--begin::Details-->
+                                <div >
+									<span class="fs-4 fw-bold"># De Ticket: </span> <span class="fs-6 fw-semibold text-gray-500">{{ $ticket->id }}</span>
+									<br>
+                                    <span class="fs-4 fw-bold">Comercio: </span> <span class="fs-6 fw-semibold text-gray-500">{{ $ticket->comercio }}</span>
+									<br>
+									<span class="fs-4 fw-bold">Estado: </span> <span class="fs-6 fw-semibold text-gray-500">{{ $ticket->estado }}</span>
+									<br>
+									<span class="fs-4 fw-bold">Total: </span> <span class="fs-6 fw-semibold text-gray-500">${{ $ticket->total }}</span>
+									<br>
+									<span class="fs-4 fw-bold">Fecha de verificación: </span> <span class="fs-6 fw-semibold text-gray-500">{{ $ticket->fechapago }}</span>
+									<br>
+									<span class="fs-4 fw-bold">Usuario que verifico: </span> <span class="fs-6 fw-semibold text-gray-500">{{ $ticket->userpago }}</span>
                                 </div>
-                                            
-					</div>
-					<!--end::Container-->
-				</div>
-			
-				<!--end::Footer-->
-			</div>
+								
+								</div>
+								
+                                <!--end::Details-->
+
+								
+                            </div>
+							 
+                        <!--end::Info-->
+						<div class="d-flex align-items-center py-2" style="margin-right: 150px;">
+						<div><button class="btn btn-success">Pagar</button></div>
+                        </div>
+                        <!--begin::Actions-->
+                       
+                        <!--end::Actions-->
+                    </div>
+
+					
+                    <!--end::Card-->
+                </div>
+                <!--end::Col-->
+
+       
+          
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+        </div>
+        
+    </div>
+    <!--end::Tab content-->
+</div>
+
+
+
+
+
+                                   
 			<!--end::Wrapper-->
 		</div>
 		<!--end::Page-->

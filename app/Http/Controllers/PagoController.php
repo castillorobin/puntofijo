@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ticketc;
+use App\Models\Ticktpago;
 use App\Models\Envio;
 
 class PagoController extends Controller
@@ -24,7 +25,7 @@ class PagoController extends Controller
                 return response()->json(['exists' => false]);
             }
 
-            $ticket = Ticketc::where('codigo', $codigo)->first();
+            $ticket = Ticktpago::where('id', $codigo)->first();
 
             return response()->json([
                 'exists' => $ticket ? true : false,
@@ -45,15 +46,15 @@ public function buscar(Request $request)
 {
     $codigo = $request->codigo;
 
-    $ticket = Ticketc::where('codigo', $codigo)->first();
+    $ticket = Ticktpago::where('id', $codigo)->first();
 
-    $pedidos = Envio::where('ticketc', $codigo)->get();
+   // $pedidos = Envio::where('ticketc', $codigo)->get();
 
     if (!$ticket) {
         return redirect()->back()->with('error', 'No se encontró un ticket con ese código.');
     }
 
-    return view('pago.detalle', compact('ticket', 'pedidos'));
+    return view('pago.detalle', compact('ticket'));
 }
     
 }
