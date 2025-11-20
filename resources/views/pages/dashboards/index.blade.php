@@ -556,9 +556,39 @@ License: For each use you must have a valid license purchased only from above li
 
 
 														<!--begin::Table body-->
-														<tbody>
+														<tbody class="fw-semibold text-gray-600">
+															@php
+                                                    $estadoColores = [
+                                                    'En ruta' => '#F39C12',
+                                                    'Entregado' => '#2ECC71',
+                                                    'Fallido' => '#E74C3C',
+                                                    'No entregado' => '#C0392B',
+                                                    'Reprogramado' => '#F1C40F',
+                                                    'Cambio' => '#3498DB'
+                                                    ];
+                                                    @endphp
+															@foreach ($envios as $envio)
+															 @php
+                                                    $estado = $envio->estado;
+                                                    $color = $estadoColores[$estado] ?? '#BDC3C7';
+                                                    @endphp
+															<tr>
+																<td><a href="/detalles/{{ $envio->guia }}" class="text-gray-600 text-hover-primary">{{ $envio->guia }}</a></td>
+																<td>{{ $envio->comercio }}</td>
+                                                        <td>{{ $envio->destinatario }}</td>
+														 <td data-order="{{ $envio->fecha_entrega }}">
+                                                            {{ date('d M Y, h:i a', strtotime($envio->fecha_entrega)) }}
+                                                        </td>
+														<td class="text-end">${{ number_format($envio->precio, 2) }}</td>
+														<td class="text-center">
+                                                            <span class="badge" style="background-color: {{ $color }}; color: white; padding: 8px 8px; border-radius: 6px;">{{ $estado }}</span>
+                                                        </td>
+                                                       
 
+															</tr>
+														
 
+															@endforeach
 														</tbody>
 														<!--end::Table body-->
 													</table>

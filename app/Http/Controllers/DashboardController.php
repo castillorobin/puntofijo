@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         addVendors(['amcharts', 'amcharts-maps', 'amcharts-stock']);
 
-        $envios = Envio::all();
+        $envios = Envio::where('repartidor', Auth::user()->name)->get();
         return view('pages.dashboards.index', compact('envios'));
 
        // return view('pages.dashboards.index');
