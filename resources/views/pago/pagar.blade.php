@@ -456,10 +456,12 @@ setTimeout(() => {
 
     <button id="btnBuscar" class="btn btn-primary me-2">Buscar</button>
 
-    <button id="btnQR" class="btn btn-secondary" style="background-image: url('/fotos/meloqr.png'); background-size: cover; height: 50px; width: 50px;">
-      
+    <button id="btnQR" class="btn btn-secondary">
+        <i class="fas fa-qrcode"></i>
     </button>
- 
+<!--
+	<button id="btnQR" class="btn btn-secondary" style="background-image: url('/fotos/meloqr.png'); background-size: cover; height: 50px; width: 50px;">
+-->
 </div>
 
 <div id="qr-reader" style="max-width:500px; display:none; margin-top:20px;" 
