@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Ticketc;
 use App\Models\Ticktpago;
 use App\Models\Envio;
+use App\Models\Empleado;
+use Illuminate\Support\Facades\Auth;
 
 class PagoController extends Controller
 {
@@ -54,7 +56,9 @@ public function buscar(Request $request)
         return redirect()->back()->with('error', 'No se encontró un ticket con ese código.');
     }
 
-    return view('pago.detalle', compact('ticket'));
+    $empleado = Empleado::where('nombre', Auth::user()->name)->get();
+
+    return view('pago.detalle', compact('ticket', 'empleado'));
 }
     
 }
