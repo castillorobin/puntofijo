@@ -70,7 +70,7 @@ thead th {
     <div style="margin-left: 100px;">
     {!! DNS1D::getBarcodeHTML($ticketact->codigo, 'C128', 2, 50) !!}
     </div>
-   </div>
+   </div> 
  </div>
   <div  style="font-weight: bolder; margin-top: 20px;">
    Comercio {{ $ticketact->comercio }}

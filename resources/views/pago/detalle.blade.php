@@ -405,7 +405,38 @@ License: For each use you must have a valid license purchased only from above li
 
         <!--begin::Toolbar-->
         <div class="card-toolbar m-0">
-           
+           @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-success" style="margin-left: 25px;">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <script>
+        // Espera 4 segundos (4000 ms) y luego oculta el mensaje
+        setTimeout(function () {
+            let alertBox = document.getElementById('alert-success');
+            if (alertBox) {
+                alertBox.classList.remove('show');
+                alertBox.classList.add('fade');
+                alertBox.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+@endif
+
+{{-- Mensaje de error general --}}
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+
+	<script>
+setTimeout(() => {
+    document.querySelectorAll('.alert').forEach(a => a.remove());
+}, 3000);
+</script>
+@endif
             <!--end::Tab nav-->
         </div>
         <!--end::Toolbar-->
@@ -674,12 +705,13 @@ License: For each use you must have a valid license purchased only from above li
                                                                 
                                                                 <input type="text" name="tota" id="tota" hidden>
                                                                 <input type="text" name="stota" id="stota" hidden>
+																<input type="text" name="ticket_id" id="ticket_id" value="{{$ticket->id}}" hidden>
                                                                 <!-- End of Payment and Change -->
                                                                 <br>
                                                                 <div class="modal-footer">
                                                                     <div class="d-flex justify-content-between w-100">
                                                                         <button type="button" style="margin: 10px" class="btn btn-secondary flex-grow-1 mr-2 btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
-                                                                        <button type="submit" id="pagadito" style="margin: 10px" class="btn btn-secondary flex-grow-1 mr-2" onclick="redireccionarPagina()" formtarget="_blank">Pagar</button>
+                                                                        <button type="submit" id="pagadito" style="margin: 10px" class="btn btn-secondary flex-grow-1 mr-2" formtarget="_blank">Pagar</button>
 
 <!--
                                                                         <button type="submit" id="pagadito" style="margin: 10px" class="btn btn-secondary flex-grow-1 mr-2" onclick="redireccionarPagina()" formtarget="_blank" disabled>Pagar</button>

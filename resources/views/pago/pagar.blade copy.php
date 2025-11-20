@@ -449,21 +449,17 @@ setTimeout(() => {
                                                 data-kt-search-enter="true"
                                                 data-kt-search-layout="inline">
 
-                                              <div class="qr-container d-flex align-items-center">
+                                               <div class="qr-container d-flex align-items-center">
+												
 
-    <input id="qr-input" type="text" placeholder="Ingrese código del ticket" 
-           class="form-control me-2" style="max-width:300px;" />
+    <input id="qr-input" type="text" placeholder="Ingrese o escanee QR" class="form-control me-2" style="max-width:300px;" />
+<button id="btnBuscar" class="btn btn-primary">Buscar</button>
 
-    <button id="btnBuscar" class="btn btn-primary me-2">Buscar</button>
-
-    <button id="btnQR" class="btn btn-secondary">
-        <i class="fas fa-qrcode"></i>
-    </button>
-
+    <!-- Contenedor donde se mostrará la cámara 
+    <div id="qr-reader" style="width: 100%; max-width: 300px; margin:auto; display:none;"></div>
+-->
+    
 </div>
-
-<div id="qr-reader" style="max-width:500px; display:none; margin-top:20px;" 
-     class="border rounded p-2 mb-3"></div>
 <div id="qr-reader" style="max-width:500px; display:none; margin-top: 25px;" class="border rounded p-2 mb-3"></div>
                                             </div>
                                             <!--end::Main wrapper-->
@@ -481,7 +477,7 @@ setTimeout(() => {
 						<!--end::Row-->
 					</div>
 					<!--end::Container-->
-				</div> 
+				</div>
 			
 				<!--end::Footer-->
 			</div>
@@ -500,25 +496,52 @@ setTimeout(() => {
 	
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
+
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 
     const qrInput = document.getElementById("qr-input");
     const qrReader = document.getElementById("qr-reader");
     const buscarBtn = document.getElementById("btnBuscar");
-    const btnQR = document.getElementById("btnQR");
     let qrScanner = null;
 
-    // ==============================================================
-    // 🔥 FUNCIÓN GENERAL para verificar el código y redirigir
-    // ==============================================================
-    async function verificarCodigo(codigo) {
+    // 📌 Escanear QR opcional
+    qrInput.addEventListener("click", async function () {
 
-        if (!codigo || codigo.trim() === "") {
+        if (qrScanner) {
+            try { await qrScanner.stop(); } catch(e){}
+        }
+
+        qrScanner = new Html5Qrcode("qr-reader");
+        qrReader.style.display = "block";
+
+        try {
+            await qrScanner.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: { width: 250, height: 250 } },
+                qrCodeMessage => {
+
+                    qrInput.value = qrCodeMessage;
+
+                    qrScanner.stop().then(() => {
+                        qrReader.style.display = "none";
+                    });
+                }
+            );
+        } catch (err) {
+            console.error("Error cámara:", err);
+        }
+    });
+
+    // 📌 BOTÓN BUSCAR
+    buscarBtn.addEventListener("click", async function () {
+        const codigo = qrInput.value.trim();
+
+        if (codigo === "") {
             Swal.fire({
                 icon: "warning",
                 title: "Código vacío",
-                text: "Ingrese un código o escanee un QR."
+                text: "Ingrese un código o escanee un QR antes de buscar."
             });
             return;
         }
@@ -534,75 +557,28 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             const data = await res.json();
+            console.log("RESPUESTA:", data);
 
             if (!data.exists) {
                 Swal.fire({
                     icon: "error",
                     title: "No encontrado",
-                    text: `No existe un ticket con el código ${codigo}`
+                    text: `No existe un ticket con el código ${codigo}`,
                 });
                 return;
             }
 
-            // ✔ Redirigir si existe
             window.location.href = `/pagar/buscar?codigo=${encodeURIComponent(codigo)}`;
 
         } catch (err) {
-            console.error("Error:", err);
+            console.error("Error FETCH:", err);
             Swal.fire({
                 icon: "error",
-                title: "Error de servidor",
+                title: "Error",
                 text: "No se pudo conectar con el servidor."
             });
         }
-    }
-
-    // ==============================================================
-    // 🔥 BOTÓN BUSCAR (manual)
-    // ==============================================================
-    buscarBtn.addEventListener("click", function () {
-        verificarCodigo(qrInput.value.trim());
     });
-
-    // ==============================================================
-    // 🔥 BOTÓN PARA ABRIR LA CÁMARA
-    // ==============================================================
-    btnQR.addEventListener("click", async function () {
-
-        if (qrScanner) {
-            try { await qrScanner.stop(); } catch (e) {}
-        }
-
-        qrScanner = new Html5Qrcode("qr-reader");
-        qrReader.style.display = "block";
-
-        try {
-            await qrScanner.start(
-                { facingMode: "environment" },
-                { fps: 10, qrbox: { width: 250, height: 250 } },
-                qrCodeMessage => {
-
-                    qrInput.value = qrCodeMessage;
-
-                    // Detener cámara
-                    qrScanner.stop().then(() => {
-                        qrReader.style.display = "none";
-                    });
-
-                    // ✔ Autoverificar
-                    verificarCodigo(qrCodeMessage);
-                }
-            );
-        } catch (err) {
-            console.error("Error al iniciar cámara:", err);
-            Swal.fire({
-                icon: "error",
-                title: "Error al iniciar cámara",
-                text: "No se pudo acceder a la cámara."
-            });
-        }
-    });
-
 });
 </script>
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->

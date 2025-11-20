@@ -117,6 +117,9 @@ Route::post('/pagar/verificar', [PagoController::class, 'verificar'])
 Route::get('/pagar/buscar', [PagoController::class, 'buscar'])
     ->name('pagar.buscar');
 
+    Route::post('/pagar/pagando', [App\Http\Controllers\PagoController::class, 'pagando'])
+    ->name('pagar.pagando');
+
 
 //No entregados
 Route::get('/envios/noentregados', [EnvioController::class, 'noentregados'])->name('envios.noentregados');
@@ -129,7 +132,7 @@ Route::post('/noentregados/verificar', [App\Http\Controllers\EnvioController::cl
 Route::post('/noentregados/actualizar', [App\Http\Controllers\EnvioController::class, 'actualizarLote'])
     ->name('noentregado.actualizar');
 
-    
+
 
 Route::post('/logout', function () {
     Auth::logout();
