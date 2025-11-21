@@ -397,7 +397,9 @@
                                                                 class="fw-bold text-gray-400 fs-6">{{ $envios[0]->estado }}</span>
                                                         </div>
 
-                                                        <button class="btn btn-primary">Ver ubicación</button>
+                                                        <a href="#" class="btn btn-light-primary fw-bold" data-bs-toggle="modal" data-bs-target="#modalVerUbicacion">
+        <i class="fas fa-map-marked-alt" style="font-size: 25px;"></i> &nbsp; Ver Ubicación
+    </a>
 
 
                                                     </div>
@@ -535,7 +537,63 @@
                         </div>
                         <!--end::Row-->
 
+                        
+<!--begin::Modal - Ver Ubicación-->
+<div class="modal fade" id="modalVerUbicacion" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mw-500px">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white">
+                    <i class="fas fa-map-marked-alt"></i> &nbsp; Ubicación del Paquete
+                </h5>
+                <button type="button" class="btn btn-icon btn-sm btn-active-light-danger" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="modal-body py-5">
+                <div class="mb-3">
+                    <label class="fw-semibold text-gray-700">Ubicacion:</label>
+                    <input type="text" class="form-control form-control-solid" value="{{ $envios[0]->agenciaubi }}" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold text-gray-700">Tipo de Ubicación:</label>
+                    <input type="text" class="form-control form-control-solid" value="{{ $envios[0]->ubicacion }}" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold text-gray-700">Caja:</label>
+                    <input type="text" class="form-control form-control-solid" value="{{ $envios[0]->caja }}" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold text-gray-700">Rack:</label>
+                    <input type="text" class="form-control form-control-solid" value="{{ $envios[0]->rack }}" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold text-gray-700">Nivel:</label>
+                    <input type="text" class="form-control form-control-solid" value="{{ $envios[0]->nivel }}" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold text-gray-700">Tarima:</label>
+                    <input type="text" class="form-control form-control-solid" value="{{ $envios[0]->tarima }}" readonly>
+                </div>
+            </div>
+
+            <div class="modal-footer justify-content-end">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal - Ver Ubicación-->
+
                         <!--begin::Modals-->
+
+
                         
 
 
