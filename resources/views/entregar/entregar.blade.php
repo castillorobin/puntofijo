@@ -495,41 +495,74 @@ setTimeout(() => {
 	
 	
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-
-    <script>
+<script>
 document.addEventListener("DOMContentLoaded", function() {
-    const qrButton = document.getElementById("qr-button");
-    const qrReader = document.getElementById("qr-reader");
+
     const qrInput = document.getElementById("qr-input");
+    const qrReader = document.getElementById("qr-reader");
+    let scanner = null;
 
-    let html5QrCode;
+    qrInput.addEventListener("click", async function () {
 
-    qrInput.addEventListener("click", async function() {
-        if (!html5QrCode) {
-            html5QrCode = new Html5Qrcode("qr-reader");
+        if (!scanner) {
+            scanner = new Html5Qrcode("qr-reader");
         }
 
         qrReader.style.display = "block";
 
-        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-
         try {
-            await html5QrCode.start(
-                { facingMode: "environment" }, // Usa cámara trasera
-                config,
-                qrCodeMessage => {
+            await scanner.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: { width: 250, height: 250 } },
+                async qrCodeMessage => {
+
                     qrInput.value = qrCodeMessage;
-                    html5QrCode.stop().then(() => {
+
+                    scanner.stop().then(() => {
                         qrReader.style.display = "none";
                     });
 
-                     window.location.href = `/envio/buscar?codigo=${encodeURIComponent(qrCodeMessage)}`;
+                    // 🔥 Verificar en backend ANTES de redirigir
+                    const res = await fetch("{{ route('envio.verificar') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({ codigo: qrCodeMessage })
+                    });
+
+                    const data = await res.json();
+
+                    if (!data.exists) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "No encontrado",
+                            text: "Este envío no existe."
+                        });
+                        return;
+                    }
+
+                    if (data.entregado) {
+                        Swal.fire({
+                            icon: "warning",
+                            title: "Ya entregado",
+                            text: "Este envío ya fue entregado y no puede procesarse nuevamente."
+                        });
+                        return;
+                    }
+
+                    // ✔ Si todo está bien → redireccionar
+                    window.location.href = `/envio/buscar?codigo=${encodeURIComponent(qrCodeMessage)}`;
                 }
             );
+
         } catch (err) {
-            console.error("Error al iniciar cámara:", err);
+            console.error("Error cámara:", err);
         }
+
     });
+
 });
 </script>
 

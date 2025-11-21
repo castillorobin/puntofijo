@@ -289,17 +289,30 @@ $ticketact = Entrega::where('id', $entrega->id)
 
 public function verificarGuia(Request $request)
 {
-    $guia = $request->input('guia');
+    $codigo = $request->codigo;
 
-    $existe = \DB::table('envios')
-        ->where('guia', $guia)
-        ->exists();
+    $envio = Envio::where('guia', $codigo)->first();
+
+    if (!$envio) {
+        return response()->json([
+            'exists' => false,
+            'message' => 'No existe el envío'
+        ]);
+    }
+
+    if ($envio->estado === "Entregado") {
+        return response()->json([
+            'exists' => true,
+            'entregado' => true,
+            'message' => 'Este envío ya fue entregado'
+        ]);
+    }
 
     return response()->json([
-        'exists' => $existe
+        'exists' => true,
+        'entregado' => false
     ]);
 }
-
 
 
 
