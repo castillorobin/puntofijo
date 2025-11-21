@@ -540,16 +540,16 @@ License: For each use you must have a valid license purchased only from above li
 												<!--begin::Table container-->
 												<div class="table-responsive">
 													<!--begin::Table-->
-													<table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+													<table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4" id="kt_ecommerce_report_shipping_table">
 														<!--begin::Table head-->
 														<thead>
 															<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-																<th class="p-0 w-170px">Guia</th>
-																<th class="p-0 min-w-100px">Comercio</th>
-																<th class="p-0 min-w-100px">Destinatario</th>
-																<th class="p-0 min-w-110px">Fecha</th>
-																<th class="p-0 min-w-50px">Precio</th>
-																<th class="p-0 min-w-50px">Estado</th>
+																<th >Guia</th>
+																<th class="min-w-150px">Comercio</th>
+																<th class="min-w-150px">Destinatario</th>
+																<th class="min-w-150px">Fecha</th>
+																<th >Precio</th>
+																<th >Estado</th>
 															</tr>
 														</thead>
 														<!--end::Table head-->
@@ -635,6 +635,8 @@ License: For each use you must have a valid license purchased only from above li
 	   {{-- Global Metronic Scripts --}}
     <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
+	<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="assets/js/custom/apps/ecommerce/reports/shipping/shipping.js"></script>
 	<!--end::Custom Javascript-->
 	<!--end::Javascript-->
 </body>
