@@ -472,7 +472,7 @@ input.is-invalid {
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Agencia</label>
-                            <input type="text" class="form-control" value="{{ $empleado[0]->agencia }}" readonly>
+                            <input type="text" class="form-control" value="{{ $empleado[0]->agencia }}" readonly name="agencia">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Método de Pago</label>
