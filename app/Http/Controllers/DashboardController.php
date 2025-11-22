@@ -14,11 +14,21 @@ class DashboardController extends Controller
     public function index()
     {
         addVendors(['amcharts', 'amcharts-maps', 'amcharts-stock']);
-
+/*
         $envios = Envio::where('repartidor', Auth::user()->name)->get();
         return view('pages.dashboards.index', compact('envios'));
-
+*/
        // return view('pages.dashboards.index');
+
+       $empleado = Empleado::where('nombre', Auth::user()->name)->first();
+
+if (!$empleado) {
+    $envios = collect(); // vacío si no existe
+} else {
+    $envios = $empleado->envios; // ← obtiene TODOS los envíos relacionados
+}
+
+return view('pages.dashboards.index', compact('envios'));
     }
 
     public function detalles($id)
