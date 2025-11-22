@@ -115,6 +115,9 @@ Route::post('/pagar/verificar', [PagoController::class, 'verificar'])
     ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
     ->name('pagar.verificar');
 
+    Route::post('/envios/verificar', [EnvioController::class, 'verificarEntregaMultiple'])
+    ->name('envios.verificar');
+
 Route::get('/pagar/buscar', [PagoController::class, 'buscar'])
     ->name('pagar.buscar');
 

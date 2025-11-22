@@ -175,7 +175,12 @@ thead th {
     {!! DNS2D::getBarcodeHTML(strval($ticketact[0]->id), 'QRCODE', 10, 10) !!}
 </div>
 </div>
-
+<p>
+    <a href="/dashboard">
+    <button class="btn btn-success" >Regresar</button>
+    </a>
+</p>
+   
    
 
 </body>

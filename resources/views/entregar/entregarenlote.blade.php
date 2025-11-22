@@ -435,6 +435,7 @@ input.is-invalid {
             </div>
 
             <div class="text-end mt-4">
+				
                  <button type="button" id="btn-limpiar" class="btn btn-light-danger">Limpiar lista</button>
                 <button type="button" id="btn-entregar-lote" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEntregarLote" disabled>
                     <i class="fas fa-check-circle"></i> Entregar
@@ -556,94 +557,172 @@ input.is-invalid {
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Librería QR -->
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const qrInput = document.getElementById("qr-input");
-    const qrReader = document.getElementById("qr-reader");
-    const tabla = document.querySelector("#tabla-lote tbody");
-    const btnEntregar = document.getElementById("btn-entregar-lote");
-    const btnLimpiar = document.getElementById("btn-limpiar");
+    const qrInput      = document.getElementById("qr-input");
+    const qrReader     = document.getElementById("qr-reader");
+    const tabla        = document.querySelector("#tabla-lote tbody");
+    const btnEntregar  = document.getElementById("btn-entregar-lote");
+    const btnLimpiar   = document.getElementById("btn-limpiar");
+
+    const inputRecibido   = document.getElementById("recibido-lote");
+    const cambioMostrado  = document.getElementById("cambio_mostrado_lote");
+    const cambioNum       = document.getElementById("cambio_num_lote");
+    const mensajeCambio   = document.getElementById("mensaje-cambio-lote"); // puede ser null si no existe
 
     let html5QrCode;
     let listaGuias = [];
 
+    // ==============================
+    // ESCANEAR QR Y AGREGAR A LA TABLA
+    // ==============================
     qrInput.addEventListener("click", async function() {
-        if (!html5QrCode) html5QrCode = new Html5Qrcode("qr-reader");
+        if (!html5QrCode) {
+            html5QrCode = new Html5Qrcode("qr-reader");
+        }
+
         qrReader.style.display = "block";
         const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
         try {
-            await html5QrCode.start({ facingMode: "environment" }, config, async (qrCodeMessage) => {
-                qrInput.value = qrCodeMessage;
-                html5QrCode.stop();
-                qrReader.style.display = "none";
+            await html5QrCode.start(
+                { facingMode: "environment" },
+                config,
+                async (qrCodeMessage) => {
 
-                // Consultar datos del envío via AJAX
-                const response = await fetch(`/envio/buscar/${qrCodeMessage}`);
-                if (response.ok) {
-    const envio = await response.json();
+                    qrInput.value = qrCodeMessage;
 
-    // Verificar duplicado
-    if (!listaGuias.includes(envio.guia)) {
-        listaGuias.push(envio.guia);
+                    // Detener cámara
+                    html5QrCode.stop().then(() => {
+                        qrReader.style.display = "none";
+                    });
 
-        const fila = `
-            <tr data-guia="${envio.guia}">
-                <td>${envio.guia}</td>
-                <td>${envio.comercio}</td>
-                <td>${envio.destinatario}</td>
-                <td>${envio.direccion}</td>
-                <td>${envio.nota || ''}</td>
-                <td class="text-end">$${parseFloat(envio.total).toFixed(2)}</td>
-                <td><button class="btn btn-sm btn-danger btn-quitar">X</button></td>
-            </tr>
-        `;
-        tabla.insertAdjacentHTML('beforeend', fila);
-        actualizarTotales();
-        btnEntregar.disabled = false;
-    } else {
-        // 🚨 AQUÍ va el mensaje de duplicado
-        Swal.fire({
-            icon: 'warning',
-            title: 'Guía duplicada',
-            text: `La guía ${envio.guia} ya fue agregada a la lista.`,
-            timer: 2500,
-            showConfirmButton: false,
-            toast: true,
-            position: 'top-end',
-        });
-    }
-} else {
-    Swal.fire({
-        icon: 'error',
-        title: 'Guía no encontrada',
-        text: 'No se encontró la guía en la base de datos.',
-        timer: 2500,
-        showConfirmButton: false,
-        toast: true,
-        position: 'top-end',
-    });
-}
-            });
+                    // ==========================
+                    // CONSULTAR ENVÍO AL BACKEND
+                    // ==========================
+                    try {
+                        const response = await fetch(`/envio/buscar/${encodeURIComponent(qrCodeMessage)}`);
+
+                        if (!response.ok) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Guía no encontrada',
+                                text: 'No se encontró la guía en la base de datos.',
+                                timer: 2500,
+                                showConfirmButton: false,
+                                toast: true,
+                                position: 'top-end',
+                            });
+                            return;
+                        }
+
+                        const envio = await response.json();
+
+                        // Validar que venga algo útil
+                        if (!envio || !envio.guia) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Guía no válida',
+                                text: 'La respuesta del servidor no es válida.',
+                                timer: 2500,
+                                showConfirmButton: false,
+                                toast: true,
+                                position: 'top-end',
+                            });
+                            return;
+                        }
+
+                        // ==========================
+                        // 🚫 VALIDAR ESTADO ENTREGADO
+                        // ==========================
+                        if (envio.estado && envio.estado.toLowerCase() === 'entregado') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ya entregado',
+                                text: `La guía ${envio.guia} ya fue entregada anteriormente.`,
+                                timer: 2500,
+                                showConfirmButton: false,
+                                toast: true,
+                                position: 'top-end',
+                            });
+                            return;
+                        }
+
+                        // ==========================
+                        // 🚫 VALIDAR DUPLICADO EN LA LISTA
+                        // ==========================
+                        if (listaGuias.includes(envio.guia)) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Guía duplicada',
+                                text: `La guía ${envio.guia} ya fue agregada a la lista.`,
+                                timer: 2500,
+                                showConfirmButton: false,
+                                toast: true,
+                                position: 'top-end',
+                            });
+                            return;
+                        }
+
+                        // ==========================
+                        // ✅ AGREGAR FILA A LA TABLA
+                        // ==========================
+                        listaGuias.push(envio.guia);
+
+                        const fila = `
+                            <tr data-guia="${envio.guia}">
+                                <td>${envio.guia}</td>
+                                <td>${envio.comercio ?? ''}</td>
+                                <td>${envio.destinatario ?? ''}</td>
+                                <td>${envio.direccion ?? ''}</td>
+                                <td>${envio.nota ?? ''}</td>
+                                <td class="text-end">$${parseFloat(envio.total ?? 0).toFixed(2)}</td>
+                                <td><button class="btn btn-sm btn-danger btn-quitar">X</button></td>
+                            </tr>
+                        `;
+                        tabla.insertAdjacentHTML('beforeend', fila);
+
+                        actualizarTotales();
+                        btnEntregar.disabled = listaGuias.length === 0;
+
+                    } catch (err) {
+                        console.error("Error en la petición fetch:", err);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Ocurrió un error al consultar la guía.',
+                            timer: 2500,
+                            showConfirmButton: false,
+                            toast: true,
+                            position: 'top-end',
+                        });
+                    }
+                }
+            );
         } catch (err) {
             console.error("Error al iniciar cámara:", err);
         }
     });
 
-    // Quitar una fila
+    // ==============================
+    // QUITAR UNA FILA
+    // ==============================
     tabla.addEventListener('click', e => {
         if (e.target.classList.contains('btn-quitar')) {
             const fila = e.target.closest('tr');
             const guia = fila.getAttribute('data-guia');
+
             listaGuias = listaGuias.filter(g => g !== guia);
             fila.remove();
+
             actualizarTotales();
-            if (listaGuias.length === 0) btnEntregar.disabled = true;
+            btnEntregar.disabled = listaGuias.length === 0;
         }
     });
 
-    // Limpiar tabla completa
+    // ==============================
+    // LIMPIAR LA TABLA COMPLETA
+    // ==============================
     btnLimpiar.addEventListener("click", function() {
         tabla.innerHTML = "";
         listaGuias = [];
@@ -651,49 +730,70 @@ document.addEventListener("DOMContentLoaded", function() {
         btnEntregar.disabled = true;
     });
 
-    // Calcular totales
+    // ==============================
+    // CALCULAR SUBTOTAL, DESCUENTO, TOTAL
+    // ==============================
     function actualizarTotales() {
         let subtotal = 0;
+
         document.querySelectorAll("#tabla-lote tbody tr").forEach(row => {
-            const valor = parseFloat(row.cells[5].textContent.replace('$', '')) || 0;
+            const valor = parseFloat(row.cells[5].textContent.replace('$', '').trim()) || 0;
             subtotal += valor;
         });
 
-        document.getElementById("subtotal-lote").value = subtotal.toFixed(2);
-        document.getElementById("lbl-subtotal").textContent = `$${subtotal.toFixed(2)}`;
+        // Inputs y labels
+        const inputSubtotal   = document.getElementById("subtotal-lote");
+        const lblSubtotal     = document.getElementById("lbl-subtotal");
+        const inputDescuento  = document.getElementById("descuento-lote");
+        const lblDescuento    = document.getElementById("lbl-descuento");
+        const lblTotal        = document.getElementById("lbl-total");
+        const inputTotal      = document.getElementById("total-lote");
 
-        const descuento = parseFloat(document.getElementById("descuento-lote").value) || 0;
-        document.getElementById("lbl-descuento").textContent = `$${descuento.toFixed(2)}`;
+        const descuento = parseFloat(inputDescuento.value) || 0;
+        const total = Math.max(subtotal - descuento, 0); // evitar negativos
 
-        const total = subtotal - descuento;
-        document.getElementById("lbl-total").textContent = `$${total.toFixed(2)}`;
-        document.getElementById("total-lote").value = total.toFixed(2);
-        document.getElementById("guias-lote").value = JSON.stringify(listaGuias);
+        if (inputSubtotal) inputSubtotal.value = subtotal.toFixed(2);
+        if (lblSubtotal)   lblSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+        if (lblDescuento)  lblDescuento.textContent = `$${descuento.toFixed(2)}`;
+        if (lblTotal)      lblTotal.textContent = `$${total.toFixed(2)}`;
+        if (inputTotal)    inputTotal.value = total.toFixed(2);
+
+        // Actualizar campo oculto de guías
+        const inputGuiasLote = document.getElementById("guias-lote");
+        if (inputGuiasLote) {
+            inputGuiasLote.value = JSON.stringify(listaGuias);
+        }
+
+        // Recalcular cambio cuando cambie el total
+        actualizarCambioLote();
     }
 
-    document.getElementById("descuento-lote").addEventListener("input", actualizarTotales);
+    // Recalcular totales cuando cambie el descuento
+    const inputDescuento = document.getElementById("descuento-lote");
+    if (inputDescuento) {
+        inputDescuento.addEventListener("input", actualizarTotales);
+    }
 
-
-
-});
-
-
- // === CAMPOS DE RECIBIDO Y CAMBIO EN LOTE ===
-    const inputRecibido = document.getElementById("recibido-lote");
-    const cambioMostrado = document.getElementById("cambio_mostrado_lote");
-    const cambioNum = document.getElementById("cambio_num_lote");
-    const mensajeCambio = document.getElementById("mensaje-cambio-lote");
-
+    // ==============================
+    // RECIBIDO Y CAMBIO
+    // ==============================
     function actualizarCambioLote() {
-        const recibido = parseFloat(inputRecibido.value) || 0;
         const total = parseFloat(document.getElementById("total-lote").value) || 0;
+        const recibido = parseFloat(inputRecibido.value) || 0;
         const cambio = recibido - total;
 
-        // Actualizar valores
-        cambioMostrado.value = "$" + (cambio >= 0 ? cambio.toFixed(2) : "0.00");
-        cambioNum.value = (cambio >= 0 ? cambio.toFixed(2) : 0);
+        // Actualizar valores visibles
+        if (cambio >= 0) {
+            cambioMostrado.value = "$" + cambio.toFixed(2);
+            cambioNum.value = cambio.toFixed(2);
+        } else {
+            cambioMostrado.value = "$0.00";
+            cambioNum.value = 0;
+        }
 
-        // Cambiar color
+        // Cambiar estilos y mensaje si existe el elemento
+        if (!mensajeCambio) return;
+
         if (recibido === 0) {
             cambioMostrado.classList.remove("is-valid", "is-invalid");
             mensajeCambio.textContent = "";
@@ -710,7 +810,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    inputRecibido.addEventListener("input", actualizarCambioLote);
+    if (inputRecibido) {
+        inputRecibido.addEventListener("input", actualizarCambioLote);
+    }
+});
 </script>
 
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->

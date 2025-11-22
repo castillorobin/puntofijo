@@ -360,6 +360,34 @@ public function verificarGuia(Request $request)
     return back()->with('success', 'Envíos actualizados correctamente.');
     }
 
+    public function verificarEntregaMultiple(Request $request)
+{
+    $codigo = $request->codigo;
+
+    $envio = Envio::where('guia', $codigo)->first();
+
+    if (!$envio) {
+        return response()->json([
+            'exists' => false,
+            'message' => 'No existe este envío.'
+        ]);
+    }
+
+    if ($envio->estado === 'Entregado') {
+        return response()->json([
+            'exists' => true,
+            'entregado' => true,
+            'message' => 'Este envío ya fue entregado.'
+        ]);
+    }
+
+    return response()->json([
+        'exists' => true,
+        'entregado' => false,
+        'envio' => $envio
+    ]);
+}
+
 
 
 
