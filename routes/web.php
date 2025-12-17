@@ -29,8 +29,9 @@ Route::group(['middleware' => ['auth']], function(){
 });
 
 Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'verified']);
-
+//Route::get('/', [DashboardController::class, 'index']);
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/error', function () {
     abort(500);
@@ -135,6 +136,8 @@ Route::post('/noentregados/verificar', [App\Http\Controllers\EnvioController::cl
 // Actualizar lote
 Route::post('/noentregados/actualizar', [App\Http\Controllers\EnvioController::class, 'actualizarLote'])
     ->name('noentregado.actualizar');
+
+Route::get('/notificaciones', [EnvioController::class, 'notificaciones'])->name('envios.notificaciones');
 
 
 

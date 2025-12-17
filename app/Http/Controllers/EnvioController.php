@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use PDF; 
 use Carbon\Carbon;
 use App\Models\Hestado;
+use App\Models\Rutas;
 
 class EnvioController extends Controller
 {
@@ -388,7 +389,14 @@ public function verificarGuia(Request $request)
     ]);
 }
 
+public function notificaciones()
+{
+
+    $puntos = Rutas::all();
+    return view('envios.notificaciones', compact('puntos'));
 
 
 
+
+}
 }

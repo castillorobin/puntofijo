@@ -48,97 +48,6 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Head-->
 <!--begin::Body-->
 
-<script>
-    function doSearch()
-
-{
-
-const tableReg = document.getElementById('kt_ecommerce_report_shipping_table');
-
-const searchText = document.getElementById('searchTerm').value.toLowerCase();
-
-let total = 0;
-
-
-
-// Recorremos todas las filas con contenido de la tabla
-
-for (let i = 1; i < tableReg.rows.length; i++) {
-
-    // Si el td tiene la clase "noSearch" no se busca en su cntenido
-
-    if (tableReg.rows[i].classList.contains("noSearch")) {
-
-        continue;
-
-    }
-
-
-
-    let found = false;
-
-    const cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
-
-    // Recorremos todas las celdas
-
-    for (let j = 0; j < cellsOfRow.length && !found; j++) {
-
-        const compareWith = cellsOfRow[j].innerHTML.toLowerCase();
-
-        // Buscamos el texto en el contenido de la celda
-
-        if (searchText.length == 0 || compareWith.indexOf(searchText) > -1) {
-
-            found = true;
-
-            total++;
-
-        }
-
-    }
-
-    if (found) {
-
-        tableReg.rows[i].style.display = '';
-
-    } else {
-
-       
-
-        tableReg.rows[i].style.display = 'none';
-
-    }
-
-}
-
-
-
-// mostramos las coincidencias
-
-const lastTR=tableReg.rows[tableReg.rows.length-1];
-
-const td=lastTR.querySelector("td");
-
-lastTR.classList.remove("hide", "red");
-
-if (searchText == "") {
-
-    lastTR.classList.add("hide");
-
-} else if (total) {
-
-    td.innerHTML="";
-
-} else {
-
-    lastTR.classList.add("red");
-
-    td.innerHTML="";
-
-}
-
-}
-</script>
 <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed aside-fixed aside-secondary-disabled">
 	<!--begin::Theme mode setup on page load-->
 	<script>
@@ -171,7 +80,7 @@ if (searchText == "") {
 				<!--begin::Logo-->
 				<div class="aside-logo flex-column-auto pt-10 pt-lg-20" id="kt_aside_logo">
 					<a href="/dashboard">
-						<img alt="Logo" src="assets/media/logos/logo.png" class="h-40px" />
+						<img alt="Logo" src="assets/media/logos/demo9.svg" class="h-40px" />
 					</a>
 				</div>
 				<!--end::Logo-->
@@ -284,17 +193,13 @@ if (searchText == "") {
 			<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
 				
 				<!--end::Header tablet and mobile-->
-				<!--begin::Header mobile-->
-
-<!--end::Header mobile-->
 				<!--begin::Header-->
 				<div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
-					
-				<!--begin::Container-->
+					<!--begin::Container-->
 					<div class="header-container container-xxl">
-						<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
+							<div class="d-flex d-lg-none align-items-center ms-n2 me-2">
    <button class="btn btn-icon btn-active-color-primary" id="kt_aside_toggle">
-    <i class="fas fa-bars" style="font-size: 28px;"></i>
+     <i class="fas fa-bars" style="font-size: 28px;"></i>
 </button>
 </div>
 						<!--begin::Page title-->
@@ -479,245 +384,139 @@ if (searchText == "") {
 						<!--begin::Row-->
 						<div class="row g-5 g-xl-8">
 							<!--begin::Col-->
-							<div class="col-xl-4">
-								<!--begin::Misc Widget 1-->
-								<div class="row mb-5 mb-xl-8 g-5 g-xl-8">
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/entregarenvio" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-fingerprint-scanning fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-													<span class="path5"></span>
-												</i>
-												<span class="fs-4 fw-bold">Entregar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/cobro/cobrar" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-gift fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-												</i>
-												<span class="fs-4 fw-bold">Cobrar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-								
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/pago/pagar" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-fingerprint-scanning fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-													<span class="path5"></span>
-												</i>
-												<span class="fs-4 fw-bold">Pagar</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/caja/cajero" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-abstract-26 fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-												</i>
-												<span class="fs-4 fw-bold">Caja</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-
-
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/entregarenlote" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-fingerprint-scanning fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-													<span class="path4"></span>
-													<span class="path5"></span>
-												</i>
-												<span class="fs-4 fw-bold">Entrega múltiple</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-6">
-										<!--begin::Card-->
-										<div class="card card-stretch">
-											<!--begin::Link-->
-											<a href="/envios/noentregados" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
-												<i class="ki-duotone ki-abstract-26 fs-2tx mb-5 ms-n1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-												</i>
-												<span class="fs-4 fw-bold">No entregados</span>
-											</a>
-											<!--end::Link-->
-										</div>
-										<!--end::Card-->
-									</div>
-									<!--end::Col-->
-									</div>
-
-
-									<div class="col-12">
-										<div class="card card-stretch">
-											<a href="/notificaciones" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justify-content-center align-items-center text-center w-100 p-10">
-												<i class="ki-duotone ki-delivery-3 fs-2tx mb-5">
-													<span class="path1"></span>
-													<span class="path2"></span>
-													<span class="path3"></span>
-												</i>
-												<span class="fs-4 fw-bold">Notificaciones</span>
-											</a>
-											</div>
-										</div>
-
-									
-
-									<!-- Fila nueva para centrar un botón -->
-					
-								
-
-
-							</div>
+						
 							<!--end::Col-->
 							<!--begin::Col-->
-							<div class="col-xl-8 ps-xl-12">
-								<!--begin::Engage widget 1-->
-								<div class="card bgi-position-y-bottom bgi-position-x-end bgi-no-repeat bgi-size-cover min-h-250px bg-primary mb-5 mb-xl-8" style="background-color:white !important; " dir="ltr">
-									<!--begin::Body-->
-									<!--begin::Header-->
-									<div class="card-header border-0 pt-5">
-										<h3 class="card-title align-items-start flex-column">
-											<span class="card-label fw-bold fs-3 mb-1">Dashboard</span>
-											<span class="text-muted mt-1 fw-semibold fs-7"></span>
-										</h3>
-
-									</div>
-									<!--end::Header-->
-									<!--begin::Body-->
-									<div class="card-body py-3">
-										<div class="tab-content">
-											<!--begin::Tap pane-->
-											<div class="tab-pane fade show active" id="kt_table_widget_5_tab_1">
-												<div class="d-flex align-items-center position-relative my-1">
-                                        <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-
-                                        <input type="search" spellcheck="false" data-ms-editor="true" id="searchTerm" class="dt-input form-control form-control-solid w-200px ps-12" placeholder="Buscar" onkeyup="doSearch()"  />
+							<div class="col-xl-11 ps-xl-4 " >
+                                <!--begin::Engage widget 1-->
+                                <div class="card bgi-position-y-bottom bgi-position-x-end bgi-no-repeat bgi-size-cover min-h-250px bg-primary mb-5 mb-xl-8"
+                                    style="background-color:white !important; " dir="ltr">
+                                    <!--begin::Header-->
+                                    <div class="card-header border-0 pt-5">
+                                        <h3 class="card-title align-items-start flex-column">
+                                            <span class="card-label fw-bold fs-3 mb-1 text-gray-600 text-uppercase">
+                                               
+                                                NOTIFICACIONES
+                                               
+                                            </span>
+                                            <span class="text-muted mt-1 fw-semibold fs-7">
+                                                <!-- Puedes agregar un subtítulo dinámico aquí si lo necesitas -->
+                                            </span>
+                                        </h3>
                                     </div>
-												<!--begin::Table container-->
-												<div class="table-responsive">
-													<!--begin::Table-->
-													<table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4" id="kt_ecommerce_report_shipping_table">
-														<!--begin::Table head-->
-														<thead>
-															<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-																<th >Guia</th>
-																<th class="min-w-150px">Comercio</th>
-																<th class="min-w-150px">Destinatario</th>
-																<th class="min-w-150px">Fecha</th>
-																<th >Precio</th>
-																<th >Estado</th>
-															</tr>
-														</thead>
-														<!--end::Table head-->
+
+   
+                                    <!--begin::Body-->
+
+                                    <div class="card-body py-3">
+                                        
+
+                                            <!--begin::Main wrapper-->
+                                            <div id="kt_docs_search_handler_basic"
+                                                data-kt-search-keypress="true"
+                                                data-kt-search-min-length="2"
+                                                data-kt-search-enter="true"
+                                                data-kt-search-layout="inline">
+
+            
+<div class="row d-flex flex-column align-items-center">
+    <div class="col-md-12 mb-3 d-flex justify-content-center">
+        <select name="tipo_notificacion" id="tipo_notificacion" class="form-control form-control-lg form-control-solid" style="width: 80%;">
+            <option value="" disabled selected>Tipo de notificacion</option>
+            <option value="atraso">Atraso</option>
+            <option value="llegado">Hemos llegado</option>
+        </select>
+    </div>
+
+	
+	 <div class="col-md-12 mb-3 d-flex justify-content-center">
+		<select name="punto" id="punto" class="form-control form-control-lg form-control-solid" style="width: 80%;">
+			<option value="" disabled selected>Selecciona un punto</option>
 
 
-														<!--begin::Table body-->
-														<tbody class="fw-semibold text-gray-600">
-															@php
-                                                    $estadoColores = [
-                                                    'En ruta' => '#F39C12',
-                                                    'Entregado' => '#2ECC71',
-                                                    'Fallido' => '#E74C3C',
-                                                    'No entregado' => '#C0392B',
-                                                    'Reprogramado' => '#F1C40F',
-                                                    'Cambio' => '#3498DB'
-                                                    ];
-                                                    @endphp
-															@foreach ($envios as $envio)
-															 @php
-                                                    $estado = $envio->estado;
-                                                    $color = $estadoColores[$estado] ?? '#BDC3C7';
-                                                    @endphp
-															<tr>
-																<td><a href="/detalles/{{ $envio->guia }}" class="text-gray-600 text-hover-primary">{{ $envio->guia }}</a></td>
-																<td>{{ $envio->comercio }}</td>
-                                                        <td>{{ $envio->destinatario }}</td>
-														 <td data-order="{{ $envio->fecha_entrega }}">
-                                                            {{ date('d M Y, h:i a', strtotime($envio->fecha_entrega)) }}
-                                                        </td>
-														<td class="text-end">${{ number_format($envio->precio, 2) }}</td>
-														<td class="text-center">
-                                                            <span class="badge" style="background-color: {{ $color }}; color: white; padding: 8px 8px; border-radius: 6px;">{{ $estado }}</span>
-                                                        </td>
-                                                       
+				@foreach ($puntos as $punto)
+                    <option value="{{ $punto->id }}">{{ $punto->punto }}</option>
+                @endforeach
 
-															</tr>
-														
+		</select>
+	</div>
+</div>
+<div class="mx-auto" style="max-width: 80%; text-center">
 
-															@endforeach
-														</tbody>
-														<!--end::Table body-->
-													</table>
-												</div>
-												<!--end::Table-->
-											</div>
-											<!--end::Tap pane-->
-										
-										</div>
-									</div>
-									<!--end::Body-->
-								</div>
-								<!--end::Engage widget 1-->
-							
-							</div>
-						</div>
+    <div class="row g-3 mb-3"> <div class="col-6">
+            <input type="text" id="horario_llegada" 
+                   class="form-control form-control-lg form-control-solid"
+                   placeholder="Hora llegada" />
+        </div>
+        <div class="col-6">
+            <input type="text" id="horario_salida" 
+                   class="form-control form-control-lg form-control-solid"
+                   placeholder="Hora salida" />
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-4">
+            <input type="text" name="placa" id="placa" 
+                   class="form-control form-control-lg form-control-solid"
+                   placeholder="Placa" />
+        </div>
+        <div class="col-4">
+            <input type="text" name="color" id="color" 
+                   class="form-control form-control-lg form-control-solid"
+                   placeholder="Color" />
+        </div>
+        <div class="col-4">
+            <input type="text" name="tipo_vehiculo" id="tipo_vehiculo" 
+                   class="form-control form-control-lg form-control-solid"
+                   placeholder="Tipo" />
+        </div>
+    </div>
+
+</div>
+
+<div class="mx-auto" style="max-width: 80%;">
+
+    <div class="row g-3 mt-3"> <div class="col-12">
+            <textarea 
+                name="nota" 
+                id="nota" 
+                class="form-control form-control-lg form-control-solid" 
+                rows="3" 
+                placeholder="Escribe una nota..."
+                style="resize: none;"></textarea>
+        </div>
+    </div>
+
+</div>
+
+<div class="mx-auto" style="max-width: 80%;">
+
+    <div class="row mt-8">
+        <div class="col-12 d-flex justify-content-end gap-3">
+            <a href="/dashboard" class="btn btn-light btn-active-light-primary fw-bold">
+                Cancelar
+            </a>
+
+            <button type="submit" class="btn btn-primary fw-bold">
+                <span class="indicator-label">Guardar</span>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+
+
+						<p></p>
+				
+   
+ 
+    
+
+                                            <!--end::Main wrapper-->
+
+            
 						<!--end::Row-->
 
 						<!--end::Tables Widget 5-->
@@ -732,26 +531,36 @@ if (searchText == "") {
 			<!--end::Wrapper-->
 		</div>
 		<!--end::Page-->
-	</div>
+	
 	<!--end::Root-->
 	<!--begin::Drawers-->
 	
 	
 		<!--end::Modal dialog-->
 	</div>
+    </div></div></div>
 	
 	
-
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 
 
 	   {{-- Global Metronic Scripts --}}
     <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
-	<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="assets/js/custom/apps/ecommerce/reports/shipping/shipping.js"></script>
 	<!--end::Custom Javascript-->
 	<!--end::Javascript-->
+
+	<script>
+    const configHora = {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    };
+
+    flatpickr("#horario_llegada", configHora);
+    flatpickr("#horario_salida", configHora);
+</script>
 </body>
 <!--end::Body-->
 
