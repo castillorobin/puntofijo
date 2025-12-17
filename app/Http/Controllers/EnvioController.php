@@ -12,6 +12,7 @@ use PDF;
 use Carbon\Carbon;
 use App\Models\Hestado;
 use App\Models\Rutas;
+use App\Models\Notificacion;
 
 class EnvioController extends Controller
 {
@@ -399,4 +400,36 @@ public function notificaciones()
 
 
 }
+public function notificacionesguardar(Request $request)
+{
+   $request->validate([
+    'tipo' => 'required|string',
+    'punto' => 'required|integer|exists:rutas,id',
+    'placa' => 'required|string',
+    'color' => 'required|string',
+    'tipocarro' => 'required|string', 
+    'nota' => 'required|string',
+    // Cambiamos 'required' por 'nullable'
+    'hora_llegada' => 'nullable|date_format:H:i',
+    'hora_salida' => 'nullable|date_format:H:i',
+]);
+
+    
+    Notificacion::create([
+        'tipo' => $request->tipo,
+        'placa' => $request->placa,
+        'color' => $request->color,
+        'tipocarro' => $request->tipocarro,   
+        'punto' => $request->punto,
+        'nota' => $request->nota,
+        'horallegada' => $request->hora_llegada,
+        'horasalida' => $request->hora_salida
+    ]);
+    
+
+    return redirect()->back()->with('success', 'Notificación enviada correctamente.');
+}
+
+
+
 }

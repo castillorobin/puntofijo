@@ -138,6 +138,7 @@ Route::post('/noentregados/actualizar', [App\Http\Controllers\EnvioController::c
     ->name('noentregado.actualizar');
 
 Route::get('/notificaciones', [EnvioController::class, 'notificaciones'])->name('envios.notificaciones');
+Route::post('/notificacionesguardar', [EnvioController::class, 'notificacionesguardar'])->name('envios.notificacionesguardar');
 
 
 

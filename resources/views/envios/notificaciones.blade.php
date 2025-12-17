@@ -404,7 +404,21 @@ License: For each use you must have a valid license purchased only from above li
                                             </span>
                                         </h3>
                                     </div>
-
+@if(session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            text: "{{ session('success') }}",
+            icon: "success",
+            buttonsStyling: false,
+            confirmButtonText: "Entendido",
+            customClass: {
+                confirmButton: "btn btn-primary"
+            }
+        });
+    });
+</script>
+@endif
    
                                     <!--begin::Body-->
 
@@ -417,14 +431,24 @@ License: For each use you must have a valid license purchased only from above li
                                                 data-kt-search-min-length="2"
                                                 data-kt-search-enter="true"
                                                 data-kt-search-layout="inline">
-
-            
+@if ($errors->any())
+    <div class="alert alert-danger mx-auto" style="max-width: 80%;">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+            <form action="/notificacionesguardar" method="POST">
+				@csrf
 <div class="row d-flex flex-column align-items-center">
     <div class="col-md-12 mb-3 d-flex justify-content-center">
-        <select name="tipo_notificacion" id="tipo_notificacion" class="form-control form-control-lg form-control-solid" style="width: 80%;">
+        <select name="tipo" id="tipo" class="form-control form-control-lg form-control-solid" style="width: 80%;">
             <option value="" disabled selected>Tipo de notificacion</option>
-            <option value="atraso">Atraso</option>
-            <option value="llegado">Hemos llegado</option>
+            <option value="atraso">¡Atraso!</option>
+			<option value="por_llegar">¡Por llegar!</option>
+            <option value="llegado">¡Hemos llegado!</option>
         </select>
     </div>
 
@@ -444,12 +468,12 @@ License: For each use you must have a valid license purchased only from above li
 <div class="mx-auto" style="max-width: 80%; text-center">
 
     <div class="row g-3 mb-3"> <div class="col-6">
-            <input type="text" id="horario_llegada" 
+            <input type="text" id="horario_llegada" name="hora_llegada"
                    class="form-control form-control-lg form-control-solid"
                    placeholder="Hora llegada" />
         </div>
         <div class="col-6">
-            <input type="text" id="horario_salida" 
+            <input type="text" id="horario_salida" name="hora_salida"
                    class="form-control form-control-lg form-control-solid"
                    placeholder="Hora salida" />
         </div>
@@ -467,7 +491,7 @@ License: For each use you must have a valid license purchased only from above li
                    placeholder="Color" />
         </div>
         <div class="col-4">
-            <input type="text" name="tipo_vehiculo" id="tipo_vehiculo" 
+            <input type="text" name="tipocarro" id="tipocarro" 
                    class="form-control form-control-lg form-control-solid"
                    placeholder="Tipo" />
         </div>
@@ -507,7 +531,7 @@ License: For each use you must have a valid license purchased only from above li
 </div>
 
 
-
+</form>
 						<p></p>
 				
    
