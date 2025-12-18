@@ -400,32 +400,53 @@ public function notificaciones()
 
 
 }
+
 public function notificacionesguardar(Request $request)
 {
-   $request->validate([
-    'tipo' => 'required|string',
-    'punto' => 'required|integer|exists:rutas,id',
-    'placa' => 'required|string',
-    'color' => 'required|string',
-    'tipocarro' => 'required|string', 
-    'nota' => 'required|string',
-    // Cambiamos 'required' por 'nullable'
-    'hora_llegada' => 'nullable|date_format:H:i',
-    'hora_salida' => 'nullable|date_format:H:i',
-]);
+    $request->validate([
+        'tipo'  => 'required|in:atraso,por_llegar,llegado',
+        'punto' => 'required|integer|exists:rutas,id',
+        'nota'  => 'required|string',
 
-    
-    Notificacion::create([
-        'tipo' => $request->tipo,
-        'placa' => $request->placa,
-        'color' => $request->color,
-        'tipocarro' => $request->tipocarro,   
-        'punto' => $request->punto,
-        'nota' => $request->nota,
-        'horallegada' => $request->hora_llegada,
-        'horasalida' => $request->hora_salida
+        // Horas
+        'hora_llegada' => 'required_if:tipo,atraso,llegado|nullable|date_format:H:i',
+        'hora_salida'  => 'required_if:tipo,llegado|nullable|date_format:H:i',
+
+        // Vehículo
+        'placa'    => 'required_if:tipo,llegado|nullable|string',
+        'color'    => 'required_if:tipo,llegado|nullable|string',
+        'tipocarro'=> 'required_if:tipo,llegado,por_llegar|nullable|string',
     ]);
-    
+
+
+    if ($request->tipo === 'atraso') {
+    $request->merge([
+        'hora_salida' => null,
+        'placa' => null,
+        'color' => null,
+        'tipocarro' => null,
+    ]);
+}
+
+if ($request->tipo === 'por_llegar') {
+    $request->merge([
+        'hora_llegada' => null,
+        'hora_salida' => null,
+        'placa' => null,
+        'color' => null,
+    ]);
+}
+
+    Notificacion::create([
+        'tipo'       => $request->tipo,
+        'punto'      => $request->punto,
+        'nota'       => $request->nota,
+        'horallegada'=> $request->hora_llegada,
+        'horasalida' => $request->hora_salida,
+        'placa'      => $request->placa,
+        'color'      => $request->color,
+        'tipocarro'  => $request->tipocarro,
+    ]);
 
     return redirect()->back()->with('success', 'Notificación enviada correctamente.');
 }

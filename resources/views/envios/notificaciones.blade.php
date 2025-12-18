@@ -442,76 +442,84 @@ License: For each use you must have a valid license purchased only from above li
 @endif
             <form action="/notificacionesguardar" method="POST">
 				@csrf
-<div class="row d-flex flex-column align-items-center">
+
+
+<div class="mx-auto" style="max-width: 80%; text-center">
+
+
     <div class="col-md-12 mb-3 d-flex justify-content-center">
-        <select name="tipo" id="tipo" class="form-control form-control-lg form-control-solid" style="width: 80%;">
-            <option value="" disabled selected>Tipo de notificacion</option>
-            <option value="atraso">¡Atraso!</option>
+		<select name="tipo" id="tipo" class="form-control form-control-lg form-control-solid" style="width: 80%;">
+			<option value="llegado">¡Hemos llegado!</option>
+			<option value="atraso">¡Atraso!</option>
 			<option value="por_llegar">¡Por llegar!</option>
-            <option value="llegado">¡Hemos llegado!</option>
-        </select>
+			
+		</select>
     </div>
 
 	
 	 <div class="col-md-12 mb-3 d-flex justify-content-center">
 		<select name="punto" id="punto" class="form-control form-control-lg form-control-solid" style="width: 80%;">
 			<option value="" disabled selected>Selecciona un punto</option>
-
-
-				@foreach ($puntos as $punto)
-                    <option value="{{ $punto->id }}">{{ $punto->punto }}</option>
-                @endforeach
-
+			@foreach ($puntos as $punto)
+				<option value="{{ $punto->id }}">{{ $punto->punto }}</option>
+			@endforeach
 		</select>
 	</div>
 </div>
+
+
 <div class="mx-auto" style="max-width: 80%; text-center">
 
-    <div class="row g-3 mb-3"> <div class="col-6">
-            <input type="text" id="horario_llegada" name="hora_llegada"
-                   class="form-control form-control-lg form-control-solid"
-                   placeholder="Hora llegada" />
-        </div>
-        <div class="col-6">
-            <input type="text" id="horario_salida" name="hora_salida"
-                   class="form-control form-control-lg form-control-solid"
-                   placeholder="Hora salida" />
-        </div>
+    <div class="row g-3 mb-3"> 
+		<div id="sec-horas" class="mx-auto" style="max-width: 80%; text-center">
+  <div class="row g-3 mb-3">
+    <div class="col-6">
+      <input type="text" id="horario_llegada" name="hora_llegada"
+             class="form-control form-control-lg form-control-solid"
+             placeholder="Hora llegada" />
     </div>
 
-    <div class="row g-3">
-        <div class="col-4">
-            <input type="text" name="placa" id="placa" 
-                   class="form-control form-control-lg form-control-solid"
-                   placeholder="Placa" />
-        </div>
-        <div class="col-4">
-            <input type="text" name="color" id="color" 
-                   class="form-control form-control-lg form-control-solid"
-                   placeholder="Color" />
-        </div>
-        <div class="col-4">
-            <input type="text" name="tipocarro" id="tipocarro" 
-                   class="form-control form-control-lg form-control-solid"
-                   placeholder="Tipo" />
-        </div>
+    <div class="col-6" id="sec-salida">
+      <input type="text" id="horario_salida" name="hora_salida"
+             class="form-control form-control-lg form-control-solid"
+             placeholder="Hora salida" />
+    </div>
+  </div>
+</div>
+		
     </div>
 
+
+<div id="sec-vehiculo" class="mx-auto" style="max-width: 80%; text-center">
+  <div class="row g-3">
+    <div class="col-4" id="sec-placa">
+      <input type="text" name="placa" id="placa"
+             class="form-control form-control-lg form-control-solid"
+             placeholder="Placa" />
+    </div>
+
+    <div class="col-4" id="sec-color">
+      <input type="text" name="color" id="color"
+             class="form-control form-control-lg form-control-solid"
+             placeholder="Color" />
+    </div>
+
+    <div class="col-4" id="sec-tipocarro">
+      <input type="text" name="tipocarro" id="tipocarro"
+             class="form-control form-control-lg form-control-solid"
+             placeholder="Tipo de vehiculo" />
+    </div>
+  </div>
 </div>
 
-<div class="mx-auto" style="max-width: 80%;">
-
-    <div class="row g-3 mt-3"> <div class="col-12">
-            <textarea 
-                name="nota" 
-                id="nota" 
-                class="form-control form-control-lg form-control-solid" 
-                rows="3" 
-                placeholder="Escribe una nota..."
-                style="resize: none;"></textarea>
-        </div>
+<div id="sec-nota" class="mx-auto" style="max-width: 80%;">
+  <div class="row g-3 mt-3">
+    <div class="col-12">
+      <textarea name="nota" id="nota"
+        class="form-control form-control-lg form-control-solid"
+        rows="3" placeholder="Escribe una nota..." style="resize:none;"></textarea>
     </div>
-
+  </div>
 </div>
 
 <div class="mx-auto" style="max-width: 80%;">
@@ -585,6 +593,85 @@ License: For each use you must have a valid license purchased only from above li
     flatpickr("#horario_llegada", configHora);
     flatpickr("#horario_salida", configHora);
 </script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const tipo = document.getElementById('tipo');
+
+  const secHoras   = document.getElementById('sec-horas');
+  const secSalida  = document.getElementById('sec-salida');
+
+  const secVehiculo = document.getElementById('sec-vehiculo');
+  const secPlaca    = document.getElementById('sec-placa');
+  const secColor    = document.getElementById('sec-color');
+  const secTipoCar  = document.getElementById('sec-tipocarro');
+
+  const inpLlegada = document.getElementById('horario_llegada');
+  const inpSalida  = document.getElementById('horario_salida');
+  const inpPlaca   = document.getElementById('placa');
+  const inpColor   = document.getElementById('color');
+  const inpTipoCar = document.getElementById('tipocarro');
+
+  const show = (el) => el && (el.style.display = '');
+  const hide = (el) => el && (el.style.display = 'none');
+
+  // Opcional: limpiar valores al ocultar
+  const clear = (...inputs) => inputs.forEach(i => { if (i) i.value = ''; });
+
+  function applyTipo(value) {
+    // Reset: ocultar todo lo "variable"
+    show(secHoras);
+    show(secVehiculo);
+
+    // Por defecto placeholders
+    inpLlegada.placeholder = 'Hora llegada';
+
+    // Mostrar todo (llegado)
+    if (value === 'llegado') {
+      show(secSalida);
+      show(secPlaca);
+      show(secColor);
+      show(secTipoCar);
+      return;
+    }
+
+    // Atraso: tipo + punto + hora_llegada (renombrar) + nota
+    if (value === 'atraso') {
+      inpLlegada.placeholder = 'Hora aproximada';
+      show(secHoras);
+      hide(secSalida);      clear(inpSalida);
+
+      hide(secVehiculo);    clear(inpPlaca, inpColor, inpTipoCar);
+      return;
+    }
+
+    // Por llegar: tipo + punto + tipocarro + nota
+    if (value === 'por_llegar') {
+      hide(secHoras);       clear(inpLlegada, inpSalida);
+
+      show(secVehiculo);
+      hide(secPlaca);       clear(inpPlaca);
+      hide(secColor);       clear(inpColor);
+      show(secTipoCar);
+      return;
+    }
+
+    // Si no hay selección: ocultar variables
+    hide(secHoras);         clear(inpLlegada, inpSalida);
+    hide(secVehiculo);      clear(inpPlaca, inpColor, inpTipoCar);
+  }
+
+  // Evento al cambiar
+  tipo.addEventListener('change', () => applyTipo(tipo.value));
+
+  // Estado inicial (por si viene old('tipo') o edit)
+  applyTipo(tipo.value || '');
+});
+</script>
+
+
+
 </body>
 <!--end::Body-->
 
