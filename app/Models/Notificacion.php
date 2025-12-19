@@ -9,6 +9,16 @@ class Notificacion extends Model
 {
     use HasFactory;
     protected $fillable = [
-    'tipo', 'placa', 'color', 'tipocarro', 'punto', 'nota', 'horallegada', 'horasalida'
+    'tipo',
+    'placa',
+    'color',
+    'tipocarro',
+    'punto',
+    'nota',
+    'horallegada',
+    'horasalida',
+    'foto1',
+    'foto2',
+    'foto3',
 ];
 }

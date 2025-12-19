@@ -404,49 +404,48 @@ public function notificaciones()
 public function notificacionesguardar(Request $request)
 {
     $request->validate([
-        'tipo'  => 'required|in:atraso,por_llegar,llegado',
+        'tipo' => 'required|string|in:llegado,atraso,por_llegar',
         'punto' => 'required|integer|exists:rutas,id',
-        'nota'  => 'required|string',
+        'nota' => 'required|string',
 
-        // Horas
-        'hora_llegada' => 'required_if:tipo,atraso,llegado|nullable|date_format:H:i',
-        'hora_salida'  => 'required_if:tipo,llegado|nullable|date_format:H:i',
+        // según tu lógica anterior:
+        'placa' => 'nullable|string',
+        'color' => 'nullable|string',
+        'tipocarro' => 'nullable|string',
+        'hora_llegada' => 'nullable|date_format:H:i',
+        'hora_salida' => 'nullable|date_format:H:i',
 
-        // Vehículo
-        'placa'    => 'required_if:tipo,llegado|nullable|string',
-        'color'    => 'required_if:tipo,llegado|nullable|string',
-        'tipocarro'=> 'required_if:tipo,llegado,por_llegar|nullable|string',
+        // fotos (máx 3)
+        'fotos' => 'nullable|array|max:3',
+        'fotos.*' => 'image|mimes:jpg,jpeg,png,webp|max:2048', // 2MB c/u
     ]);
 
-
-    if ($request->tipo === 'atraso') {
-    $request->merge([
-        'hora_salida' => null,
-        'placa' => null,
-        'color' => null,
-        'tipocarro' => null,
-    ]);
-}
-
-if ($request->tipo === 'por_llegar') {
-    $request->merge([
-        'hora_llegada' => null,
-        'hora_salida' => null,
-        'placa' => null,
-        'color' => null,
-    ]);
-}
-
-    Notificacion::create([
-        'tipo'       => $request->tipo,
-        'punto'      => $request->punto,
-        'nota'       => $request->nota,
-        'horallegada'=> $request->hora_llegada,
+    $data = [
+        'tipo' => $request->tipo,
+        'punto' => $request->punto,
+        'nota' => $request->nota,
+        'placa' => $request->placa,
+        'color' => $request->color,
+        'tipocarro' => $request->tipocarro,
+        'horallegada' => $request->hora_llegada,
         'horasalida' => $request->hora_salida,
-        'placa'      => $request->placa,
-        'color'      => $request->color,
-        'tipocarro'  => $request->tipocarro,
-    ]);
+    ];
+
+    // Guardar fotos SOLO si tipo = llegado
+    if ($request->tipo === 'llegado' && $request->hasFile('fotos')) {
+        $files = $request->file('fotos'); // array
+        // Asegura máximo 3 por si acaso:
+        $files = array_slice($files, 0, 3);
+
+        foreach ($files as $i => $file) {
+            $path = $file->store('notificaciones', 'public'); 
+            // guarda en storage/app/public/notificaciones
+            // luego se accede con asset('storage/'.$path)
+            $data['foto'.($i+1)] = $path; // foto1, foto2, foto3
+        }
+    }
+
+    Notificacion::create($data);
 
     return redirect()->back()->with('success', 'Notificación enviada correctamente.');
 }

@@ -440,8 +440,8 @@ License: For each use you must have a valid license purchased only from above li
         </ul>
     </div>
 @endif
-            <form action="/notificacionesguardar" method="POST">
-				@csrf
+            <form action="/notificacionesguardar" method="POST" enctype="multipart/form-data">
+    @csrf
 
 
 <div class="mx-auto" style="max-width: 80%; text-center">
@@ -521,6 +521,29 @@ License: For each use you must have a valid license purchased only from above li
     </div>
   </div>
 </div>
+
+
+<div id="sec-fotos" class="mx-auto" style="max-width: 80%; display:none;">
+  <div class="row g-3 mt-3">
+    <div class="col-12 text-start">
+      <label class="form-label fw-bold">Fotos (máximo 3)</label>
+      <input type="file"
+             id="fotos"
+             name="fotos[]"
+             class="form-control form-control-lg form-control-solid"
+             accept="image/*"
+             multiple
+             capture="environment">
+      <div class="form-text">Puedes seleccionar hasta 3 imágenes.</div>
+    </div>
+
+    <div class="col-12">
+      <div id="previewFotos" class="d-flex flex-wrap gap-3 mt-2"></div>
+    </div>
+  </div>
+</div>
+
+
 
 <div class="mx-auto" style="max-width: 80%;">
 
@@ -667,6 +690,106 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Estado inicial (por si viene old('tipo') o edit)
   applyTipo(tipo.value || '');
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const tipo = document.getElementById('tipo');
+  const secFotos = document.getElementById('sec-fotos');
+  const inputFotos = document.getElementById('fotos');
+  const preview = document.getElementById('previewFotos');
+
+  const normName = (f) => `${f.name}_${f.size}_${f.lastModified}`;
+
+  let selectedFiles = []; // aquí acumulamos
+
+  const syncInputFiles = () => {
+    const dt = new DataTransfer();
+    selectedFiles.forEach(f => dt.items.add(f));
+    inputFotos.files = dt.files;
+  };
+
+  const renderPreviews = () => {
+    preview.innerHTML = '';
+
+    selectedFiles.forEach((file, idx) => {
+      const url = URL.createObjectURL(file);
+
+      const wrap = document.createElement('div');
+      wrap.className = 'position-relative';
+      wrap.style.width = '110px';
+      wrap.style.height = '110px';
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = 'preview';
+      img.style.width = '110px';
+      img.style.height = '110px';
+      img.style.objectFit = 'cover';
+      img.className = 'rounded border';
+
+      // botón eliminar (X)
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-icon btn-sm btn-danger position-absolute';
+      btn.style.top = '4px';
+      btn.style.right = '4px';
+      btn.innerHTML = '&times;';
+      btn.addEventListener('click', () => {
+        selectedFiles.splice(idx, 1);
+        syncInputFiles();
+        renderPreviews();
+      });
+
+      wrap.appendChild(img);
+      wrap.appendChild(btn);
+      preview.appendChild(wrap);
+
+      img.onload = () => URL.revokeObjectURL(url);
+    });
+  };
+
+  const showFotosIfNeeded = () => {
+    const isLlegado = (tipo?.value === 'llegado');
+    if (secFotos) secFotos.style.display = isLlegado ? '' : 'none';
+
+    // Si cambia a otro tipo, limpiamos todo
+    if (!isLlegado && inputFotos) {
+      selectedFiles = [];
+      inputFotos.value = '';
+      if (preview) preview.innerHTML = '';
+    }
+  };
+
+  showFotosIfNeeded();
+  tipo?.addEventListener('change', showFotosIfNeeded);
+
+  inputFotos?.addEventListener('change', () => {
+    const files = Array.from(inputFotos.files || []);
+
+    // agregar (acumular) solo imágenes, evitar duplicadas
+    for (const f of files) {
+      if (!f.type.startsWith('image/')) continue;
+
+      const key = normName(f);
+      const exists = selectedFiles.some(x => normName(x) === key);
+      if (!exists) selectedFiles.push(f);
+    }
+
+    // limitar a 3
+    if (selectedFiles.length > 3) {
+      selectedFiles = selectedFiles.slice(0, 3);
+      alert('Máximo 3 imágenes.');
+    }
+
+    syncInputFiles();
+    renderPreviews();
+
+    // IMPORTANTE: limpiar el input para que si eliges la MISMA imagen luego,
+    // dispare change otra vez (algunos navegadores no disparan si es igual)
+  //  inputFotos.value = '';
+  });
 });
 </script>
 
