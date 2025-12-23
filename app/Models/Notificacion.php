@@ -20,5 +20,7 @@ class Notificacion extends Model
     'foto1',
     'foto2',
     'foto3',
+    'leida',
+    'leida_at',
 ];
 }
