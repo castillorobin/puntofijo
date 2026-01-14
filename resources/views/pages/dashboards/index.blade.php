@@ -167,11 +167,12 @@ if (searchText == "") {
 		<!--begin::Page-->
 		<div class="page d-flex flex-row flex-column-fluid">
 			<!--begin::Aside-->
-			<div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-width="auto" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_toggle">
+			<div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-width="auto" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_toggle" >
 				<!--begin::Logo-->
-				<div class="aside-logo flex-column-auto pt-10 pt-lg-20" id="kt_aside_logo">
+				<div class="aside-logo flex-column-auto" id="kt_aside_logo" style="background-color: #001d7e !important; height: 240px;">
 					<a href="/dashboard">
-						<img alt="Logo" src="assets/media/logos/logo.png" class="h-40px" />
+						
+						
 					</a>
 				</div>
 				<!--end::Logo-->
@@ -288,7 +289,7 @@ if (searchText == "") {
 
 <!--end::Header mobile-->
 				<!--begin::Header-->
-				<div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
+				<div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}" style="background-color: #001d7e !important;">
 					
 				<!--begin::Container-->
 					<div class="header-container container-xxl">
@@ -298,9 +299,10 @@ if (searchText == "") {
 </button>
 </div>
 						<!--begin::Page title-->
-						<div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
+						<div class="page-title d-flex align-items-center justify-content-start flex-wrap me-lg-20 py-3 py-lg-0 me-3">
 							<!--begin::Heading-->
-							<h1 class="d-flex flex-column text-dark fw-bold my-1">
+							<img alt="Logo" src="/fotos/logomelo.png" class="h-40px me-5" />
+							<h1 class="d-flex text-dark fw-bold my-1 m-0">
 								<span class="text-white fs-1">Hola, {{ Auth::user()->name }}</span>
 								<small class="text-gray-600 fs-6 fw-normal pt-2"></small>
 							</h1>
